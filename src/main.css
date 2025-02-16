@@ -1,0 +1,24 @@
+@font-face {
+  font-family: "custom font";
+  src: url(./assets/linuxlibertinemono.ttf) format("truetype");
+}
+
+body {
+  background-color: black;
+  color: whitesmoke;
+  font-family: "custom font";
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+pre {
+  font-family: "custom font", monospace;
+  font-size: medium;
+  line-height: 1.5vh;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
