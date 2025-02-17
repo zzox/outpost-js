@@ -13,7 +13,7 @@ type GridItem = {
 
 type Grid = GridItem[][]
 
-const boxSize = 16
+const boxSize = 24
 
 export const go = () => {
   const world:Grid = []
@@ -21,7 +21,8 @@ export const go = () => {
   for (let y = 0; y < boxSize; y++) {
     world[y] = []
     for (let x = 0; x < boxSize; x++) {
-      world[y][x] = { r: Math.random() < 0.2 ? '0' : 'P' }
+      world[y][x] = { r: Math.random() < 0.2 ? '\u2588' : '\u2591' }
+      // world[y][x] = { r: Math.random() < 0.2 ? '\u2588' : '\u2593' }
     }
   }
 
@@ -41,30 +42,53 @@ class MoveBox {
 
   dragging:boolean = false
 
-  constructor (x:number, y:number) {
-    this.element = this.makeElement()
-    this.element.style.top = `${y}px`
-    this.element.style.left = `${x}px`
-  }
+  dragX:number = 0
+  dragY:number = 0
 
-  makeElement ():HTMLDivElement {
-    const el = $make('div')
+  constructor (x:number, y:number) {
+    this.element = $make('div') as HTMLDivElement
     const top = $make('div')
     const bottom = $make('div')
     const title = $make('pre')
     this.content = $make('pre') as HTMLDivElement
 
+    this.element.className = 'box'
     title.innerText = 'This is the title!'
-
-    el.className = 'box'
     top.className = 'box-title'
     bottom.className = 'box-content'
 
-    el.appendChild(top)
-    el.appendChild(bottom)
+    this.element.appendChild(top)
+    this.element.appendChild(bottom)
     top.appendChild(title)
     bottom.appendChild(this.content)
 
-    return el as HTMLDivElement
+    top.onmousedown = this.mouseDown
+
+    this.setPosition(x, y)
+  }
+
+  mouseDown = (ev:MouseEvent) => {
+    this.dragging = true
+    this.dragX = ev.clientX - this.element.offsetLeft
+    this.dragY = ev.clientY - this.element.offsetTop
+    document.onmousemove = this.mouseMove
+    document.onmouseup = this.mouseUp
+  }
+
+  mouseMove = (ev:MouseEvent) => {
+    // TODO: clamp on screen
+    this.setPosition(ev.clientX - this.dragX, ev.clientY - this.dragY)
+  }
+
+  mouseUp = () => {
+    this.dragging = false
+
+    document.onmousemove = null
+    document.onmouseup = null
+  }
+
+  setPosition = (x:number, y:number) => {
+    this.element.style.top = `${y}px`
+    this.element.style.left = `${x}px`
   }
 }

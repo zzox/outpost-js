@@ -1,19 +1,19 @@
 @font-face {
-  font-family: "custom font";
+  font-family: "linux libertine";
   src: url(./assets/linuxlibertinemono.ttf) format("truetype");
 }
 
 body {
   background-color: black;
   color: whitesmoke;
-  font-family: "custom font";
+  font-family: "linux libertine";
   overflow-y: hidden;
   overflow-x: hidden;
 }
 
 pre {
-  font-family: "custom font", monospace;
-  font-size: medium;
+  font-family: "linux libertine", monospace;
+  font-size: 1.5vh;
   line-height: 1.5vh;
   margin: 0;
 }
