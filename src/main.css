@@ -15,10 +15,34 @@ pre {
   font-family: "custom font", monospace;
   font-size: medium;
   line-height: 1.5vh;
+  margin: 0;
 }
 
 main {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.box {
+  position: fixed;
+  border: .5vh inset whitesmoke;
+  /* border-color: whitesmoke; */
+  padding: 1vh;
+  margin: 0;
+}
+
+.box-title {
+	cursor: move;
+	height: 3vh;
+  /* border-width: 1.5vh;
+  border-bottom: .75vh; */
+  border-color: whitesmoke;
+  text-align: center;
+}
+
+.box-content {
+  border-width: 1.5vh;
+  border-bottom: .75vh;
+  border-color: whitesmoke;
 }
