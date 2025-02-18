@@ -29,27 +29,28 @@ main {
 }
 
 .box > * {
-  border: .5vh solid whitesmoke;
+  border: .5vh double whitesmoke;
   padding: 1vh;
   margin: 0;
+  background-color: black;
 }
 
 .box-title {
 	cursor: move;
   text-align: center;
-  border-bottom: .25vh solid whitesmoke;
+  border-bottom: .5vh double whitesmoke;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .box-content {
-  border-top: .25vh solid whitesmoke;
+  border-top: none;
 }
 
 button {
   cursor: pointer;
-  border: .25vh solid whitesmoke;
+  border: .25vh double whitesmoke;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,4 +60,8 @@ button {
 
 button:hover {
   background-color: #555;
+}
+
+.brown {
+  color: brown;
 }

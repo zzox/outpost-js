@@ -21,7 +21,7 @@ export const go = () => {
   for (let y = 0; y < boxSize; y++) {
     world[y] = []
     for (let x = 0; x < boxSize; x++) {
-      world[y][x] = { r: Math.random() < 0.2 ? '\u2588' : '\u2591' }
+      world[y][x] = { r: Math.random() < 0.2 ? '\u25AA' : '\u2591' }
       // world[y][x] = { r: Math.random() < 0.2 ? '\u2588' : '\u2593' }
     }
   }
@@ -31,7 +31,16 @@ export const go = () => {
   const box = new MoveBox(40, 40)
 
   $q('main').appendChild(box.element)
-  box.content.innerText = world.map(row => row.map(item => item.r).join('') + '\n').join('')
+
+  const renderItem = (r:string) => {
+    if (r == '\u25AA') {
+      return '<span class="brown">\u25AA</span>'
+    }
+
+    return r
+  }
+
+  box.content.innerHTML = world.map(row => row.map(item => renderItem(item.r)).join('') + '\n').join('')
 }
 
 class MoveBox {
