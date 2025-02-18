@@ -29,17 +29,34 @@ main {
 }
 
 .box > * {
-  border: .5vh inset whitesmoke;
-  /* border-color: whitesmoke; */
+  border: .5vh solid whitesmoke;
   padding: 1vh;
   margin: 0;
 }
 
 .box-title {
 	cursor: move;
-  /* border-width: 1.5vh; */
-  border-color: whitesmoke;
   text-align: center;
+  border-bottom: .25vh solid whitesmoke;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.box-content {}
+.box-content {
+  border-top: .25vh solid whitesmoke;
+}
+
+button {
+  cursor: pointer;
+  border: .25vh solid whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  color: whitesmoke;
+}
+
+button:hover {
+  background-color: #555;
+}

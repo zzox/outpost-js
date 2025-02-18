@@ -4,7 +4,6 @@ const $q = (query:string): HTMLElement => document.querySelector(query)
 // // @ts-ignore
 const $id = (id:string): HTMLElement => document.getElementById(id)
 
-// // @ts-ignore
 const $make = (type:string): HTMLElement => document.createElement(type)
 
 const clamp = (value:number, min:number, max:number):number => Math.max(Math.min(value, max), min)
@@ -15,7 +14,7 @@ type GridItem = {
 
 type Grid = GridItem[][]
 
-const boxSize = 24
+const boxSize = 40
 
 export const go = () => {
   const world:Grid = []
@@ -37,12 +36,8 @@ export const go = () => {
 }
 
 class MoveBox {
-
   element:HTMLDivElement
-
   content:HTMLDivElement
-
-  dragging:boolean = false
 
   dragX:number = 0
   dragY:number = 0
@@ -52,25 +47,32 @@ class MoveBox {
     const top = $make('div')
     const bottom = $make('div')
     const title = $make('pre')
+    const left = $make('pre')
+    const xOut = $make('button')
     this.content = $make('pre') as HTMLDivElement
 
     this.element.className = 'box'
-    title.innerText = 'This is the title!'
     top.className = 'box-title'
     bottom.className = 'box-content'
+    left.innerText = ' '
+    title.innerText = 'This is the title!'
+    xOut.innerText = 'X'
 
     this.element.appendChild(top)
     this.element.appendChild(bottom)
+    top.appendChild(left)
     top.appendChild(title)
+    top.appendChild(xOut)
     bottom.appendChild(this.content)
 
     top.onmousedown = this.mouseDown
+    xOut.onmousedown = (ev) => ev.stopPropagation()
+    xOut.onclick = this.close
 
     this.setPosition(x, y)
   }
 
   mouseDown = (ev:MouseEvent) => {
-    this.dragging = true
     this.dragX = ev.clientX - this.element.offsetLeft
     this.dragY = ev.clientY - this.element.offsetTop
     document.onmousemove = this.mouseMove
@@ -83,8 +85,6 @@ class MoveBox {
   }
 
   mouseUp = () => {
-    this.dragging = false
-
     document.onmousemove = null
     document.onmouseup = null
   }
@@ -95,5 +95,9 @@ class MoveBox {
 
     this.element.style.left = `${xx}px`
     this.element.style.top = `${yy}px`
+  }
+
+  close = () => {
+    this.element.remove()
   }
 }
