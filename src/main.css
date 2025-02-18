@@ -3,34 +3,40 @@
   src: url(../assets/linuxlibertinemono.ttf) format("truetype");
 } */
 
+:root {
+  --bg-color: #000;
+  --color: whitesmoke;
+  font-size: 16px;
+}
+
 body {
-  background-color: black;
-  color: whitesmoke;
-  font-family: "linux libertine";
+  background-color: var(--bg-color);
+  color: var(--color);
+  /* font-family: "linux libertine"; */
   overflow-y: hidden;
   overflow-x: hidden;
 }
 
 pre {
-  font-family: "linux libertine", monospace;
-  font-size: 1.5vh;
-  line-height: 1.5vh;
+  /* font-family: "linux libertine", monospace; */
+  line-height: 1em;
   margin: 0;
 }
 
 main {
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
 .box {
   position: fixed;
+  min-width: 7.5em;
+  border: .25em double var(--color);
 }
 
 .box > * {
-  border: .5vh double whitesmoke;
-  padding: 1vh;
+  padding: .5em;
   margin: 0;
   background-color: black;
 }
@@ -38,7 +44,7 @@ main {
 .box-title {
 	cursor: move;
   text-align: center;
-  border-bottom: .5vh double whitesmoke;
+  border-bottom: .125em double var(--color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -50,18 +56,29 @@ main {
 
 button {
   cursor: pointer;
-  border: .25vh double whitesmoke;
+  border: .125em solid var(--color);
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: black;
-  color: whitesmoke;
+  background-color: var(--bg-color);
+  color: var(--color);
 }
 
 button:hover {
   background-color: #555;
 }
 
+.min-box {}
+
 .brown {
   color: brown;
+}
+
+#logs > .box-content {
+  height: 25em;
+  width: 20em;
+}
+
+#logs pre {
+  white-space: pre-wrap;
 }

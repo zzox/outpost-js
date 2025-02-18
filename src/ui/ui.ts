@@ -1,9 +1,13 @@
 // @ts-ignore
-const $q = (query:string): HTMLElement => document.querySelector(query)
+export const $q = (query:string): HTMLElement => document.querySelector(query)
 // @ts-ignore
-const $id = (id:string): HTMLElement => document.getElementById(id)
+export const $id = (id:string): HTMLElement => document.getElementById(id)
 
-const $make = (type:string): HTMLElement => document.createElement(type)
+export const $make = (type:string): HTMLElement => document.createElement(type)
+
+export const addToMain = (box:MoveBox) => {
+  $q('main').appendChild(box.element)
+}
 
 const clamp = (value:number, min:number, max:number):number => Math.max(Math.min(value, max), min)
 
@@ -15,7 +19,7 @@ type Grid = GridItem[][]
 
 const boxSize = 40
 
-export const go = () => {
+const go = () => {
   const world:Grid = []
 
   for (let y = 0; y < boxSize; y++) {
@@ -28,10 +32,6 @@ export const go = () => {
 
   // $id('main').innerText = world.map(row => row.map(item => item.r).join('') + '\n').join('')
 
-  const box = new MoveBox(40, 40)
-
-  $q('main').appendChild(box.element)
-
   const renderItem = (r:string) => {
     if (r == '\u25AA') {
       return '<span class="brown">\u25AA</span>'
@@ -40,18 +40,19 @@ export const go = () => {
     return r
   }
 
-  box.content.innerHTML = world.map(row => row.map(item => renderItem(item.r)).join('') + '\n').join('')
+  // box.content.innerHTML = world.map(row => row.map(item => renderItem(item.r)).join('') + '\n').join('')
 }
 
-class MoveBox {
+export class MoveBox {
   element:HTMLDivElement
   content:HTMLDivElement
 
   dragX:number = 0
   dragY:number = 0
 
-  constructor (x:number, y:number) {
+  constructor (x:number, y:number, titleText:string, id:string) {
     this.element = $make('div') as HTMLDivElement
+    this.element.id = id
     const top = $make('div')
     const bottom = $make('div')
     const title = $make('pre')
@@ -63,8 +64,8 @@ class MoveBox {
     top.className = 'box-title'
     bottom.className = 'box-content'
     left.innerText = ' '
-    title.innerText = 'This is the title!'
-    xOut.innerText = 'X'
+    title.innerText = titleText
+    xOut.innerHTML = '<pre>X</pre>'
 
     this.element.appendChild(top)
     this.element.appendChild(bottom)
@@ -98,6 +99,7 @@ class MoveBox {
   }
 
   setPosition = (x:number, y:number) => {
+    // TODO: disallow above topbar, set topbar element as global
     const xx = clamp(x, 0, window.innerWidth - this.element.getBoundingClientRect().width)
     const yy = clamp(y, 0, window.innerHeight - this.element.getBoundingClientRect().height)
 
