@@ -7,6 +7,8 @@ const $id = (id:string): HTMLElement => document.getElementById(id)
 // // @ts-ignore
 const $make = (type:string): HTMLElement => document.createElement(type)
 
+const clamp = (value:number, min:number, max:number):number => Math.max(Math.min(value, max), min)
+
 type GridItem = {
   r:string
 }
@@ -88,7 +90,10 @@ class MoveBox {
   }
 
   setPosition = (x:number, y:number) => {
-    this.element.style.top = `${y}px`
-    this.element.style.left = `${x}px`
+    const xx = clamp(x, 0, window.innerWidth - this.element.getBoundingClientRect().width)
+    const yy = clamp(y, 0, window.innerHeight - this.element.getBoundingClientRect().height)
+
+    this.element.style.left = `${xx}px`
+    this.element.style.top = `${yy}px`
   }
 }

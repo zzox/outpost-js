@@ -1,6 +1,6 @@
 @font-face {
   font-family: "linux libertine";
-  src: url(./assets/linuxlibertinemono.ttf) format("truetype");
+  src: url(../assets/linuxlibertinemono.ttf) format("truetype");
 }
 
 body {
@@ -26,6 +26,9 @@ main {
 
 .box {
   position: fixed;
+}
+
+.box > * {
   border: .5vh inset whitesmoke;
   /* border-color: whitesmoke; */
   padding: 1vh;
@@ -34,15 +37,9 @@ main {
 
 .box-title {
 	cursor: move;
-	height: 3vh;
-  /* border-width: 1.5vh;
-  border-bottom: .75vh; */
+  /* border-width: 1.5vh; */
   border-color: whitesmoke;
   text-align: center;
 }
 
-.box-content {
-  border-width: 1.5vh;
-  border-bottom: .75vh;
-  border-color: whitesmoke;
-}
+.box-content {}
