@@ -1,7 +1,6 @@
-// // @ts-ignore
+// @ts-ignore
 const $q = (query:string): HTMLElement => document.querySelector(query)
-
-// // @ts-ignore
+// @ts-ignore
 const $id = (id:string): HTMLElement => document.getElementById(id)
 
 const $make = (type:string): HTMLElement => document.createElement(type)

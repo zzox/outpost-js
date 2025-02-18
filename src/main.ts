@@ -1,8 +1,6 @@
-import { go } from './ui'
+import { go } from './ui/ui'
 
 console.log('hi world')
-
-let it = 4
 
 // const next = () => {
   go()
