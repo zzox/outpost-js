@@ -5,10 +5,16 @@ console.log('hi world')
 
 let logs: LogList
 
-const next = () => {
-  // if (--frames == 0) {
-  //   render()
-  // }
+let time = 0
+
+const next = (now:number) => {
+  if (now - time > 100) {
+    // doUpdate();
+
+    // for the overflow
+    // TODO: calculate
+    time = now + (now - time) - 100
+  }
 
   if (Math.random() < 0.01) {
     logs.addLog(`here is a random log: ${Math.random()}`)

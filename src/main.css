@@ -7,20 +7,32 @@
   --bg-color: #000;
   --color: whitesmoke;
   font-size: 16px;
+
+  --gold: #d8df23;
 }
 
 body {
   background-color: var(--bg-color);
   color: var(--color);
   /* font-family: "linux libertine"; */
-  overflow-y: hidden;
-  overflow-x: hidden;
+  /* overflow-y: hidden;
+  overflow-x: hidden; */
 }
 
-pre {
-  /* font-family: "linux libertine", monospace; */
-  line-height: 1em;
-  margin: 0;
+nav {
+  display: flex;
+  justify-content: space-between;
+  height: 3em;
+}
+
+nav > div {
+  display: flex;
+}
+
+nav button {
+  padding: 0 2vh;
+  border: .25em solid var(--color);
+  height: 100%;
 }
 
 main {
@@ -29,10 +41,16 @@ main {
   align-items: center; */
 }
 
+pre {
+  /* font-family: "linux libertine", monospace; */
+  line-height: 1em;
+  margin: 0;
+}
+
 .box {
   position: fixed;
   min-width: 7.5em;
-  border: .25em double var(--color);
+  border: .25em solid var(--color);
 }
 
 .box > * {
@@ -44,7 +62,7 @@ main {
 .box-title {
 	cursor: move;
   text-align: center;
-  border-bottom: .125em double var(--color);
+  border-bottom: .125em solid var(--color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -52,6 +70,7 @@ main {
 
 .box-content {
   border-top: none;
+  overflow-y: scroll;
 }
 
 button {
@@ -60,6 +79,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   background-color: var(--bg-color);
   color: var(--color);
 }
@@ -72,6 +92,14 @@ button:hover {
 
 .brown {
   color: brown;
+}
+
+.day {
+  align-items: start;
+}
+
+.money {
+  color: var(--gold);
 }
 
 #logs > .box-content {
