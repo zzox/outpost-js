@@ -4,11 +4,10 @@
 } */
 
 :root {
-  --bg-color: #000;
+  /* --bg-color: #000; */
+  --bg-color: #0e0e0e;
   --color: whitesmoke;
   font-size: 16px;
-
-  --gold: #d8df23;
 }
 
 body {
@@ -31,8 +30,22 @@ nav > div {
 
 nav button {
   padding: 0 2vh;
-  border: .25em solid var(--color);
   height: 100%;
+}
+
+button {
+  cursor: pointer;
+  border: .25em solid var(--color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: var(--bg-color);
+  color: var(--color);
+}
+
+button:hover {
+  background-color: #555;
 }
 
 main {
@@ -73,26 +86,7 @@ pre {
   overflow-y: scroll;
 }
 
-button {
-  cursor: pointer;
-  border: .125em solid var(--color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background-color: var(--bg-color);
-  color: var(--color);
-}
-
-button:hover {
-  background-color: #555;
-}
-
 .min-box {}
-
-.brown {
-  color: brown;
-}
 
 .day {
   align-items: start;
@@ -110,3 +104,24 @@ button:hover {
 #logs pre {
   white-space: pre-wrap;
 }
+
+/* colors */
+/* from solarized */
+.WHITE { color: #fdf6e3 }
+.OFFWHITE { color: #eee8d5 }
+.GREEN { color: #859900 }
+.GREY { color: #93a1a1 }
+.DARKGREY { color: #586e75 }
+.ORANGE { color: #cb4b16 }
+.PURPLE { color: #6c71c4 }
+.BLUE { color: #268bd2 }
+.EMERALD { color: #2aa198 }
+.TAN { color: #b58900 }
+
+/* made up */
+.BG { color: #0e0e0e }
+.BROWN { color: #893203 }
+.GOLD { color: #d8df23 }
+
+/* Not yet used made up colors */
+.DARK_GREEN { color: #587558 }

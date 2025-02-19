@@ -41,3 +41,24 @@ const paletteColors = [
   // Not yet used colors
   Colors.DARK_GREEN,
 ];
+
+export const cssColors = [
+  'WHITE',
+  'OFFWHITE',
+  'GREEN',
+  'GREY',
+  'DARKGREY',
+  'ORANGE',
+  'PURPLE',
+  'BLUE',
+  'EMERALD',
+  'TAN',
+
+  // made up
+  'BG',
+  'BROWN',
+  'GOLD',
+
+  // Not yet used colors
+  'DARK_GREEN',
+];

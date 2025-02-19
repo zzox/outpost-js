@@ -1,5 +1,5 @@
-import { LogList } from "./ui/renderable"
-import { addToMain } from "./ui/ui"
+import { LogList } from './ui/renderable'
+import { addToMain, makeWorldAscii } from './ui/ui'
 
 console.log('hi world')
 
@@ -25,6 +25,7 @@ const next = (now:number) => {
 }
 
 const go = () => {
+  makeWorldAscii()
   logs = new LogList(100, 100)
   addToMain(logs)
   requestAnimationFrame(next)

@@ -32,4 +32,3 @@ export class LogList extends MoveBox {
     this.logs.unshift(log)
   }
 }
-
