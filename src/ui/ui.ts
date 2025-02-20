@@ -8,8 +8,8 @@ export const $id = (id:string): HTMLElement => document.getElementById(id)
 
 export const $make = (type:string): HTMLElement => document.createElement(type)
 
-export const addToMain = (box:MoveBox) => {
-  $q('main').appendChild(box.element)
+export const addToMain = (win:MovableWindow) => {
+  $q('main').appendChild(win.element)
 }
 
 const clamp = (value:number, min:number, max:number):number => Math.max(Math.min(value, max), min)
@@ -68,40 +68,48 @@ export const makeWorldAscii = () => {
   $id('main').innerHTML = html;
 }
 
-export class MoveBox {
+export class MovableWindow {
   element:HTMLDivElement
   content:HTMLDivElement
 
   dragX:number = 0
   dragY:number = 0
 
-  constructor (x:number, y:number, titleText:string, id:string) {
+  constructor (x:number, y:number, titleText:string, hasXOut:boolean, id:string) {
     this.element = $make('div') as HTMLDivElement
     this.element.id = id
     const top = $make('div')
     const bottom = $make('div')
     const title = $make('pre')
-    const left = $make('pre')
-    const xOut = $make('button')
     this.content = $make('pre') as HTMLDivElement
 
     this.element.className = 'box'
     top.className = 'box-title'
     bottom.className = 'box-content'
-    left.innerText = ' '
     title.innerText = titleText
-    xOut.innerHTML = '<pre>X</pre>'
 
     this.element.appendChild(top)
     this.element.appendChild(bottom)
-    top.appendChild(left)
+
+    if (hasXOut) {
+      // left element used to balance out the right
+      const left = $make('pre')
+      left.innerText = ' '
+      top.appendChild(left)
+    }
+
     top.appendChild(title)
-    top.appendChild(xOut)
     bottom.appendChild(this.content)
 
     top.onmousedown = this.mouseDown
-    xOut.onmousedown = (ev) => ev.stopPropagation()
-    xOut.onclick = this.close
+
+    if (hasXOut) {
+      const xOut = $make('button')
+      xOut.innerHTML = '<pre>X</pre>'
+      top.appendChild(xOut)
+      xOut.onmousedown = (ev) => ev.stopPropagation()
+      xOut.onclick = this.close
+    }
 
     this.setPosition(x, y)
   }

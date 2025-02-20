@@ -8,6 +8,7 @@
   --bg-color: #0e0e0e;
   --color: whitesmoke;
   font-size: 16px;
+  --top: 999;
 }
 
 body {
@@ -86,14 +87,16 @@ pre {
   overflow-y: scroll;
 }
 
-.min-box {}
-
 .day {
   align-items: start;
 }
 
-.money {
+/* .money {
   color: var(--gold);
+} */
+
+.top {
+  z-index: var(--top);
 }
 
 #logs > .box-content {
@@ -119,7 +122,7 @@ pre {
 .TAN { color: #b58900 }
 
 /* made up */
-.BG { color: #0e0e0e }
+.BG { color: var(--bg-color) }
 .BROWN { color: #893203 }
 .GOLD { color: #d8df23 }
 
