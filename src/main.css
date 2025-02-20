@@ -19,6 +19,12 @@ body {
   overflow-x: hidden; */
 }
 
+main {
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+
 nav {
   display: flex;
   justify-content: space-between;
@@ -30,7 +36,7 @@ nav > div {
 }
 
 nav button {
-  padding: 0 2vh;
+  padding: 0 1em;
   height: 100%;
 }
 
@@ -47,12 +53,6 @@ button {
 
 button:hover {
   background-color: #555;
-}
-
-main {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
 }
 
 pre {
@@ -74,17 +74,36 @@ pre {
 }
 
 .box-title {
-	cursor: move;
-  text-align: center;
+  cursor: move;
   border-bottom: .125em solid var(--color);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+.box-title.center {
+  justify-content: center;
+}
+
 .box-content {
   border-top: none;
   overflow-y: scroll;
+}
+
+.alert-text {
+  margin: .5em 1em 1em 1em;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  height: 3em;
+  margin: 1em;
+}
+
+.button-row > button {
+  margin: 0 1em;
+  padding: 0 1em;
 }
 
 .day {

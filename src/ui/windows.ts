@@ -24,12 +24,10 @@ export class MovableWindow {
     this.element.appendChild(top)
     this.element.appendChild(this.content)
 
-    if (hasXOut) {
-      // left element used to balance out the right
-      const left = $make('pre')
-      left.innerText = ' '
-      top.appendChild(left)
-    }
+    // left element used to balance out the right
+    const left = $make('pre')
+    left.innerText = ' '
+    top.appendChild(left)
 
     top.appendChild(title)
     top.onmousedown = this.mouseDown
@@ -39,7 +37,11 @@ export class MovableWindow {
       xOut.innerHTML = '<pre>X</pre>'
       top.appendChild(xOut)
       xOut.onmousedown = (ev) => ev.stopPropagation()
-      xOut.onclick = this.close
+      xOut.onclick = this.close.bind(this)
+    } else {
+      const right = $make('pre')
+      right.innerText = ' '
+      top.appendChild(right)
     }
 
     this.setPosition(x, y)
@@ -71,11 +73,10 @@ export class MovableWindow {
     this.element.style.top = `${yy}px`
   }
 
-  close = () => {
+  close () {
     this.element.remove()
   }
 }
-
 
 export class WaresMenu {
   render = (wares:Inventory, prices:Inventory) => {
@@ -91,7 +92,10 @@ export class Alert extends MovableWindow {
 
     const text = $make('pre')
     text.innerText = textString
-    this.content.appendChild(text)
+    text.className = 'alert-text'
+
+    const buttonRow = $make('div')
+    buttonRow.className = 'button-row'
 
     options.forEach(({ text, cb }) => {
       const button = $make('button')
@@ -100,9 +104,16 @@ export class Alert extends MovableWindow {
 
       button.appendChild(pre)
 
-      button.onclick = cb
-      this.content.appendChild(button)
+      button.onclick = () => {
+        this.close()
+        cb()
+      }
+
+      buttonRow.appendChild(button)
     });
+
+    this.content.appendChild(text)
+    this.content.appendChild(buttonRow)
   }
 }
 

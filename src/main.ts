@@ -1,4 +1,4 @@
-import { Alert, LogList } from './ui/renderable'
+import { Alert, LogList } from './ui/windows'
 import { addToMain, makeWorldAscii } from './ui/ui'
 
 console.log('hi world')
@@ -31,7 +31,15 @@ const go = () => {
   // setting position here so the bounding client rect exists
   logs.setPosition(16384, 16384)
 
-  const alert = new Alert(40, 40, 'What are you going to do about this?', [{ text: 'Confirm', cb: () => console.log('yeaeaa') }, { text: 'Deny', cb: () => console.log('no')}]);
+  const alert = new Alert(
+    40,
+    40,
+    'What are you going to do about this?',
+    [
+      { text: 'Confirm', cb: () => console.log('yeaeaa') },
+      { text: 'Deny', cb: () => console.log('no')}
+    ]
+  );
   addToMain(alert)
 
   requestAnimationFrame(next)
