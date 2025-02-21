@@ -20,6 +20,7 @@ const next = (now:number) => {
   }
 
   $id('time-of-day').innerHTML = getTimeText(world.time)
+  $id('day-num').innerHTML = `Day ${world.day + 1}`
 
   if (Math.random() < 0.01) {
     logs.addLog(`here is a random log: ${Math.random()}`)
@@ -46,6 +47,7 @@ const go = () => {
     ]
   );
   addToMain(alert)
+  alert.alignToCenter()
 
   requestAnimationFrame(next)
 }

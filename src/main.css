@@ -116,6 +116,7 @@ pre {
 
 #day {
   align-items: start;
+  min-width: 8em;
 }
 
 #logs > .box-content {

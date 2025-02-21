@@ -54,7 +54,6 @@ export class MovableWindow {
   }
 
   mouseMove = (ev:MouseEvent) => {
-    // TODO: clamp on screen
     this.setPosition(ev.clientX - this.dragX, ev.clientY - this.dragY)
   }
 
@@ -70,6 +69,13 @@ export class MovableWindow {
 
     this.element.style.left = `${xx}px`
     this.element.style.top = `${yy}px`
+  }
+
+  alignToCenter = () => {
+    this.setPosition(
+      (window.innerWidth - this.element.getBoundingClientRect().width) / 2,
+      (window.innerHeight - this.element.getBoundingClientRect().height) / 2
+    )
   }
 
   close () {
