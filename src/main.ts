@@ -1,5 +1,7 @@
 import { Alert, LogList } from './ui/windows'
-import { addToMain, makeWorldAscii } from './ui/ui'
+import { $id, addToMain, makeWorldAscii } from './ui/ui'
+import { world } from './world/world'
+import { getTimeText } from './util/text-display'
 
 console.log('hi world')
 
@@ -10,11 +12,14 @@ let time = 0
 const next = (now:number) => {
   if (now - time > 100) {
     // doUpdate();
+    world.step()
 
     // for the overflow
-    // TODO: calculate
+    // TODO: calculate in a more agnostic way
     time = now + (now - time) - 100
   }
+
+  $id('time-of-day').innerHTML = getTimeText(world.time)
 
   if (Math.random() < 0.01) {
     logs.addLog(`here is a random log: ${Math.random()}`)

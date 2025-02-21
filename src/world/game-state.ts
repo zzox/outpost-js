@@ -1,9 +1,4 @@
-enum ItemType {
-  Rope = 'rope',
-  Wood = 'wood',
-}
-
-export type Inventory = Map<ItemType, number>;
+import { ItemType, Inventory } from '../data/items'
 
 const startingWares = new Map()
 startingWares.set(ItemType.Rope, 100)
@@ -19,13 +14,9 @@ class GameState {
     this.wares = startingWares
   }
 
-  buyItem (item:ItemType, amount:number, totalPrice:number) {
+  buyItem (item:ItemType, amount:number, totalPrice:number) {}
 
-  }
-
-  sellItem (item:ItemType, amount:number, totalPrice:number) {
-    
-  }
+  sellItem (item:ItemType, amount:number, totalPrice:number) {}
 }
 
 export const state = new GameState()

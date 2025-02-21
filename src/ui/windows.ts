@@ -1,5 +1,4 @@
 import { clamp } from '../util/util'
-import type { Inventory } from '../world/game-state'
 import { $make } from './ui'
 
 export class MovableWindow {
@@ -78,11 +77,11 @@ export class MovableWindow {
   }
 }
 
-export class WaresMenu {
-  render = (wares:Inventory, prices:Inventory) => {
-    // go through list, rows of prees
-  }
-}
+// export class WaresMenu {
+//   render = (wares:Inventory, prices:Inventory) => {
+//     // go through list, rows of prees
+//   }
+// }
 
 export class Alert extends MovableWindow {
   constructor (x:number, y:number, textString:string, options:{ text: string, cb: () => void }[] ) {

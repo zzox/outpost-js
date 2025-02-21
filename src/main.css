@@ -70,7 +70,7 @@ pre {
 .box > * {
   padding: .5em;
   margin: 0;
-  background-color: black;
+  background-color: var(--bg-color);
 }
 
 .box-title {
@@ -106,16 +106,16 @@ pre {
   padding: 0 1em;
 }
 
-.day {
-  align-items: start;
-}
-
 /* .money {
   color: var(--gold);
 } */
 
 .top {
   z-index: var(--top);
+}
+
+#day {
+  align-items: start;
 }
 
 #logs > .box-content {
