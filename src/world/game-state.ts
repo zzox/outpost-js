@@ -4,7 +4,7 @@ const startingWares = new Map()
 startingWares.set(ItemType.Rope, 100)
 startingWares.set(ItemType.Wood, 50)
 
-class GameState {
+export class GameState {
   money:number
 
   wares:Inventory
@@ -18,5 +18,3 @@ class GameState {
 
   sellItem (item:ItemType, amount:number, totalPrice:number) {}
 }
-
-export const state = new GameState()

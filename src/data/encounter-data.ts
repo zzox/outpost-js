@@ -1,3 +1,6 @@
+import { Actor } from '../world/actor'
+import { ItemType } from './items'
+
 export enum EncounterType {
   Buy = 'Buy',
   Sell = 'Sell',
@@ -8,8 +11,8 @@ export enum EncounterType {
 
 export type EncounterData = {
   type:EncounterType
-  // actor:Actor
-  // item:ItemType
-  amount?:number
-  price?:number
+  actor:Actor
+  item:ItemType
+  amount:number
+  price:number
 }

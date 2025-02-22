@@ -1,6 +1,8 @@
 export enum ItemType {
-  Rope = 'rope',
-  Wood = 'wood',
+  Rope = 'Rope',
+  Wood = 'Wood',
+  SmallPotion = 'Small Potion',
+  LargePotion = 'Large Potion',
 }
 
 export type Inventory = Map<ItemType, number>;

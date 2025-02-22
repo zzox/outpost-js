@@ -1,4 +1,8 @@
+import { getName } from '../data/actor-data';
 import { EncounterData, EncounterType } from '../data/encounter-data';
+import { ItemType } from '../data/items';
+import { randomInt } from '../util/util';
+import { Actor } from './actor';
 
 export class World {
   time:number = 0
@@ -21,7 +25,16 @@ export class World {
     }
 
     if (--this.spawnTime === 0) {
-      this.onEncounter({ type: EncounterType.Sell });
+      // TODO: separate spawning an actor and an actor encounter
+      const actor = new Actor(getName())
+      const amount = randomInt(5)
+      this.onEncounter({
+        type: EncounterType.Buy,
+        actor,
+        amount,
+        price: amount * 5,
+        item: Math.random() < 0.5 ? ItemType.Wood : ItemType.SmallPotion
+      });
       this.spawnTime = 10
     }
 
