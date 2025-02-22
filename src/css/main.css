@@ -59,6 +59,7 @@ pre {
   /* font-family: "linux libertine", monospace; */
   line-height: 1em;
   margin: 0;
+  user-select: none;
 }
 
 .box {
@@ -131,6 +132,7 @@ pre {
 /* colors */
 /* from solarized */
 .WHITE { color: #fdf6e3 }
+.WHITESMOKE { color: whitesmoke } /* #f5f5f5 */
 .OFFWHITE { color: #eee8d5 }
 .GREEN { color: #859900 }
 .GREY { color: #93a1a1 }
@@ -148,3 +150,4 @@ pre {
 
 /* Not yet used made up colors */
 .DARK_GREEN { color: #587558 }
+

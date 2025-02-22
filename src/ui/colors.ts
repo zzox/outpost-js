@@ -1,6 +1,7 @@
 enum Colors {
   // from solarized
   WHITE = 0xfdf6e3,
+  WHITESMOKE = 0xf5f5f5,
   OFFWHITE = 0xeee8d5,
   GREEN = 0x859900,
   GREY = 0x93a1a1,
@@ -23,6 +24,7 @@ enum Colors {
 // needed?
 const paletteColors = [
   Colors.WHITE,
+  Colors.WHITESMOKE,
   Colors.OFFWHITE,
   Colors.GREEN,
   Colors.GREY,
@@ -44,6 +46,7 @@ const paletteColors = [
 
 export const cssColors = [
   'WHITE',
+  'WHITESMOKE',
   'OFFWHITE',
   'GREEN',
   'GREY',

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:editor": "vite serve src/editor/",
     "build": "tsc --noEmit && bun build ./index.html --outdir dist"
   },
   "devDependencies": {
