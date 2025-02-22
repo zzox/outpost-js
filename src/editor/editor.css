@@ -19,17 +19,34 @@ pre {
   line-height: 1em;
   margin: 0;
   user-select: none;
-  letter-spacing: .2em;
+  /* letter-spacing: .2em; */
+  /* font-stretch: semi-expanded; */
+  /* transform: scale(1.2, 1.0); */
 }
 
 #left {
-  flex-grow: 1;
+  width: 33%;
   display: flex;
   flex-direction: column;
 }
 
 #right {
   flex-grow: 2;
+}
+
+#symbol-buttons {
+  color: whitesmoke;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.symbol:hover {
+  background-color: #586e75;
+}
+
+.symbol-selected {
+  background-color: #cb4b16;
 }
 
 .item:hover {
@@ -40,6 +57,11 @@ pre {
   border-color: whitesmoke;
   background-color: #0e0e0e;
   height: 2em;
+}
+
+.flex-down {
+  display: flex;
+  flex-direction: column;
 }
 
 /* colors */

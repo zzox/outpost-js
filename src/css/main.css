@@ -59,7 +59,7 @@ pre {
   /* font-family: "linux libertine", monospace; */
   line-height: 1em;
   margin: 0;
-  user-select: none;
+  /* user-select: none; */
 }
 
 .box {
