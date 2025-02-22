@@ -1,7 +1,17 @@
+import { EncounterData, EncounterType } from '../data/encounter-data';
 
-class World {
+export class World {
   time:number = 0
   day:number = 0
+
+  // TEMP:
+  spawnTime:number = 10
+
+  onEncounter:(d:EncounterData) => void
+
+  constructor (onEncounter:(d:EncounterData) => void) {
+    this.onEncounter = onEncounter
+  }
 
   step () {
     this.time++;
@@ -10,12 +20,11 @@ class World {
       this.day++;
     }
 
-    // if (--spawnTime == 0) {
-    //   spawnActor();
-    // }
+    if (--this.spawnTime === 0) {
+      this.onEncounter({ type: EncounterType.Sell });
+      this.spawnTime = 10
+    }
 
     // tiles.update();
   }
 }
-
-export const world:World = new World()
