@@ -45,6 +45,9 @@ const paletteColors = [
 ];
 
 export const cssColors = [
+  // made up
+  'BG',
+
   'WHITE',
   'WHITESMOKE',
   'OFFWHITE',
@@ -58,7 +61,6 @@ export const cssColors = [
   'TAN',
 
   // made up
-  'BG',
   'BROWN',
   'GOLD',
 
