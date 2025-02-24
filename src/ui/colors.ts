@@ -42,7 +42,7 @@ const paletteColors = [
 
   // Not yet used colors
   Colors.DARK_GREEN,
-];
+]
 
 export const cssColors = [
   // made up
@@ -66,4 +66,4 @@ export const cssColors = [
 
   // Not yet used colors
   'DARK_GREEN',
-];
+]

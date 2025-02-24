@@ -38,5 +38,5 @@ export const makeWorldAscii = () => {
     html += '\n'
   }
 
-  $id('main').innerHTML = html;
+  $id('main').innerHTML = html
 }

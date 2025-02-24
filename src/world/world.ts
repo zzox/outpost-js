@@ -1,8 +1,8 @@
-import { getName } from '../data/actor-data';
-import { EncounterData, EncounterType } from '../data/encounter-data';
-import { ItemType } from '../data/items';
-import { randomInt } from '../util/util';
-import { Actor } from './actor';
+import { getName } from '../data/actor-data'
+import { EncounterData, EncounterType } from '../data/encounter-data'
+import { ItemType } from '../data/items'
+import { randomInt } from '../util/util'
+import { Actor } from './actor'
 
 export class World {
   time:number = 0
@@ -18,10 +18,10 @@ export class World {
   }
 
   step () {
-    this.time++;
+    this.time++
     if (this.time == 360) {
-      this.time = 0;
-      this.day++;
+      this.time = 0
+      this.day++
     }
 
     if (--this.spawnTime === 0) {
@@ -34,10 +34,10 @@ export class World {
         amount,
         price: amount * 5,
         item: Math.random() < 0.5 ? ItemType.Wood : ItemType.SmallPotion
-      });
+      })
       this.spawnTime = 10
     }
 
-    // tiles.update();
+    // tiles.update()
   }
 }

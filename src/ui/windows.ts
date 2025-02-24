@@ -115,7 +115,7 @@ export class Alert extends MovableWindow {
       }
 
       buttonRow.appendChild(button)
-    });
+    })
 
     this.content.appendChild(text)
     this.content.appendChild(buttonRow)

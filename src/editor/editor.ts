@@ -40,13 +40,13 @@ const save = () => {
     Array.from(pre.children).map(item =>
       symbols.indexOf(item.innerHTML)
     )
-  );
+  )
 
   const fileColors = Array.from(document.querySelectorAll('#right > pre')).map(pre =>
     Array.from(pre.children).map(item =>
       cssColors.indexOf(item.className.split(' ')[1]) === -1 ? 0 : cssColors.indexOf(item.className.split(' ')[1])
     )
-  );
+  )
 
   console.log(JSON.stringify(fileItems))
   console.log(JSON.stringify(fileColors))
@@ -58,7 +58,7 @@ const load = (fileItems:number[][], fileColors:number[][]) => {
       item.innerText = symbols[fileItems[y][x]]
       item.classList.add(cssColors[fileColors[y][x]])
     })
-  });
+  })
 }
 
 const go = () => {
