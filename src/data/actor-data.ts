@@ -1,6 +1,61 @@
+import { getWeightedRandom, intClamp, randomInt } from '../util/util'
+import { Actor } from '../world/actor'
+import { Inventory, TargetType } from './items'
+
 let id = 0
 
-export const getName = () => {
+export const generateActor = ():Actor => {
+  const actorLevel = 3 + randomInt(5);
+
+  const actor = new Actor(
+    id++,
+    actorLevel,
+    randomInt(50 * actorLevel),
+    intClamp(100 - randomInt(1000), 0, 100),
+    intClamp(100 - randomInt(1000), 0, 100),
+    intClamp(100 - randomInt(200), 0, 100)
+  )
+
+  actor.target = generateActorTarget(actor.level)
+  return actor;
+}
+
+const generateActorTarget = (level:number):TargetType => {
+  const weights = [
+    { item: TargetType.Wood, weight: 1 },
+    { item: TargetType.Rope, weight: 1 },
+    { item: TargetType.Weapon, weight: 1 },
+    { item: TargetType.Health, weight: 3 },
+  ]
+
+  return getWeightedRandom(weights)
+}
+
+// const generateInventory = (level:number) => {
+//   const inventory:Inventory = new Map<ItemType, Int>();
+
+//   var maxItems = 1 + randomInt(4);
+//   for (item in itemData.keys()) {
+//     if (maxItems <= 0) {
+//       break;
+//     }
+
+//     // // NOTE: reverse engineering inventory from what the character is looking for
+//     // if (targetItems.get(target).contains(item)) {
+//     //   continue;
+//     // }
+//     // dont get data from the actors
+
+//     final num = randomInt(getInvItems(item, level));
+//     if (num > 0) {
+//       inventory.set(item, num);
+//       maxItems--;
+//     }
+//   }
+//   return inventory;
+// }
+
+export const generateName = () => {
   return names[id++]
 }
 

@@ -1,15 +1,17 @@
-import { getName } from '../data/actor-data'
+import { generateActor } from '../data/actor-data'
 import { EncounterData, EncounterType } from '../data/encounter-data'
 import { ItemType } from '../data/items'
 import { randomInt } from '../util/util'
-import { Actor } from './actor'
+
+// TEMP:
+const SPAWN_TIME = 1
 
 export class World {
   time:number = 0
   day:number = 0
 
   // TEMP:
-  spawnTime:number = 10
+  spawnTime:number = SPAWN_TIME
 
   onEncounter:(d:EncounterData) => void
 
@@ -26,18 +28,25 @@ export class World {
 
     if (--this.spawnTime === 0) {
       // TODO: separate spawning an actor and an actor encounter
-      const actor = new Actor(getName())
-      const amount = randomInt(5)
-      this.onEncounter({
-        type: EncounterType.Buy,
-        actor,
-        amount,
-        price: amount * 5,
-        item: Math.random() < 0.5 ? ItemType.Wood : ItemType.SmallPotion
-      })
-      this.spawnTime = 10
+      this.spawnAction()
     }
 
     // tiles.update()
+  }
+
+  spawnAction () {
+    const actor = generateActor()
+    const amount = randomInt(5)
+
+    console.log(actor.target)
+
+    this.onEncounter({
+      type: EncounterType.Buy,
+      actor,
+      amount,
+      price: amount * 5,
+      item: Math.random() < 0.5 ? ItemType.Wood : ItemType.SmallPotion
+    })
+    this.spawnTime = SPAWN_TIME
   }
 }

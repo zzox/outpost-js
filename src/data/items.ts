@@ -5,6 +5,13 @@ export enum ItemType {
   LargePotion = 'Large Potion',
 }
 
+export enum TargetType {
+  Wood = 'Wood',
+  Rope = 'Rope',
+  Weapon = 'Weapon',
+  Health = 'Health'
+}
+
 export type Inventory = Map<ItemType, number>
 
 export const removeFromInventory = (inv:Inventory, item:ItemType, amount:number) => {

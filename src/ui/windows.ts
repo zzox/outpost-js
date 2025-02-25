@@ -123,7 +123,7 @@ export class Alert extends MovableWindow {
 }
 
 export class LogList extends MovableWindow {
-  logs: string[]
+  static logs: string[]
 
   preEl: HTMLPreElement
 
@@ -135,15 +135,15 @@ export class LogList extends MovableWindow {
     this.content.appendChild(this.preEl)
     // this.content.classList.add('min-box')
 
-    this.logs = (new Array(100)).map(_ => '')
+    LogList.logs = (new Array(100)).map(_ => '')
   }
 
   render = () => {
-    this.preEl.innerText = this.logs.join('\n')
+    this.preEl.innerText = LogList.logs.join('\n')
   }
 
   addLog = (log:string) => {
-    this.logs.pop()
-    this.logs.unshift(log)
+    LogList.logs.pop()
+    LogList.logs.unshift(log)
   }
 }
