@@ -14,9 +14,6 @@ export const getWeightedRandom = <T>(items:RandomWeight<T>[]):T => {
   const total = items.reduce((tot, item) => tot + item.weight, 0)
 
   let value = randomInt(total)
-
-  console.log(value, total, items)
-
   while (true) {
     const item = items.shift()
     if (item === undefined) {

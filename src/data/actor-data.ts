@@ -1,6 +1,6 @@
 import { getWeightedRandom, intClamp, randomInt } from '../util/util'
 import { Actor } from '../world/actor'
-import { Inventory, TargetType } from './items'
+import { Inventory, itemData, ItemType } from './items'
 
 let id = 0
 
@@ -20,14 +20,11 @@ export const generateActor = ():Actor => {
   return actor;
 }
 
-// TODO: type TargetItemType = TargetType | ItemType
-const generateActorTarget = (level:number):TargetType => {
-  const weights = [
-    { item: TargetType.Wood, weight: 1 },
-    { item: TargetType.Rope, weight: 1 },
-    { item: TargetType.Weapon, weight: 1 },
-    { item: TargetType.Health, weight: 7 },
-  ]
+const generateActorTarget = (level:number):ItemType => {
+  const weights = []
+  for (let item of itemData.entries()) {
+    weights.push({ item: item[0], weight: item[1].common })
+  }
 
   return getWeightedRandom(weights)
 }

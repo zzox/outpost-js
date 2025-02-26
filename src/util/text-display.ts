@@ -20,3 +20,8 @@ export const encounterLog = (data:EncounterData, result:boolean):string => {
 
   throw 'Undefined encounter'
 }
+
+export const encounterText = (data:EncounterData):string => {
+  const plural = data.amount && data.amount > 1 ? 's' : ''
+  return `Do you want to sell ${data.amount} ${data.item}${plural} to ${data.actor.name}?`
+}

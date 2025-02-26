@@ -1,5 +1,5 @@
 import { generateName } from '../data/actor-data'
-import { Inventory, ItemType, TargetType } from '../data/items'
+import { Inventory, ItemType } from '../data/items'
 
 export class Actor {
   id:number
@@ -13,7 +13,7 @@ export class Actor {
 
   inventory:Inventory
 
-  target!: TargetType | ItemType
+  target!: ItemType
 
   constructor (id:number, level:number, money:number, leeway:number, cheapness:number, zealous:number) {
     this.id = id;

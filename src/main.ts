@@ -1,7 +1,7 @@
 import { Alert, LogList } from './ui/windows'
 import { $id, addToMain, makeWorldAscii } from './ui/ui'
 import { World } from './world/world'
-import { encounterLog, getTimeText } from './util/text-display'
+import { encounterLog, encounterText, getTimeText } from './util/text-display'
 import { EncounterData } from './data/encounter-data'
 import { GameState } from './world/game-state'
 
@@ -14,7 +14,7 @@ let alert: Alert | undefined
 let time = 0
 
 const handleEncounter = (data:EncounterData) => {
-  alert = new Alert(0, 0, 'Do you want to sell a potion?', [
+  alert = new Alert(0, 0, encounterText(data), [
     { text: 'Sell', cb: () => {
       alert = undefined
       logs.addLog(encounterLog(data, true))

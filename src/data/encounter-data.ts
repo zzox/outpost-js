@@ -4,9 +4,9 @@ import { ItemType } from './items'
 export enum EncounterType {
   Buy = 'Buy',
   Sell = 'Sell',
-  // Service;
-  // Robbery;
-  // Stickup;
+  // Service
+  // Robbery
+  // Stickup
 }
 
 export type EncounterData = {
