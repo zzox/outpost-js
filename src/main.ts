@@ -59,7 +59,7 @@ const next = (now:number) => {
 const go = () => {
   makeWorldAscii()
   state = new GameState()
-  world = new World(handleEncounter)
+  world = new World(state, handleEncounter)
   logs = new LogList(0, 0)
   addToMain(logs)
   // setting position here so the bounding client rect exists

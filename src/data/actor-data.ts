@@ -20,12 +20,13 @@ export const generateActor = ():Actor => {
   return actor;
 }
 
+// TODO: type TargetItemType = TargetType | ItemType
 const generateActorTarget = (level:number):TargetType => {
   const weights = [
     { item: TargetType.Wood, weight: 1 },
     { item: TargetType.Rope, weight: 1 },
     { item: TargetType.Weapon, weight: 1 },
-    { item: TargetType.Health, weight: 3 },
+    { item: TargetType.Health, weight: 7 },
   ]
 
   return getWeightedRandom(weights)
