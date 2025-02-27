@@ -2,7 +2,7 @@ import { Alert, LogList } from './ui/windows'
 import { $id, addToMain, makeWorldAscii } from './ui/ui'
 import { World } from './world/world'
 import { encounterLog, encounterText, getTimeText } from './util/text-display'
-import { EncounterData } from './data/encounter-data'
+import { EncounterData, EncounterResData } from './data/encounter-data'
 import { GameState } from './world/game-state'
 
 let world: World
@@ -17,15 +17,19 @@ const handleEncounter = (data:EncounterData) => {
   alert = new Alert(0, 0, encounterText(data), [
     { text: 'Sell', cb: () => {
       alert = undefined
-      logs.addLog(encounterLog(data, true))
+      world.doEncounter(true)
     } },
     { text: 'Deny', cb: () => {
       alert = undefined
-      logs.addLog(encounterLog(data, false))
+      world.doEncounter(false)
     } },
   ])
   addToMain(alert)
   alert.alignToCenter()
+}
+
+const handleEncounterRes = (data:EncounterResData) => {
+  logs.addLog(encounterLog(data))
 }
 
 const update = () => {
@@ -59,7 +63,7 @@ const next = (now:number) => {
 const go = () => {
   makeWorldAscii()
   state = new GameState()
-  world = new World(state, handleEncounter)
+  world = new World(state, handleEncounter, handleEncounterRes)
   logs = new LogList(0, 0)
   addToMain(logs)
   // setting position here so the bounding client rect exists

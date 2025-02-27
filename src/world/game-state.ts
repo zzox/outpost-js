@@ -3,6 +3,7 @@ import { ItemType, Inventory } from '../data/items'
 const startingWares = new Map()
 startingWares.set(ItemType.Rope, 100)
 startingWares.set(ItemType.Wood, 50)
+startingWares.set(ItemType.Potion, 10)
 
 export class GameState {
   money:number

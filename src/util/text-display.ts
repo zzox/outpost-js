@@ -1,4 +1,4 @@
-import { EncounterData, EncounterType } from '../data/encounter-data'
+import { EncounterData, EncounterResData, EncounterResType, EncounterType } from '../data/encounter-data'
 
 export const getTimeText = (time:number):string => {
   if (time < 120) {
@@ -10,12 +10,18 @@ export const getTimeText = (time:number):string => {
   }
 }
 
-export const encounterLog = (data:EncounterData, result:boolean):string => {
-  const plural = data.amount && data.amount > 1 ? 's' : ''
-  if (data.type === EncounterType.Buy) {
-    return `You ${result ? 'sold' : 'did not sell'} ${data.amount} ${data.item}${plural} to ${data.actor.name}`
-  } else if (data.type === EncounterType.Sell) {
-    return `You ${result ? 'bought' : 'did not buy'} ${data.amount} ${data.item}${plural} from ${data.actor.name}`
+export const encounterLog = ({ encounter, type }:EncounterResData):string => {
+  const plural = encounter.amount && encounter.amount > 1 ? 's' : ''
+  if (type === EncounterResType.Sold) {
+    return `You sold ${encounter.amount} ${encounter.item}${plural} to ${encounter.actor.name}`
+  } else if (type === EncounterResType.DenySold) {
+    return `You denied selling ${encounter.amount} ${encounter.item}${plural} to ${encounter.actor.name}`
+  } else if (type === EncounterResType.DontHave) {
+    return `You didnt have any ${encounter.item} for ${encounter.actor.name}`
+  } else if (type === EncounterResType.TooExpensive) {
+    return `Your ${encounter.item} prices are too expensive for ${encounter.actor.name}`
+  } else if (type === EncounterResType.CantAfford) {
+    return `${encounter.actor.name} cannot afford your ${encounter.item}s`
   }
 
   throw 'Undefined encounter'
@@ -23,5 +29,5 @@ export const encounterLog = (data:EncounterData, result:boolean):string => {
 
 export const encounterText = (data:EncounterData):string => {
   const plural = data.amount && data.amount > 1 ? 's' : ''
-  return `Do you want to sell ${data.amount} ${data.item}${plural} to ${data.actor.name}?`
+  return `Do you want to sell ${data.amount} ${data.item}${plural} to ${data.actor.name} for $${data.price}?`
 }

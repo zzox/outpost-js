@@ -1,5 +1,6 @@
 import { generateActor } from '../data/actor-data'
-import { EncounterData, EncounterType } from '../data/encounter-data'
+import { EncounterData, EncounterResData, EncounterResType, EncounterType } from '../data/encounter-data'
+import { getNumFromInventory, getScale, itemData } from '../data/items'
 import { randomInt } from '../util/util'
 import { GameState } from './game-state'
 
@@ -7,17 +8,27 @@ import { GameState } from './game-state'
 const SPAWN_TIME = 1
 
 export class World {
-  state: GameState
+  state:GameState
   time:number = 0
   day:number = 0
 
   // TEMP:
   spawnTime:number = SPAWN_TIME
 
-  onEncounter:(d:EncounterData) => void
+  currentEncounter?:EncounterData
 
-  constructor (state:GameState, onEncounter:(d:EncounterData) => void) {
+  // callback denoting an encounter starting
+  onEncounter:(d:EncounterData) => void
+  // callback on an encounter resolving
+  onEncounterRes:(d:EncounterResData) => void
+
+  constructor (
+    state:GameState,
+    onEncounter:(d:EncounterData) => void,
+    onEncounterRes:(d:EncounterResData) => void
+  ) {
     this.onEncounter = onEncounter
+    this.onEncounterRes = onEncounterRes
     this.state = state
   }
 
@@ -29,7 +40,7 @@ export class World {
     }
 
     if (--this.spawnTime === 0) {
-      // TODO: separate spawning an actor and an actor encounter
+    // TODO: separate spawning an actor and an actor encounter
       this.spawnAction()
     }
 
@@ -37,8 +48,18 @@ export class World {
   }
 
   spawnAction () {
+    this.spawnTime = SPAWN_TIME
+
     const actor = generateActor()
-    const amount = randomInt(5)
+
+    const encounter = {
+      type: EncounterType.Buy,
+      actor,
+      amount: 0,
+      // TEMP:
+      price: 0,
+      item: actor.target
+    }
 
     console.log(actor.target)
 
@@ -70,13 +91,54 @@ export class World {
     // }
     /* chunk end */
 
-    this.onEncounter({
-      type: EncounterType.Buy,
-      actor,
-      amount,
-      price: amount * 5,
-      item: actor.target
-    })
-    this.spawnTime = SPAWN_TIME
+    const data = itemData.get(actor.target)
+    if (!data) {
+      throw 'Cannot find item'
+    }
+
+    // TODO: random num between half scale and scale
+    const amountWanted = getScale(actor.target, actor.level)
+
+    const items = getNumFromInventory(this.state.wares, actor.target)
+    if (items === 0) {
+      this.onEncounterRes({ type: EncounterResType.DontHave, encounter })
+      return
+    }
+
+    // if too expensive per item, do a tooexpensive event
+    // skipping while wares prices doesnt exist ^^^
+
+    // if they can afford them, buy
+    // if they can afford some, buy those
+    // otherwise do a cantafford event
+
+    // TODO: get price from other factors
+    const totalPrice = data.price * amountWanted
+    if (totalPrice > actor.money) {
+      this.onEncounterRes({ type: EncounterResType.CantAfford, encounter })
+      return
+    }
+
+    const amount = amountWanted
+
+    encounter.amount = amount
+    encounter.price = amount * data.price
+
+    this.currentEncounter = encounter
+
+    this.onEncounter(this.currentEncounter)
+  }
+
+  doEncounter (result:boolean) {
+    if (!this.currentEncounter) {
+      throw 'No encounter exists'
+    }
+
+    if (this.currentEncounter.type === EncounterType.Buy) {
+      this.onEncounterRes({ type: result ? EncounterResType.Sold : EncounterResType.DenySold, encounter: this.currentEncounter })
+      this.currentEncounter = undefined
+    } else {
+      throw 'Not Implemented'
+    }
   }
 }
