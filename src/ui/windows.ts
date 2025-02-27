@@ -1,3 +1,4 @@
+import { ItemType } from '../data/items'
 import { clamp } from '../util/util'
 import { $make } from './ui'
 
@@ -145,5 +146,24 @@ export class LogList extends MovableWindow {
   addLog = (log:string) => {
     LogList.logs.pop()
     LogList.logs.unshift(log)
+  }
+}
+
+export class WaresMenu extends MovableWindow {
+
+  onSetPrice:(t:ItemType, price?:number) => void
+
+  constructor (x:number, y:number, onSetPrice:(t:ItemType, price?:number) => void) {
+    super(x, y, 'Wares', true, 'wares')
+
+    this.onSetPrice = onSetPrice
+  }
+
+  render = () => {
+
+  }
+
+  addPrice = () => {
+
   }
 }

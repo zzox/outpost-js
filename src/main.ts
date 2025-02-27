@@ -1,15 +1,17 @@
-import { Alert, LogList } from './ui/windows'
-import { $id, addToMain, makeWorldAscii } from './ui/ui'
+import { Alert, LogList, WaresMenu } from './ui/windows'
+import { $id, addToMain, hideWindow, makeWorldAscii } from './ui/ui'
 import { World } from './world/world'
 import { encounterLog, encounterText, getTimeText } from './util/text-display'
 import { EncounterData, EncounterResData } from './data/encounter-data'
 import { GameState } from './world/game-state'
+import { ItemType } from './data/items'
 
 let world: World
 let state: GameState
 
 let logs: LogList
 let alert: Alert | undefined
+let waresMenu:WaresMenu
 
 let time = 0
 
@@ -30,7 +32,10 @@ const handleEncounter = (data:EncounterData) => {
 
 const handleEncounterRes = (data:EncounterResData) => {
   logs.addLog(encounterLog(data))
+  logs.render()
 }
+
+const onSetPrice = (type:ItemType, price?:number) => {}
 
 const update = () => {
   // HACK: if alert is visible, dont step the world
@@ -40,7 +45,7 @@ const update = () => {
 }
 
 const draw = () => {
-  logs.render()
+  // logs.render()
 }
 
 const next = (now:number) => {
@@ -60,13 +65,25 @@ const next = (now:number) => {
   requestAnimationFrame(next)
 }
 
+const createMainListeners = () => {
+
+}
+
 const go = () => {
-  makeWorldAscii()
   state = new GameState()
   world = new World(state, handleEncounter, handleEncounterRes)
+
   logs = new LogList(0, 0)
+  waresMenu = new WaresMenu(0, 200, onSetPrice)
+
+  makeWorldAscii()
+
   addToMain(logs)
-  // setting position here so the bounding client rect exists
+  addToMain(waresMenu)
+
+  hideWindow(waresMenu)
+
+  // setting position here so the bounding client rect exists once added
   logs.setPosition(16384, 16384)
 
   requestAnimationFrame(next)

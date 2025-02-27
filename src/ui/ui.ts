@@ -13,6 +13,14 @@ export const addToMain = (win:MovableWindow) => {
   $q('main').appendChild(win.element)
 }
 
+export const hideWindow = (win:MovableWindow) => {
+  win.element.classList.add('display-none')
+}
+
+export const showWindow = (win:MovableWindow) => {
+  win.element.classList.remove('display-none')
+}
+
 type GridItem = {
   r:string
 }
