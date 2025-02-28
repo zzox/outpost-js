@@ -83,6 +83,10 @@ const go = () => {
 
   hideWindow(waresMenu)
 
+  for (let items of state.wares.entries()) {
+    waresMenu.addItem(items[0], items[1], 20)
+  }
+
   // setting position here so the bounding client rect exists once added
   logs.setPosition(16384, 16384)
 

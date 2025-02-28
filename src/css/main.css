@@ -129,6 +129,10 @@ pre {
   white-space: pre-wrap;
 }
 
+.wares-row {
+  display: flex;
+}
+
 /* colors */
 /* from solarized */
 .WHITE { color: #fdf6e3 }

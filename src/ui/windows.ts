@@ -150,6 +150,7 @@ export class LogList extends MovableWindow {
 }
 
 export class WaresMenu extends MovableWindow {
+  priceLines:{ item: ItemType, el: HTMLSpanElement }[] = []
 
   onSetPrice:(t:ItemType, price?:number) => void
 
@@ -163,7 +164,30 @@ export class WaresMenu extends MovableWindow {
 
   }
 
-  addPrice = () => {
+  addItem = (item:ItemType, amount:number, price:number) => {
+    const fullEl = $make('div')
+    const nameEl = $make('pre')
+    const amountEl = $make('pre')
+    const div1 = $make('pre')
+    const div2 = $make('pre')
 
+    fullEl.className = 'wares-row'
+    div1.innerText = '|'
+    div2.innerText = '|'
+
+    nameEl.innerText = item.padEnd(20, ' ')
+
+    // setAmount
+    // PERF:
+    amountEl.innerText = `x${amount}`.padStart(7, ' ')
+
+    fullEl.appendChild(nameEl)
+    fullEl.appendChild(div1)
+    fullEl.appendChild(amountEl)
+    fullEl.appendChild(div2)
+
+    this.priceLines.push({ item, el: fullEl })
+
+    this.content.appendChild(fullEl)
   }
 }
