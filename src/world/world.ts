@@ -5,7 +5,7 @@ import { randomInt } from '../util/util'
 import { GameState } from './game-state'
 
 // TEMP:
-const SPAWN_TIME = 1
+const SPAWN_TIME = 10
 
 export class World {
   state:GameState
@@ -100,7 +100,7 @@ export class World {
     const amountWanted = getScale(actor.target, actor.level)
 
     const items = getNumFromInventory(this.state.wares, actor.target)
-    if (items === 0) {
+    if (items === 0 || items < amountWanted) {
       this.onEncounterRes({ type: EncounterResType.DontHave, encounter })
       return
     }
@@ -124,8 +124,13 @@ export class World {
     encounter.amount = amount
     encounter.price = amount * data.price
 
-    this.currentEncounter = encounter
+    // TEMP: force a result if prices exist
+    if (getNumFromInventory(this.state.prices, actor.target)) {
+      this.onEncounterRes({ type: EncounterResType.Sold, encounter })
+      return
+    }
 
+    this.currentEncounter = encounter
     this.onEncounter(this.currentEncounter)
   }
 

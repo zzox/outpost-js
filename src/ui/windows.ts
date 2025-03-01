@@ -144,7 +144,7 @@ export class LogList extends MovableWindow {
 }
 
 export class WaresMenu extends MovableWindow {
-  priceLines:{ item: ItemType, el: HTMLSpanElement }[] = []
+  priceLines:Map<ItemType, HTMLSpanElement> = new Map
 
   onSetPrice:(t:ItemType, price?:number) => void
 
@@ -165,6 +165,7 @@ export class WaresMenu extends MovableWindow {
     fullEl.className = 'wares-row'
     nameEl.innerText = item.padEnd(20, ' ')
     numInput.value = price.toString()
+    amountEl.id = 'amount'
 
     // setAmount
     // PERF:
@@ -185,12 +186,16 @@ export class WaresMenu extends MovableWindow {
       }
     }
 
-    if (this.priceLines.length) {
+    if (this.priceLines.size) {
       this.content.appendChild($make('hr'))
     }
 
-    this.priceLines.push({ item, el: fullEl })
-    numInput.tabIndex = this.priceLines.length
+    this.priceLines.set(item, fullEl)
+    numInput.tabIndex = this.priceLines.size
     this.content.appendChild(fullEl)
+  }
+
+  updateItem = (item:ItemType, amount:number) => {
+    (this.priceLines.get(item)?.querySelector('#amount') as HTMLPreElement).innerText = `x${amount} `.padStart(7, ' ')
   }
 }

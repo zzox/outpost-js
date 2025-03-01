@@ -2,9 +2,9 @@ import { Alert, LogList, WaresMenu } from './ui/windows'
 import { $id, addToMain, hideWindow, makeWorldAscii } from './ui/ui'
 import { World } from './world/world'
 import { encounterLog, encounterText, getTimeText } from './util/text-display'
-import { EncounterData, EncounterResData } from './data/encounter-data'
+import { EncounterData, EncounterResData, EncounterResType } from './data/encounter-data'
 import { GameState } from './world/game-state'
-import { ItemType } from './data/items'
+import { getNumFromInventory, ItemType } from './data/items'
 
 let world: World
 let state: GameState
@@ -31,6 +31,23 @@ const handleEncounter = (data:EncounterData) => {
 }
 
 const handleEncounterRes = (data:EncounterResData) => {
+  // TODO: move into world.ts?
+  if (data.type === EncounterResType.Sold) {
+    state.money += data.encounter.price
+    const invItem = getNumFromInventory(state.wares, data.encounter.item)
+
+    if (!invItem) {
+      throw 'Item doesnt exist'
+    }
+
+    state.wares.set(data.encounter.item, invItem - data.encounter.amount)
+
+    // keep here if move
+    waresMenu.updateItem(data.encounter.item, state.wares.get(data.encounter.item) as number)
+    // TODO: extract to a method
+    ;($id('money').querySelector('pre') as HTMLPreElement).innerText = `$${state.money}`
+  }
+
   logs.addLog(encounterLog(data))
   logs.render()
 }
