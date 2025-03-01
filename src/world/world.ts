@@ -1,6 +1,6 @@
 import { generateActor } from '../data/actor-data'
 import { EncounterData, EncounterResData, EncounterResType, EncounterType } from '../data/encounter-data'
-import { getNumFromInventory, getScale, itemData } from '../data/items'
+import { getActorMaxPrice, getNumFromInventory, getScale, itemData } from '../data/items'
 import { randomInt } from '../util/util'
 import { GameState } from './game-state'
 
@@ -110,28 +110,27 @@ export class World {
       amountWanted = itemsInInventory
     }
 
-    // if too expensive per item, do a tooexpensive event
-    // skipping while wares prices doesnt exist ^^^
-
-    // if they can afford them, buy
-    // if they can afford some, buy those
-
-    // TODO: get price from other factors
     const totalPrice = data.price * amountWanted
     if (totalPrice > actor.money) {
       this.onEncounterRes({ type: EncounterResType.CantAfford, encounter })
       return
     }
 
-    const amount = amountWanted
+    let itemPrice = getNumFromInventory(this.state.prices, actor.target)
 
-    encounter.amount = amount
-    encounter.price = amount * data.price
+    encounter.amount = amountWanted
+    encounter.price = amountWanted * itemPrice
 
-    // TEMP: force a result if prices exist
-    if (getNumFromInventory(this.state.prices, actor.target)) {
-      this.onEncounterRes({ type: EncounterResType.Sold, encounter })
+    if (itemPrice !== 0) {
+      if (itemPrice <= getActorMaxPrice(data.price, actor.leeway)) {
+        this.onEncounterRes({ type: EncounterResType.Sold, encounter })
+      } else {
+        this.onEncounterRes({ type: EncounterResType.TooExpensive, encounter })
+      }
       return
+    } else {
+      // TODO: update price with actor cheapness
+      itemPrice = data.price
     }
 
     this.currentEncounter = encounter
