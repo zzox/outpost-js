@@ -96,13 +96,18 @@ export class World {
       throw 'Cannot find item'
     }
 
+    // calculate the scale of a target item between
     // TODO: random num between half scale and scale
-    const amountWanted = getScale(actor.target, actor.level)
+    let amountWanted = getScale(actor.target, actor.level)
 
-    const items = getNumFromInventory(this.state.wares, actor.target)
-    if (items === 0 || items < amountWanted) {
+    const itemsInInventory = getNumFromInventory(this.state.wares, actor.target)
+    if (itemsInInventory === 0) {
       this.onEncounterRes({ type: EncounterResType.DontHave, encounter })
       return
+    }
+
+    if (itemsInInventory < amountWanted) {
+      amountWanted = itemsInInventory
     }
 
     // if too expensive per item, do a tooexpensive event
@@ -110,7 +115,6 @@ export class World {
 
     // if they can afford them, buy
     // if they can afford some, buy those
-    // otherwise do a cantafford event
 
     // TODO: get price from other factors
     const totalPrice = data.price * amountWanted
