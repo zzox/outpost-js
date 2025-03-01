@@ -17,7 +17,7 @@ export const encounterLog = ({ encounter, type }:EncounterResData):string => {
   } else if (type === EncounterResType.DenySold) {
     return `You denied selling ${encounter.amount} ${encounter.item}${plural} to ${encounter.actor.name}`
   } else if (type === EncounterResType.DontHave) {
-    return `You didnt have any ${encounter.item} for ${encounter.actor.name}`
+    return `You didnt have any ${encounter.item}s for ${encounter.actor.name}`
   } else if (type === EncounterResType.TooExpensive) {
     return `Your ${encounter.item} prices are too expensive for ${encounter.actor.name}`
   } else if (type === EncounterResType.CantAfford) {

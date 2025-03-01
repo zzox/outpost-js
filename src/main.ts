@@ -6,11 +6,11 @@ import { EncounterData, EncounterResData, EncounterResType } from './data/encoun
 import { GameState } from './world/game-state'
 import { getNumFromInventory, ItemType } from './data/items'
 
-let world: World
-let state: GameState
+let world:World
+let state:GameState
 
-let logs: LogList
-let alert: Alert | undefined
+let logs:LogList
+let alert:Alert | undefined
 let waresMenu:WaresMenu
 
 let time = 0
@@ -102,6 +102,7 @@ const go = () => {
   for (let items of state.wares.entries()) {
     waresMenu.addItem(items[0], items[1], state.prices.get(items[0]) as number)
   }
+  setMoney(state.money)
 
   // setting position here so the bounding client rect exists once added
   logs.setPosition(16384, 16384)

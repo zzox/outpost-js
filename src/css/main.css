@@ -19,11 +19,11 @@ body {
   overflow-x: hidden; */
 }
 
-main {
-  /* display: flex;
+/* main {
+  display: flex;
   justify-content: center;
-  align-items: center; */
-}
+  align-items: center;
+} */
 
 nav {
   display: flex;
@@ -84,6 +84,7 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .box {

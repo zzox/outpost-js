@@ -96,9 +96,9 @@ export class World {
       throw 'Cannot find item'
     }
 
-    // calculate the scale of a target item between
+    // calculate the scale of a target item from level
     // TODO: random num between half scale and scale
-    let amountWanted = getScale(actor.target, actor.level)
+    let amountWanted = Math.max(getScale(actor.target, actor.level), 1)
 
     const itemsInInventory = getNumFromInventory(this.state.wares, actor.target)
     if (itemsInInventory === 0) {
@@ -106,23 +106,20 @@ export class World {
       return
     }
 
+    // buy all items if we want too many
     if (itemsInInventory < amountWanted) {
       amountWanted = itemsInInventory
     }
-
-    const totalPrice = data.price * amountWanted
-    if (totalPrice > actor.money) {
-      this.onEncounterRes({ type: EncounterResType.CantAfford, encounter })
-      return
-    }
-
-    let itemPrice = getNumFromInventory(this.state.prices, actor.target)
-
     encounter.amount = amountWanted
+
+    const itemPrice = getNumFromInventory(this.state.prices, actor.target)
     encounter.price = amountWanted * itemPrice
 
+    // if the prices are set, decide here if the actor buys
     if (itemPrice !== 0) {
-      if (itemPrice <= getActorMaxPrice(data.price, actor.leeway)) {
+      if (encounter.price > actor.money) {
+        this.onEncounterRes({ type: EncounterResType.CantAfford, encounter })
+      } else if (itemPrice <= getActorMaxPrice(data.price, actor.leeway)) {
         this.onEncounterRes({ type: EncounterResType.Sold, encounter })
       } else {
         this.onEncounterRes({ type: EncounterResType.TooExpensive, encounter })
@@ -130,7 +127,7 @@ export class World {
       return
     } else {
       // TODO: update price with actor cheapness
-      itemPrice = data.price
+      encounter.price = amountWanted * data.price
     }
 
     this.currentEncounter = encounter
