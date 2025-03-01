@@ -1,9 +1,9 @@
 import { ItemType, Inventory } from '../data/items'
 
 const startingWares = new Map<ItemType, number>()
-startingWares.set(ItemType.Rope, 100)
-startingWares.set(ItemType.Wood, 50)
-startingWares.set(ItemType.Potion, 10)
+startingWares.set(ItemType.Rope, 200)
+startingWares.set(ItemType.Wood, 100)
+startingWares.set(ItemType.Potion, 50)
 
 const startingPrices = new Map<ItemType, number>()
 startingPrices.set(ItemType.Rope, 5)

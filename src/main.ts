@@ -1,5 +1,5 @@
 import { Alert, LogList, WaresMenu } from './ui/windows'
-import { $id, addToMain, hideWindow, makeWorldAscii } from './ui/ui'
+import { $id, addToMain, hideWindow, makeWorldAscii, setMoney } from './ui/ui'
 import { World } from './world/world'
 import { encounterLog, encounterText, getTimeText } from './util/text-display'
 import { EncounterData, EncounterResData, EncounterResType } from './data/encounter-data'
@@ -44,8 +44,7 @@ const handleEncounterRes = (data:EncounterResData) => {
 
     // keep here if move
     waresMenu.updateItem(data.encounter.item, state.wares.get(data.encounter.item) as number)
-    // TODO: extract to a method
-    ;($id('money').querySelector('pre') as HTMLPreElement).innerText = `$${state.money}`
+    setMoney(state.money)
   }
 
   logs.addLog(encounterLog(data))

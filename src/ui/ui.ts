@@ -36,6 +36,10 @@ export const showWindow = (win:MovableWindow) => {
   win.element.classList.remove('display-none')
 }
 
+export const setMoney = (amount:number) => {
+  ($id('money').querySelector('pre') as HTMLPreElement).innerText = `$${amount}`
+}
+
 type GridItem = {
   r:string
 }
