@@ -154,10 +154,6 @@ export class WaresMenu extends MovableWindow {
     this.onSetPrice = onSetPrice
   }
 
-  render = () => {
-
-  }
-
   addItem = (item:ItemType, amount:number, price:number) => {
     const fullEl = $make('div')
     const nameEl = $make('pre')
@@ -167,8 +163,8 @@ export class WaresMenu extends MovableWindow {
     const numInput = makeNumInput()
 
     fullEl.className = 'wares-row'
-
     nameEl.innerText = item.padEnd(20, ' ')
+    numInput.value = price.toString()
 
     // setAmount
     // PERF:

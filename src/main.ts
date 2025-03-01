@@ -35,7 +35,9 @@ const handleEncounterRes = (data:EncounterResData) => {
   logs.render()
 }
 
-const onSetPrice = (type:ItemType, price?:number) => {}
+const onSetPrice = (type:ItemType, price?:number) => {
+  state.prices.set(type, price ?? 0)
+}
 
 const update = () => {
   // HACK: if alert is visible, dont step the world
@@ -65,9 +67,7 @@ const next = (now:number) => {
   requestAnimationFrame(next)
 }
 
-const createMainListeners = () => {
-
-}
+const createMainListeners = () => {}
 
 const go = () => {
   state = new GameState()
@@ -84,7 +84,7 @@ const go = () => {
   hideWindow(waresMenu)
 
   for (let items of state.wares.entries()) {
-    waresMenu.addItem(items[0], items[1], 20)
+    waresMenu.addItem(items[0], items[1], state.prices.get(items[0]) as number)
   }
 
   // setting position here so the bounding client rect exists once added
