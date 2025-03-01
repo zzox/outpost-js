@@ -6,8 +6,23 @@ import { MovableWindow } from './windows'
 export const $q = (query:string): HTMLElement => document.querySelector(query)
 // @ts-ignore
 export const $id = (id:string): HTMLElement => document.getElementById(id)
-
 export const $make = (type:string): HTMLElement => document.createElement(type)
+
+export const makePreText = (text:string):HTMLPreElement => {
+  const input = $make('pre') as HTMLPreElement
+  input.innerText = text
+  return input
+}
+
+export const makeNumInput = ():HTMLInputElement => {
+  const input = $make('input') as HTMLInputElement
+  input.type = 'number'
+  input.value = '1'
+  input.min = '1'
+  input.max = '65536'
+  input.step = '1'
+  return input
+}
 
 export const addToMain = (win:MovableWindow) => {
   $q('main').appendChild(win.element)

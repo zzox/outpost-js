@@ -1,6 +1,6 @@
 import { ItemType } from '../data/items'
 import { clamp } from '../util/util'
-import { $make } from './ui'
+import { $make, makeNumInput, makePreText } from './ui'
 
 export class MovableWindow {
   element:HTMLDivElement
@@ -84,12 +84,6 @@ export class MovableWindow {
   }
 }
 
-// export class WaresMenu {
-//   render = (wares:Inventory, prices:Inventory) => {
-//     // go through list, rows of prees
-//   }
-// }
-
 export class Alert extends MovableWindow {
   constructor (x:number, y:number, textString:string, options:{ text: string, cb: () => void }[] ) {
     super(x, y, 'Alert', false, 'Alert')
@@ -168,26 +162,39 @@ export class WaresMenu extends MovableWindow {
     const fullEl = $make('div')
     const nameEl = $make('pre')
     const amountEl = $make('pre')
-    const div1 = $make('pre')
-    const div2 = $make('pre')
+    const div1 = makePreText('|')
+    const div2 = makePreText('| $')
+    const numInput = makeNumInput()
 
     fullEl.className = 'wares-row'
-    div1.innerText = '|'
-    div2.innerText = '|'
 
     nameEl.innerText = item.padEnd(20, ' ')
 
     // setAmount
     // PERF:
-    amountEl.innerText = `x${amount}`.padStart(7, ' ')
+    amountEl.innerText = `x${amount} `.padStart(7, ' ')
 
     fullEl.appendChild(nameEl)
     fullEl.appendChild(div1)
     fullEl.appendChild(amountEl)
     fullEl.appendChild(div2)
+    fullEl.appendChild(numInput)
+
+    numInput.onblur = () => {
+      const num = parseInt(numInput.value)
+      if (isNaN(num)) {
+        numInput.value = '0'
+      } else {
+        this.onSetPrice(item, num)
+      }
+    }
+
+    if (this.priceLines.length) {
+      this.content.appendChild($make('hr'))
+    }
 
     this.priceLines.push({ item, el: fullEl })
-
+    numInput.tabIndex = this.priceLines.length
     this.content.appendChild(fullEl)
   }
 }
