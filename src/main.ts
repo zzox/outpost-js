@@ -5,6 +5,7 @@ import { encounterLog, encounterOption, encounterText, getTimeText } from './uti
 import { EncounterData, EncounterResData, EncounterResType } from './data/encounter-data'
 import { GameState } from './world/game-state'
 import { getNumFromInventory, ItemType } from './data/items'
+import { clamp } from './util/util'
 
 let world:World
 let state:GameState
@@ -78,7 +79,7 @@ const next = (now:number) => {
 
     // for the overflow
     // TODO: calculate correctly
-    time = now + 100 - (now - time)
+    time = now + clamp(100 - (now - time), -100, 0)
   }
 
   $id('time-of-day').innerHTML = getTimeText(world.time)
