@@ -12,6 +12,8 @@ export enum EncounterType {
 export enum EncounterResType {
   Sold = 'Sold',
   DenySold = 'DenySold',
+  Bought = 'Bought',
+  NotBought = 'NotBought',
   DontHave = 'DontHave',
   TooExpensive = 'TooExpensive',
   CantAfford = 'CantAfford',

@@ -1,6 +1,6 @@
 import { ItemType } from '../data/items'
 import { clamp } from '../util/util'
-import { $make, makeNumInput, makePreText } from './ui'
+import { $make, hideWindow, makeNumInput, makePreText } from './ui'
 
 export class MovableWindow {
   element:HTMLDivElement
@@ -80,22 +80,32 @@ export class MovableWindow {
   }
 
   close () {
-    this.element.remove()
+    // this.element.remove()
+    hideWindow(this)
   }
 }
 
 export class Alert extends MovableWindow {
-  constructor (x:number, y:number, textString:string, options:{ text: string, cb: () => void }[] ) {
-    super(x, y, 'Alert', false, 'Alert')
+  dialog:HTMLPreElement
+  buttonRow:HTMLDivElement
 
-    this.element.classList.add('top')
+  constructor () {
+    super(0, 0, 'Alert', false, 'alert')
 
-    const text = $make('pre')
-    text.innerText = textString
-    text.className = 'alert-text'
+    this.dialog = $make('pre') as HTMLPreElement
+    this.dialog.className = 'alert-text'
 
-    const buttonRow = $make('div')
-    buttonRow.className = 'button-row'
+    this.buttonRow = $make('div') as HTMLDivElement
+    this.buttonRow.className = 'button-row'
+
+    this.content.appendChild(this.dialog)
+    this.content.appendChild(this.buttonRow)
+  }
+
+  activate (textString:string, options:{ text: string, cb: () => void }[] ) {
+    this.dialog.innerText = textString
+
+    Array.from(this.buttonRow.children).forEach(el => el.remove())
 
     options.forEach(({ text, cb }) => {
       const button = $make('button')
@@ -109,11 +119,8 @@ export class Alert extends MovableWindow {
         cb()
       }
 
-      buttonRow.appendChild(button)
+      this.buttonRow.appendChild(button)
     })
-
-    this.content.appendChild(text)
-    this.content.appendChild(buttonRow)
   }
 }
 

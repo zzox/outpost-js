@@ -2,6 +2,7 @@ import { generateActor } from '../data/actor-data'
 import { EncounterData, EncounterResData, EncounterResType, EncounterType } from '../data/encounter-data'
 import { getActorMaxPrice, getNumFromInventory, getScale, itemData } from '../data/items'
 import { randomInt } from '../util/util'
+import { Actor } from './actor'
 import { GameState } from './game-state'
 
 // TEMP:
@@ -52,16 +53,21 @@ export class World {
 
     const actor = generateActor()
 
+    if (actor.targetType === EncounterType.Buy) {
+      this.handleBuy(actor)
+    } else {
+      this.handleSell(actor)
+    }
+  }
+
+  handleBuy (actor:Actor) {
     const encounter = {
       type: EncounterType.Buy,
       actor,
       amount: 0,
-      // TEMP:
       price: 0,
       item: actor.target
     }
-
-    console.log(actor.target)
 
     /* following chunk is about getting a specific item that the actor wants from their target */
 
@@ -134,6 +140,37 @@ export class World {
     this.onEncounter(this.currentEncounter)
   }
 
+  handleSell (actor:Actor) {
+    const encounter = {
+      type: EncounterType.Sell,
+      actor,
+      amount: 0,
+      price: 0,
+      item: actor.target
+    }
+
+    const data = itemData.get(actor.target)
+    if (!data) {
+      throw 'Cannot find item'
+    }
+
+    // TODO: specific scaling per item
+    const amount = Math.max(getScale(actor.target, actor.level) * 10, 1)
+    // TODO: specific margin per item
+    const price = Math.ceil(data.price * 0.5)
+
+    encounter.amount = amount
+    encounter.price = price * amount
+
+    if (encounter.price > this.state.money) {
+      this.onEncounterRes({ type: EncounterResType.CantAfford, encounter })
+      return
+    }
+
+    this.currentEncounter = encounter
+    this.onEncounter(this.currentEncounter)
+  }
+
   doEncounter (result:boolean) {
     if (!this.currentEncounter) {
       throw 'No encounter exists'
@@ -141,6 +178,9 @@ export class World {
 
     if (this.currentEncounter.type === EncounterType.Buy) {
       this.onEncounterRes({ type: result ? EncounterResType.Sold : EncounterResType.DenySold, encounter: this.currentEncounter })
+      this.currentEncounter = undefined
+    } else if (this.currentEncounter.type === EncounterType.Sell) {
+      this.onEncounterRes({ type: result ? EncounterResType.Bought : EncounterResType.NotBought, encounter: this.currentEncounter })
       this.currentEncounter = undefined
     } else {
       throw 'Not Implemented'

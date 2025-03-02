@@ -1,5 +1,6 @@
 import { getWeightedRandom, intClamp, randomInt } from '../util/util'
 import { Actor } from '../world/actor'
+import { EncounterType } from './encounter-data'
 import { Inventory, itemData, ItemType } from './items'
 
 let id = 0
@@ -16,7 +17,9 @@ export const generateActor = ():Actor => {
     intClamp(100 - randomInt(200), 0, 100)
   )
 
+  actor.targetType = Math.random() < 0.9 ? EncounterType.Buy : EncounterType.Sell
   actor.target = generateActorTarget(actor.level)
+
   return actor;
 }
 
