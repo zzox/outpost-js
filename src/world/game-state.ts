@@ -1,4 +1,4 @@
-import { ItemType, Inventory } from '../data/items'
+import { ItemType, Inventory, getNumFromInventory, addToInventory, removeFromInventory } from '../data/items'
 
 const startingWares = new Map<ItemType, number>()
 startingWares.set(ItemType.Rope, 200)
@@ -18,13 +18,38 @@ export class GameState {
   wares:Inventory
   prices:Inventory
 
+  history:History
+
   constructor () {
     this.money = 500
     this.wares = startingWares
     this.prices = startingPrices
+
+    this.history = new History()
   }
 
-  buyItem (item:ItemType, amount:number, totalPrice:number) {}
+  buyItem (item:ItemType, amount:number, totalPrice:number) {
+    this.money -= totalPrice
+    addToInventory(this.wares, item, amount)
 
-  sellItem (item:ItemType, amount:number, totalPrice:number) {}
+    // stats
+    addToInventory(this.history.itemsBought, item, amount)
+    this.history.expenses += totalPrice
+  }
+
+  sellItem (item:ItemType, amount:number, totalPrice:number) {
+    this.money += totalPrice
+    removeFromInventory(this.wares, item, amount)
+
+    // stats
+    addToInventory(this.history.itemsSold, item, amount)
+    this.history.revenue += totalPrice
+  }
+}
+
+class History {
+  itemsSold:Inventory = new Map()
+  itemsBought:Inventory = new Map()
+  revenue:number = 0
+  expenses:number = 0
 }

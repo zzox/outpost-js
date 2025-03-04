@@ -35,7 +35,7 @@ itemData.set(ItemType.RiseLeaf, { price: 200, common: 1, scale: scale(1, -10, 2)
 export type Inventory = Map<ItemType, number>
 
 export const removeFromInventory = (inv:Inventory, item:ItemType, amount:number) => {
-  if (inv.get(item) || getNumFromInventory(inv, item) < amount) throw 'Not enough in inventory'
+  if (!inv.get(item) || getNumFromInventory(inv, item) < amount) throw 'Not enough in inventory'
   inv.set(item, getNumFromInventory(inv, item) - amount)
 }
 

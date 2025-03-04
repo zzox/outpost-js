@@ -1,5 +1,5 @@
-import { Alert, LogList, WaresMenu } from './ui/windows'
-import { $id, addToMain, hideWindow, makeWorldAscii, setMoney, showWindow } from './ui/ui'
+import { Alert, LogList, MovableWindow, WaresMenu } from './ui/windows'
+import { $id, addToMain, hideWindow, makeWorldAscii, setMoneyUi, showWindow } from './ui/ui'
 import { World } from './world/world'
 import { encounterLog, encounterOption, encounterText, getTimeText } from './util/text-display'
 import { EncounterData, EncounterResData, EncounterResType } from './data/encounter-data'
@@ -36,21 +36,13 @@ const handleEncounter = (data:EncounterData) => {
 const handleEncounterRes = (data:EncounterResData) => {
   // TODO: move into world.ts?
   if (data.type === EncounterResType.Sold) {
-    state.money += data.encounter.price
-    const invItem = getNumFromInventory(state.wares, data.encounter.item)
-    state.wares.set(data.encounter.item, invItem - data.encounter.amount)
-
-    // keep here if move
+    state.sellItem(data.encounter.item,  data.encounter.amount, data.encounter.price)
     waresMenu.updateItem(data.encounter.item, state.wares.get(data.encounter.item) as number)
-    setMoney(state.money)
+    setMoneyUi(state.money)
   } else if (data.type === EncounterResType.Bought) {
-    state.money -= data.encounter.price
-    const invItem = getNumFromInventory(state.wares, data.encounter.item)
-    state.wares.set(data.encounter.item, invItem + data.encounter.amount)
-
-    // keep here if move
+    state.buyItem(data.encounter.item, data.encounter.amount, data.encounter.price)
     waresMenu.updateItem(data.encounter.item, state.wares.get(data.encounter.item) as number)
-    setMoney(state.money)
+    setMoneyUi(state.money)
   }
 
   logs.addLog(encounterLog(data))
@@ -87,7 +79,9 @@ const next = (now:number) => {
   requestAnimationFrame(next)
 }
 
-const createMainListeners = () => {}
+const createMainListeners = () => {
+  $id('wares-button').onclick = () => showWindow(waresMenu)
+}
 
 const go = () => {
   state = new GameState()
@@ -97,7 +91,7 @@ const go = () => {
   waresMenu = new WaresMenu(0, 200, onSetPrice)
   alert = new Alert()
 
-  makeWorldAscii()
+  // makeWorldAscii()
 
   addToMain(logs)
   addToMain(waresMenu)
@@ -109,10 +103,12 @@ const go = () => {
   for (let items of state.wares.entries()) {
     waresMenu.addItem(items[0], items[1], state.prices.get(items[0]) as number)
   }
-  setMoney(state.money)
+  setMoneyUi(state.money)
 
   // setting position here so the bounding client rect exists once added
   logs.setPosition(16384, 16384)
+
+  createMainListeners()
 
   requestAnimationFrame(next)
 

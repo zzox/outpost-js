@@ -38,8 +38,8 @@ export const showWindow = (win:MovableWindow) => {
   win.element.classList.remove('display-none')
 }
 
-export const setMoney = (amount:number) => {
-  ($id('money').querySelector('pre') as HTMLPreElement).innerText = `$${amount}`
+export const setMoneyUi = (amount:number) => {
+  ($id('money-button').querySelector('pre') as HTMLPreElement).innerText = `$${amount}`
 }
 
 type GridItem = {
@@ -76,7 +76,7 @@ export const makeWorldAscii = () => {
   // }
 
   // try 2
-  // not terrible, querySelectorAll can be slow
+  // not terrible, querySelectorAll can be slow, layout takes a while
   // if ($id('bg').childElementCount > 0) {
   //   const items = Array.from(document.querySelectorAll('#bg > span'))
   //   ;(items[randomInt(items.length)] as HTMLDivElement).textContent = '!'
@@ -99,7 +99,7 @@ export const makeWorldAscii = () => {
   // }
 
   // try 3
-  // still not as fast as id like
+  // still not as fast as id like, paint takes longer than layout
   if ($id('bg').childElementCount == 0) {
     // Array.from($id('bg').children).map(child => child.remove())
 
@@ -118,6 +118,7 @@ export const makeWorldAscii = () => {
     }
   } else {
     const items = Array.from(document.querySelectorAll('.woo'))
-    ;(items[randomInt(items.length)] as HTMLDivElement).innerText = '!'
+    const int = randomInt(items.length) - 1
+    ;(items[int] as HTMLDivElement).innerText = '!'
   }
 }
