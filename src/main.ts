@@ -69,11 +69,13 @@ const update = () => {
 
 const draw = () => {
   // logs.render()
+  $id('time-of-day').innerHTML = getTimeText(world.time)
+  $id('day-num').innerHTML = `Day ${world.day + 1}`
+  // makeWorldAscii()
 }
 
 const next = (now:number) => {
   if (now - time > 100) {
-    // doUpdate();
     update()
     draw()
 
@@ -81,9 +83,6 @@ const next = (now:number) => {
     // TODO: calculate correctly
     time = now + clamp(100 - (now - time), -100, 0)
   }
-
-  $id('time-of-day').innerHTML = getTimeText(world.time)
-  $id('day-num').innerHTML = `Day ${world.day + 1}`
 
   requestAnimationFrame(next)
 }

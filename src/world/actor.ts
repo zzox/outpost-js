@@ -18,13 +18,13 @@ export class Actor {
   targetType!:EncounterType
 
   constructor (id:number, level:number, money:number, leeway:number, cheapness:number, zealous:number) {
-    this.id = id;
-    this.level = level;
+    this.id = id
+    this.level = level
 
-    this.money = money;
-    this.leeway = leeway;
-    this.cheapness = cheapness;
-    this.zealous = zealous;
+    this.money = money
+    this.leeway = leeway
+    this.cheapness = cheapness
+    this.zealous = zealous
 
     this.inventory = new Map()
 

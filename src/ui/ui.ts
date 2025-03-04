@@ -1,4 +1,5 @@
 import { fileInCode, fileInColors } from '../data/editor-data'
+import { symbols } from '../editor/symbols'
 import { cssColors } from './colors'
 import { MovableWindow } from './windows'
 
@@ -55,15 +56,19 @@ export const makeWorldAscii = () => {
     return r
   }
 
-  let html = ''
+  $id('bg').innerText = ''
 
   for (let y = 0; y < fileInCode.length; y++) {
     // TODO: close span on last color?
     for (let x = 0; x < fileInCode[0].length; x++) {
-      html += `<span class='${cssColors[fileInColors[y][x]]}'>${fileInCode[y][x] === 0 ? '&nbsp;' : String.fromCharCode(fileInCode[y][x])}</span>`
+      const span = $make('span')
+      span.className = cssColors[fileInColors[y][x]]
+      span.innerText = symbols[fileInCode[y][x]]
+      // html += `<span class='${cssColors[fileInColors[y][x]]}'>${fileInCode[y][x] === 0 ? ' ' : symbols[fileInCode[y][x]]}</span>`
+      $id('bg').appendChild(span)
     }
-    html += '\n'
+    const nl = $make('span')
+    nl.innerText = '\n'
+    $id('bg').appendChild(nl)
   }
-
-  $id('main').innerHTML = html
 }
