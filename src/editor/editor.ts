@@ -44,7 +44,7 @@ const save = () => {
 
   const fileItems = Array.from(document.querySelectorAll('#right > pre')).map(pre =>
     Array.from(pre.children).map(item =>
-      symbols.indexOf(item.innerHTML)
+      symbols.indexOf(item.textContent as string)
     )
   )
 

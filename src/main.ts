@@ -69,9 +69,9 @@ const update = () => {
 
 const draw = () => {
   // logs.render()
-  $id('time-of-day').innerHTML = getTimeText(world.time)
-  $id('day-num').innerHTML = `Day ${world.day + 1}`
-  // makeWorldAscii()
+  $id('time-of-day').textContent = getTimeText(world.time)
+  $id('day-num').textContent = `Day ${world.day + 1}`
+  makeWorldAscii()
 }
 
 const next = (now:number) => {
