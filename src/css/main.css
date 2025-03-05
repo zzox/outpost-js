@@ -83,6 +83,24 @@ input[type=number] {
   appearance: textfield;
 }
 
+#day {
+  align-items: start;
+  min-width: 10em;
+}
+
+#logs > .box-content {
+  height: 25em;
+  width: 20em;
+}
+
+#logs pre {
+  white-space: pre-wrap;
+}
+
+#finance > .box-content {
+  width: 20em;
+}
+
 #bg {
   width: 100vw;
   height: calc(100vh - 3em);
@@ -149,23 +167,14 @@ input[type=number] {
   z-index: var(--top);
 }
 
-#day {
-  align-items: start;
-  min-width: 8em;
-}
-
-#logs > .box-content {
-  height: 25em;
-  width: 20em;
-}
-
-#logs pre {
-  white-space: pre-wrap;
-}
-
 .wares-row {
   display: flex;
   align-items: center;
+}
+
+.finance-row {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* colors */

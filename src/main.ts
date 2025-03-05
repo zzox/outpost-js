@@ -6,6 +6,7 @@ import { EncounterData, EncounterResData, EncounterResType } from './data/encoun
 import { GameState } from './world/game-state'
 import { getNumFromInventory, ItemType } from './data/items'
 import { clamp } from './util/util'
+import { FinanceWindow } from './ui/finance-window'
 
 let world:World
 let state:GameState
@@ -14,6 +15,7 @@ let encounterActive:boolean = false
 let logs:LogList
 let alert:Alert
 let waresMenu:WaresMenu
+let financeWindow:FinanceWindow
 
 let time = 0
 
@@ -45,6 +47,7 @@ const handleEncounterRes = (data:EncounterResData) => {
     setMoneyUi(state.money)
   }
 
+  financeWindow.updateFromState(state.history)
   logs.addLog(encounterLog(data))
   logs.render()
 }
@@ -81,6 +84,7 @@ const next = (now:number) => {
 
 const createMainListeners = () => {
   $id('wares-button').onclick = () => showWindow(waresMenu)
+  $id('money-button').onclick = () => showWindow(financeWindow)
 }
 
 const go = () => {
@@ -88,6 +92,8 @@ const go = () => {
   world = new World(state, handleEncounter, handleEncounterRes)
 
   logs = new LogList(0, 0)
+  // TODO: use constants for hieght here
+  financeWindow = new FinanceWindow(0, 0)
   waresMenu = new WaresMenu(0, 200, onSetPrice)
   alert = new Alert()
 
@@ -95,6 +101,7 @@ const go = () => {
 
   addToMain(logs)
   addToMain(waresMenu)
+  addToMain(financeWindow)
   addToMain(alert)
 
   // hideWindow(waresMenu)
@@ -107,6 +114,7 @@ const go = () => {
 
   // setting position here so the bounding client rect exists once added
   logs.setPosition(16384, 16384)
+  financeWindow.setPosition(16384, 36)
 
   createMainListeners()
 

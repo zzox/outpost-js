@@ -47,7 +47,7 @@ export class GameState {
   }
 }
 
-class History {
+export class History {
   itemsSold:Inventory = new Map()
   itemsBought:Inventory = new Map()
   revenue:number = 0
