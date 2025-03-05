@@ -36,6 +36,7 @@ export const hideWindow = (win:MovableWindow) => {
 
 export const showWindow = (win:MovableWindow) => {
   win.element.classList.remove('display-none')
+  win.setPosition(win.element.getBoundingClientRect().left, win.element.getBoundingClientRect().top)
 }
 
 export const setMoneyUi = (amount:number) => {

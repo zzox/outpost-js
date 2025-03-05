@@ -7,6 +7,7 @@ import { GameState } from './world/game-state'
 import { getNumFromInventory, ItemType } from './data/items'
 import { clamp } from './util/util'
 import { FinanceWindow } from './ui/finance-window'
+import { TOPBAR_HEIGHT } from './data/globals'
 
 let world:World
 let state:GameState
@@ -92,19 +93,18 @@ const go = () => {
   world = new World(state, handleEncounter, handleEncounterRes)
 
   logs = new LogList(0, 0)
-  // TODO: use constants for hieght here
-  financeWindow = new FinanceWindow(0, 0)
+  financeWindow = new FinanceWindow(0, TOPBAR_HEIGHT)
   waresMenu = new WaresMenu(0, 200, onSetPrice)
   alert = new Alert()
 
-  // makeWorldAscii()
+  makeWorldAscii()
 
   addToMain(logs)
   addToMain(waresMenu)
   addToMain(financeWindow)
   addToMain(alert)
 
-  // hideWindow(waresMenu)
+  hideWindow(financeWindow)
   hideWindow(alert)
 
   for (let items of state.wares.entries()) {

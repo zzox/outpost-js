@@ -1,3 +1,4 @@
+import { TOPBAR_HEIGHT } from '../data/globals'
 import { ItemType } from '../data/items'
 import { clamp } from '../util/util'
 import { $make, hideWindow, makeNumInput, makePreText } from './ui'
@@ -66,7 +67,7 @@ export class MovableWindow {
   setPosition = (x:number, y:number) => {
     // TODO: disallow above topbar, set topbar element as global
     const xx = clamp(x, 0, window.innerWidth - this.element.getBoundingClientRect().width)
-    const yy = clamp(y, 0, window.innerHeight - this.element.getBoundingClientRect().height)
+    const yy = clamp(y, TOPBAR_HEIGHT, window.innerHeight - this.element.getBoundingClientRect().height)
 
     this.element.style.left = `${xx}px`
     this.element.style.top = `${yy}px`
