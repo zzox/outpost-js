@@ -1,4 +1,4 @@
-import { Alert, LogList, MovableWindow, WaresMenu } from './ui/windows'
+import { Alert, LogList } from './ui/windows'
 import { $id, addToMain, hideWindow, makeWorldAscii, setMoneyUi, showWindow } from './ui/ui'
 import { World } from './world/world'
 import { encounterLog, encounterOption, encounterText, getTimeText } from './util/text-display'
@@ -8,6 +8,7 @@ import { getNumFromInventory, ItemType } from './data/items'
 import { clamp } from './util/util'
 import { FinanceWindow } from './ui/finance-window'
 import { TOPBAR_HEIGHT } from './data/globals'
+import { WaresMenu } from './ui/wares-window'
 
 let world:World
 let state:GameState

@@ -1,7 +1,6 @@
 import { TOPBAR_HEIGHT } from '../data/globals'
-import { ItemType } from '../data/items'
 import { clamp } from '../util/util'
-import { $make, hideWindow, makeNumInput, makePreText } from './ui'
+import { $make, hideWindow } from './ui'
 
 export class MovableWindow {
   element:HTMLDivElement
@@ -37,7 +36,7 @@ export class MovableWindow {
       const xOut = $make('button')
       xOut.innerHTML = '<pre>X</pre>'
       top.appendChild(xOut)
-      xOut.onmousedown = (ev) => ev.stopPropagation()
+      // xOut.onmousedown = (ev) => ev.stopPropagation()
       xOut.onclick = this.close.bind(this)
     } else {
       const right = $make('pre')
@@ -148,62 +147,5 @@ export class LogList extends MovableWindow {
   addLog = (log:string) => {
     LogList.logs.pop()
     LogList.logs.unshift(log)
-  }
-}
-
-export class WaresMenu extends MovableWindow {
-  priceLines:Map<ItemType, HTMLSpanElement> = new Map
-
-  onSetPrice:(t:ItemType, price?:number) => void
-
-  constructor (x:number, y:number, onSetPrice:(t:ItemType, price?:number) => void) {
-    super(x, y, 'Wares', true, 'wares')
-
-    this.onSetPrice = onSetPrice
-  }
-
-  addItem = (item:ItemType, amount:number, price:number) => {
-    const fullEl = $make('div')
-    const nameEl = $make('pre')
-    const amountEl = $make('pre')
-    const div1 = makePreText('|')
-    const div2 = makePreText('| $')
-    const numInput = makeNumInput()
-
-    fullEl.className = 'wares-row'
-    nameEl.innerText = item.padEnd(20, ' ')
-    numInput.value = price.toString()
-    amountEl.id = 'amount'
-
-    // setAmount
-    // PERF:
-    amountEl.innerText = `x${amount} `.padStart(7, ' ')
-
-    fullEl.appendChild(nameEl)
-    fullEl.appendChild(div1)
-    fullEl.appendChild(amountEl)
-    fullEl.appendChild(div2)
-    fullEl.appendChild(numInput)
-
-    numInput.onblur = () => {
-      const num = parseInt(numInput.value)
-      if (isNaN(num)) {
-        numInput.value = '0'
-      } else {
-        this.onSetPrice(item, num)
-      }
-    }
-
-    if (this.priceLines.size) {
-      this.content.appendChild($make('hr'))
-    }
-
-    this.priceLines.set(item, fullEl)
-    numInput.tabIndex = this.priceLines.size
-    this.content.appendChild(fullEl)
-  }
-
-  updateItem = (item:ItemType, amount:number) => {
-    (this.priceLines.get(item)?.querySelector('#amount') as HTMLPreElement).innerText = `x${amount} `.padStart(7, ' ')
   }
 }

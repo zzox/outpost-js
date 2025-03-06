@@ -50,9 +50,9 @@ export const encounterOption = ({ type }:EncounterData, option:number):string =>
 export const encounterText = (data:EncounterData):string => {
   const plural = data.amount && data.amount > 1 ? 's' : ''
   if (data.type === EncounterType.Buy) {
-    return `Do you want to sell ${data.amount} ${data.item}${plural} to ${data.actor.name} for $${data.price}?`
+    return `Sell ${data.amount} ${data.item}${plural} to ${data.actor.name} for $${data.price}?`
   } else if (data.type === EncounterType.Sell) {
-    return `Do you want to buy ${data.amount} ${data.item}${plural} from ${data.actor.name} for $${data.price}?`
+    return `Buy ${data.amount} ${data.item}${plural} from ${data.actor.name} for $${data.price}?`
   }
 
   throw 'Undefined enctounter text'

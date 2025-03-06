@@ -159,6 +159,10 @@ input[type=number] {
   padding: 0 1em;
 }
 
+.set-button {
+  width: 8em;
+}
+
 /* .money {
   color: var(--gold);
 } */

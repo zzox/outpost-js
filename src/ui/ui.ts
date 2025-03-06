@@ -5,10 +5,10 @@ import { cssColors } from './colors'
 import { MovableWindow } from './windows'
 
 // @ts-ignore
-export const $q = (query:string): HTMLElement => document.querySelector(query)
+export const $q = (query:string):HTMLElement => document.querySelector(query)
 // @ts-ignore
-export const $id = (id:string): HTMLElement => document.getElementById(id)
-export const $make = (type:string): HTMLElement => document.createElement(type)
+export const $id = (id:string):HTMLElement => document.getElementById(id)
+export const $make = (type:string):HTMLElement => document.createElement(type)
 
 export const makePreText = (text:string):HTMLPreElement => {
   const input = $make('pre') as HTMLPreElement
@@ -24,6 +24,12 @@ export const makeNumInput = ():HTMLInputElement => {
   input.max = '65536'
   input.step = '1'
   return input
+}
+
+export const makeButton = (text:string):HTMLButtonElement => {
+  const button = $make('button')
+  button.innerHTML = `<pre>${text}</pre>`
+  return button as HTMLButtonElement
 }
 
 export const addToMain = (win:MovableWindow) => {
