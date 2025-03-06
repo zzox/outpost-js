@@ -38,20 +38,31 @@ export class WaresMenu extends MovableWindow {
     fullEl.appendChild(numInput)
     fullEl.appendChild(setButton)
 
+    if (price) {
+      setButton.classList.add('display-none')
+    } else {
+      numInput.classList.add('display-none')
+    }
+
     numInput.onblur = () => {
       const num = parseInt(numInput.value)
-      if (isNaN(num)) {
+      if (isNaN(num) || num === 0) {
         numInput.value = '0'
         this.onSetPrice(item)
+
+        numInput.classList.add('display-none')
+        setButton.classList.remove('display-none')
+        setButton.focus()
       } else {
         this.onSetPrice(item, num)
       }
     }
 
     setButton.onclick = () => {
-      numInput.classList.remove('display-none')
       setButton.classList.add('display-none')
+      numInput.classList.remove('display-none')
       numInput.focus()
+      numInput.value = '1'
     }
 
     if (this.priceLines.size) {

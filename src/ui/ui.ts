@@ -23,6 +23,7 @@ export const makeNumInput = ():HTMLInputElement => {
   input.min = '1'
   input.max = '65536'
   input.step = '1'
+  input.className = 'num-input'
   return input
 }
 

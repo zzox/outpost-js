@@ -160,7 +160,11 @@ input[type=number] {
 }
 
 .set-button {
-  width: 8em;
+  width: 6em;
+}
+
+.num-input {
+  width: 6em;
 }
 
 /* .money {
