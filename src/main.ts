@@ -1,4 +1,4 @@
-import { Alert, LogList } from './ui/windows'
+import { Alert, LogList, MovableWindow } from './ui/windows'
 import { $id, addToMain, hideWindow, makeWorldAscii, setMoneyUi, showWindow } from './ui/ui'
 import { World } from './world/world'
 import { encounterLog, encounterOption, encounterText, getTimeText } from './util/text-display'
@@ -9,6 +9,7 @@ import { clamp } from './util/util'
 import { FinanceWindow } from './ui/finance-window'
 import { TOPBAR_HEIGHT } from './data/globals'
 import { WaresMenu } from './ui/wares-window'
+import { logger, LogLevel, setLogLevel } from './util/logger'
 
 let world:World
 let state:GameState
@@ -18,6 +19,8 @@ let logs:LogList
 let alert:Alert
 let waresMenu:WaresMenu
 let financeWindow:FinanceWindow
+
+// let windows:MovableWindow[] = []
 
 let time = 0
 
@@ -56,6 +59,7 @@ const handleEncounterRes = (data:EncounterResData) => {
 
 const onSetPrice = (type:ItemType, price?:number) => {
   state.prices.set(type, price ?? 0)
+  logger.log('prices set', state.prices)
 }
 
 const update = () => {
@@ -108,6 +112,12 @@ const go = () => {
   hideWindow(financeWindow)
   hideWindow(alert)
 
+  // windows = [
+  //   logs,
+  //   waresMenu,
+  //   financeWindow
+  // ]
+
   for (let items of state.wares.entries()) {
     waresMenu.addItem(items[0], items[1], state.prices.get(items[0]) as number)
   }
@@ -121,6 +131,7 @@ const go = () => {
 
   requestAnimationFrame(next)
 
+  setLogLevel(LogLevel.Debug)
   console.log('hi world')
 }
 
