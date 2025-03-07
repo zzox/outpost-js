@@ -1,6 +1,6 @@
 import { TOPBAR_HEIGHT } from '../data/globals'
 import { clamp } from '../util/util'
-import { $make, hideWindow } from './ui'
+import { $make, hideWindow, makePreText } from './ui'
 
 export class MovableWindow {
   element:HTMLDivElement
@@ -14,22 +14,18 @@ export class MovableWindow {
     this.element.id = id
     const top = $make('div')
     this.content = $make('div') as HTMLDivElement
-    const title = $make('pre')
 
     this.element.className = 'box'
     top.className = 'box-title'
     this.content.className = 'box-content'
-    title.innerText = titleText
 
     this.element.appendChild(top)
     this.element.appendChild(this.content)
 
     // left element used to balance out the right
-    const left = $make('pre')
-    left.innerText = ' '
-    top.appendChild(left)
+    top.appendChild(makePreText(' '))
 
-    top.appendChild(title)
+    top.appendChild(makePreText(titleText))
     top.onmousedown = this.mouseDown
 
     if (hasXOut) {
@@ -39,9 +35,7 @@ export class MovableWindow {
       // xOut.onmousedown = (ev) => ev.stopPropagation()
       xOut.onclick = this.close.bind(this)
     } else {
-      const right = $make('pre')
-      right.innerText = ' '
-      top.appendChild(right)
+      top.appendChild(makePreText(' '))
     }
 
     this.setPosition(x, y)
@@ -109,8 +103,7 @@ export class Alert extends MovableWindow {
 
     options.forEach(({ text, cb }) => {
       const button = $make('button')
-      const pre = $make('pre')
-      pre.innerText = text
+      const pre = makePreText(text)
 
       button.appendChild(pre)
 
@@ -132,8 +125,7 @@ export class LogList extends MovableWindow {
   constructor (x:number, y:number) {
     super(x, y, 'Logs', true, 'logs')
 
-    this.preEl = $make('pre') as HTMLPreElement
-    this.preEl.innerText = (new Array(20)).map(_ => '\n').join('')
+    this.preEl = makePreText((new Array(20)).map(_ => '\n').join(''))
     this.content.appendChild(this.preEl)
     // this.content.classList.add('min-box')
 

@@ -29,7 +29,7 @@ export class WaresMenu extends MovableWindow {
 
     // setAmount
     // PERF:
-    amountEl.innerText = `x${amount} `.padStart(7, ' ')
+    amountEl.textContent = `x${amount} `.padStart(7, ' ')
 
     fullEl.appendChild(nameEl)
     fullEl.appendChild(div1)
