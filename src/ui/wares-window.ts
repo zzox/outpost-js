@@ -3,7 +3,7 @@ import { $make, makeButton, makeNumInput, makePreText } from './ui'
 import { MovableWindow } from './windows'
 
 export class WaresMenu extends MovableWindow {
-  priceLines:Map<ItemType, HTMLSpanElement> = new Map
+  priceLines:{ item: ItemType, el: HTMLSpanElement }[] = []
 
   onSetPrice:(t:ItemType, price?:number) => void
 
@@ -14,6 +14,7 @@ export class WaresMenu extends MovableWindow {
   }
 
   addItem = (item:ItemType, amount:number, price:number) => {
+    const index = this.priceLines.length
     const fullEl = $make('div')
     const nameEl = makePreText(item.padEnd(20, ' '))
     const amountEl = $make('pre')
@@ -24,7 +25,7 @@ export class WaresMenu extends MovableWindow {
 
     fullEl.className = 'wares-row'
     numInput.value = price.toString()
-    amountEl.id = 'amount'
+    amountEl.className = 'amount'
     setButton.className = 'set-button'
 
     // setAmount
@@ -44,7 +45,7 @@ export class WaresMenu extends MovableWindow {
       numInput.classList.add('display-none')
     }
 
-    numInput.onblur = () => {
+    const onEnterPrice = () => {
       const num = parseInt(numInput.value)
       if (isNaN(num) || num === 0) {
         numInput.value = '0'
@@ -58,6 +59,20 @@ export class WaresMenu extends MovableWindow {
       }
     }
 
+    numInput.onblur = onEnterPrice
+    numInput.onkeydown = (event:KeyboardEvent) => {
+      if (event.key === 'Enter') {
+        console.log('focusing')
+        const el = this.priceLines[(index + 1) % this.priceLines.length]?.el
+        if (!el.querySelector('.num-input')?.classList.contains('display-none')) {
+          (el.querySelector('.num-input') as HTMLInputElement)?.focus()
+        } else {
+          el.querySelector('button')?.focus()
+          event.preventDefault()
+        }
+      }
+    }
+
     setButton.onclick = () => {
       setButton.classList.add('display-none')
       numInput.classList.remove('display-none')
@@ -65,17 +80,17 @@ export class WaresMenu extends MovableWindow {
       numInput.value = '1'
     }
 
-    if (this.priceLines.size) {
+    if (index) {
       this.content.appendChild($make('hr'))
     }
 
-    this.priceLines.set(item, fullEl)
-    numInput.tabIndex = this.priceLines.size
-    setButton.tabIndex = this.priceLines.size
+    this.priceLines.push({ item, el: fullEl })
+    numInput.tabIndex = index + 1
+    setButton.tabIndex = index + 1
     this.content.appendChild(fullEl)
   }
 
   updateItem = (item:ItemType, amount:number) => {
-    (this.priceLines.get(item)?.querySelector('#amount') as HTMLPreElement).innerText = `x${amount} `.padStart(7, ' ')
+    (this.priceLines.find((line) => line.item === item)?.el.querySelector('.amount') as HTMLPreElement).textContent = `x${amount} `.padStart(7, ' ')
   }
 }

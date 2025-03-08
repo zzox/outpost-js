@@ -93,6 +93,8 @@ const createMainListeners = () => {
   $id('money-button').onclick = () => showWindow(financeWindow)
 }
 
+const handleGrabWindow = () => {}
+
 const go = () => {
   state = new GameState()
   world = new World(state, handleEncounter, handleEncounterRes)
