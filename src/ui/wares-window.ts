@@ -66,6 +66,8 @@ export class WaresMenu extends MovableWindow {
           (el.querySelector('.num-input') as HTMLInputElement)?.focus()
         } else {
           el.querySelector('button')?.focus()
+          // folliwng event is needed to prevent the enter key from selecting
+          // the next "set" button
           event.preventDefault()
         }
       }

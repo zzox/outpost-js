@@ -1,20 +1,22 @@
-import { Alert, LogList, MovableWindow } from './ui/windows'
-import { $id, addToMain, hideWindow, makeWorldAscii, setMoneyUi, showWindow } from './ui/ui'
+import { Alert, LogList } from './ui/windows'
+import { $id, addToMain, hideWindow, setMoneyUi, showWindow } from './ui/ui'
 import { World } from './world/world'
 import { encounterLog, encounterOption, encounterText, getTimeText } from './util/text-display'
 import { EncounterData, EncounterResData, EncounterResType } from './data/encounter-data'
 import { GameState } from './world/game-state'
-import { getNumFromInventory, ItemType } from './data/items'
+import { ItemType } from './data/items'
 import { clamp } from './util/util'
 import { FinanceWindow } from './ui/finance-window'
 import { TOPBAR_HEIGHT } from './data/globals'
 import { WaresMenu } from './ui/wares-window'
 import { logger, LogLevel, setLogLevel } from './util/logger'
+import { AsciiRenderer } from './ui/ascii'
+import { fileInCode, fileInColors } from './data/editor-data'
 
 let world:World
 let state:GameState
 let encounterActive:boolean = false
-
+let worldAscii:AsciiRenderer
 let logs:LogList
 let alert:Alert
 let waresMenu:WaresMenu
@@ -72,7 +74,7 @@ const draw = () => {
   // logs.render()
   $id('time-of-day').textContent = getTimeText(world.time)
   $id('day-num').textContent = `Day ${world.day + 1}`
-  makeWorldAscii()
+  worldAscii.render()
 }
 
 const next = (now:number) => {
@@ -104,7 +106,7 @@ const go = () => {
   waresMenu = new WaresMenu(0, 200, onSetPrice)
   alert = new Alert()
 
-  makeWorldAscii()
+  worldAscii = new AsciiRenderer('bg', 30, 60, fileInCode, fileInColors)
 
   addToMain(logs)
   addToMain(waresMenu)
