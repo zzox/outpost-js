@@ -1,4 +1,4 @@
-import { $id, $make, $q } from '../ui/ui'
+import { $id, $make, $q, makePreText } from '../ui/ui'
 import { symbols } from './symbols'
 import { cssColors } from '../ui/colors'
 
@@ -70,10 +70,9 @@ const load = (fileItems:number[][], fileColors:number[][]) => {
 
 const go = () => {
   for (let y = 0; y < boxHeight; y++) {
-    const pre = $make('pre')
+    const pre = makePreText(' ')
     for (let x = 0; x < boxWidth; x++) {
       const span = $make('span')
-      span.innerText = ' '
       span.className = 'item'
       span.onmousemove = buttonPress(x, y)
       pre.appendChild(span)
@@ -82,13 +81,12 @@ const go = () => {
   }
 
   symbols.forEach(s => {
-    const pre = $make('pre')
+    const pre = makePreText(s)
     pre.onclick = () => {
       Array.from($id('symbol-buttons').children).forEach(item => item.classList.remove('symbol-selected'))
       pre.classList.add('symbol-selected')
       symbol = s
     }
-    pre.innerText = s
     pre.className = 'symbol'
     $id('symbol-buttons').appendChild(pre)
   })

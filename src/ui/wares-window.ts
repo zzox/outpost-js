@@ -2,6 +2,8 @@ import { ItemType } from '../data/items'
 import { $make, makeButton, makeNumInput, makePreText } from './ui'
 import { MovableWindow } from './windows'
 
+const padAmount = (amount:number) => `x${amount} `.padStart(7, ' ')
+
 export class WaresMenu extends MovableWindow {
   priceLines:{ item: ItemType, el: HTMLSpanElement }[] = []
 
@@ -17,7 +19,7 @@ export class WaresMenu extends MovableWindow {
     const index = this.priceLines.length
     const fullEl = $make('div')
     const nameEl = makePreText(item.padEnd(20, ' '))
-    const amountEl = $make('pre')
+    const amountEl = makePreText(padAmount(amount))
     const div1 = makePreText('|')
     const div2 = makePreText('| $')
     const numInput = makeNumInput()
@@ -27,10 +29,6 @@ export class WaresMenu extends MovableWindow {
     numInput.value = price.toString()
     amountEl.className = 'amount'
     setButton.className = 'set-button'
-
-    // setAmount
-    // PERF:
-    amountEl.textContent = `x${amount} `.padStart(7, ' ')
 
     fullEl.appendChild(nameEl)
     fullEl.appendChild(div1)
@@ -91,6 +89,6 @@ export class WaresMenu extends MovableWindow {
   }
 
   updateItem = (item:ItemType, amount:number) => {
-    (this.priceLines.find((line) => line.item === item)?.el.querySelector('.amount') as HTMLPreElement).textContent = `x${amount} `.padStart(7, ' ')
+    (this.priceLines.find((line) => line.item === item)?.el.querySelector('.amount') as HTMLPreElement).textContent = padAmount(amount)
   }
 }
