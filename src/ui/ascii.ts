@@ -1,4 +1,3 @@
-import { fileInCode, fileInColors } from '../data/editor-data'
 import { symbols } from '../editor/symbols'
 import { logger } from '../util/logger'
 import { randomInt } from '../util/util'
@@ -15,8 +14,8 @@ export class AsciiRenderer {
   symbols:IntGrid
   colors:IntGrid
 
-  prevSymbols:IntGrid
-  prevColors:IntGrid
+  private prevSymbols:IntGrid
+  private prevColors:IntGrid
 
   constructor (id:string, height:number, width:number, symbols:IntGrid, colors:IntGrid) {
     const pel = $q(`pre#${id}`) as HTMLPreElement
@@ -33,10 +32,12 @@ export class AsciiRenderer {
 
     this.width = width
     this.height = height
-    this.prevSymbols = makeEmptyGrid(height, width)
-    this.prevColors = makeEmptyGrid(height, width)
     this.symbols = copyGrid(symbols)
     this.colors = copyGrid(colors)
+    this.prevSymbols = makeEmptyGrid(height, width)
+    this.prevColors = makeEmptyGrid(height, width)
+
+    console.log(symbols)
 
     this.make()
     this.render()
@@ -48,9 +49,8 @@ export class AsciiRenderer {
       nl.style.display = 'flex'
       for (let x = 0; x < this.width; x++) {
         const div = $make('div')
-        div.className = cssColors[fileInColors[y][x]]
-        div.innerText = symbols[fileInCode[y][x]]
-        // html += `<div class='${cssColors[fileInColors[y][x]]}'>${fileInCode[y][x] === 0 ? ' ' : symbols[fileInCode[y][x]]}</div>`
+        // div.className = cssColors[this.colors[y][x]]
+        div.textContent = ' '
         nl.appendChild(div)
       }
       this.parentEl.appendChild(nl)
@@ -58,8 +58,20 @@ export class AsciiRenderer {
   }
 
   render () {
-    // check prev with current
-    // copy current with prev
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        if (this.symbols[y][x] !== this.prevSymbols[y][x]) {
+          this.parentEl.children.item(y)!.children.item(x)!.textContent = symbols[this.symbols[y][x]]
+        }
+
+        if (this.colors[y][x] !== this.prevColors[y][x]) {
+          this.parentEl.children.item(y)!.children.item(x)!.className = cssColors[this.colors[y][x]]
+        }
+      }
+    }
+
+    this.prevColors = copyGrid(this.colors)
+    this.prevSymbols = copyGrid(this.symbols)
   }
 }
 
@@ -115,25 +127,25 @@ export const makeWorldAscii = () => {
 
   // try 3
   // still not as fast as id like, paint takes longer than layout
-  if ($id('bg').childElementCount == 0) {
-    // Array.from($id('bg').children).map(child => child.remove())
+  // if ($id('bg').childElementCount == 0) {
+  //   // Array.from($id('bg').children).map(child => child.remove())
 
-    for (let y = 0; y < fileInCode.length; y++) {
-      // TODO: close span on last color?
-      const nl = $make('div')
-      nl.style.display = 'flex'
-      for (let x = 0; x < fileInCode[0].length; x++) {
-        const div = $make('div')
-        div.className = cssColors[fileInColors[y][x]] + ' woo'
-        div.innerText = symbols[fileInCode[y][x]]
-        // html += `<div class='${cssColors[fileInColors[y][x]]}'>${fileInCode[y][x] === 0 ? ' ' : symbols[fileInCode[y][x]]}</div>`
-        nl.appendChild(div)
-      }
-      $id('bg').appendChild(nl)
-    }
-  } else {
-    const items = Array.from(document.querySelectorAll('.woo'))
-    const int = randomInt(items.length) - 1
-    ;(items[int] as HTMLDivElement).innerText = '!'
-  }
+  //   for (let y = 0; y < fileInCode.length; y++) {
+  //     // TODO: close span on last color?
+  //     const nl = $make('div')
+  //     nl.style.display = 'flex'
+  //     for (let x = 0; x < fileInCode[0].length; x++) {
+  //       const div = $make('div')
+  //       div.className = cssColors[fileInColors[y][x]] + ' woo'
+  //       div.innerText = symbols[fileInCode[y][x]]
+  //       // html += `<div class='${cssColors[fileInColors[y][x]]}'>${fileInCode[y][x] === 0 ? ' ' : symbols[fileInCode[y][x]]}</div>`
+  //       nl.appendChild(div)
+  //     }
+  //     $id('bg').appendChild(nl)
+  //   }
+  // } else {
+  //   const items = Array.from(document.querySelectorAll('.woo'))
+  //   const int = randomInt(items.length) - 1
+  //   ;(items[int] as HTMLDivElement).innerText = '!'
+  // }
 }

@@ -5,13 +5,14 @@ import { encounterLog, encounterOption, encounterText, getTimeText } from './uti
 import { EncounterData, EncounterResData, EncounterResType } from './data/encounter-data'
 import { GameState } from './world/game-state'
 import { ItemType } from './data/items'
-import { clamp } from './util/util'
+import { clamp, randomInt } from './util/util'
 import { FinanceWindow } from './ui/finance-window'
 import { TOPBAR_HEIGHT } from './data/globals'
 import { WaresMenu } from './ui/wares-window'
 import { logger, LogLevel, setLogLevel } from './util/logger'
 import { AsciiRenderer } from './ui/ascii'
 import { fileInCode, fileInColors } from './data/editor-data'
+import { symbols } from './editor/symbols'
 
 let world:World
 let state:GameState
@@ -67,6 +68,10 @@ const onSetPrice = (type:ItemType, price?:number) => {
 const update = () => {
   if (!encounterActive) {
     world.step()
+
+    if (Math.random() < 0.1) {
+      worldAscii.symbols[randomInt(29)][randomInt(59)] = 1
+    }
   }
 }
 
@@ -98,6 +103,7 @@ const createMainListeners = () => {
 const handleGrabWindow = () => {}
 
 const go = () => {
+  console.log(symbols)
   state = new GameState()
   world = new World(state, handleEncounter, handleEncounterRes)
 
