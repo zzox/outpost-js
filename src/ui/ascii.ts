@@ -17,9 +17,8 @@ export class AsciiRenderer {
   private prevSymbols:IntGrid
   private prevColors:IntGrid
 
-  constructor (id:string, height:number, width:number, symbols:IntGrid, colors:IntGrid) {
-    const pel = $q(`pre#${id}`) as HTMLPreElement
-    if (!pel) {
+  constructor (parent:HTMLPreElement, height:number, width:number, symbols:IntGrid, colors:IntGrid) {
+    if (!parent) {
       throw 'No parent element for ascii renderer'
     }
 
@@ -28,7 +27,7 @@ export class AsciiRenderer {
       throw 'Wrong size width or height'
     }
 
-    this.parentEl = pel
+    this.parentEl = parent
 
     this.width = width
     this.height = height

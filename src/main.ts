@@ -112,7 +112,7 @@ const go = () => {
   waresMenu = new WaresMenu(0, 200, onSetPrice)
   alert = new Alert()
 
-  worldAscii = new AsciiRenderer('bg', 30, 60, fileInCode, fileInColors)
+  worldAscii = new AsciiRenderer($id('bg') as HTMLPreElement, 30, 60, fileInCode, fileInColors)
 
   addToMain(logs)
   addToMain(waresMenu)

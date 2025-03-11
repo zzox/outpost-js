@@ -10,7 +10,8 @@ export class Actor {
   zealous:number // 0-100 how much they try to over-sell
 
   level:number
-  name:String
+  name?:String
+  // type?:ActorType
 
   inventory:Inventory
 
@@ -28,7 +29,7 @@ export class Actor {
 
     this.inventory = new Map()
 
-    // this.name = generateName(id)
-    this.name = generateName()
+    this.name = generateName(id)
+    // this.name = generateName()
   }
 }

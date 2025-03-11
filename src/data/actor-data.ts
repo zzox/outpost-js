@@ -5,6 +5,11 @@ import { Inventory, itemData, ItemType } from './items'
 
 let id = 0
 
+// export enum ActorType {
+//   Knight;
+//   Witch;
+// }
+
 export const generateActor = ():Actor => {
   const actorLevel = 3 + randomInt(5);
 
@@ -56,8 +61,8 @@ const generateActorTarget = (level:number):ItemType => {
 //   return inventory;
 // }
 
-export const generateName = () => {
-  return names[id++]
+export const generateName = (id:number): string | undefined => {
+  return names[id]
 }
 
 const names = [
