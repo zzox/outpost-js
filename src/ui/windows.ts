@@ -96,7 +96,11 @@ export class Alert extends MovableWindow {
     this.content.appendChild(this.buttonRow)
   }
 
-  activate (textString:string, options:{ text: string, cb: () => void }[] ) {
+  activate (
+    textString:string,
+    options:{ text: string, cb: () => void }[],
+    checkbox?: { text: string, cb: (checked:boolean) => void }
+  ) {
     this.dialog.innerText = textString
 
     Array.from(this.buttonRow.children).forEach(el => el.remove())

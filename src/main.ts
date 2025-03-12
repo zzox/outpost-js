@@ -26,6 +26,8 @@ let financeWindow:FinanceWindow
 
 // let windows:MovableWindow[] = []
 
+let fastForward = false
+
 let time = 0
 
 const handleEncounter = (data:EncounterData) => {
@@ -85,7 +87,11 @@ const draw = () => {
 
 const next = (now:number) => {
   if (now - time > 100) {
-    update()
+    let updates = 1
+    if (fastForward) updates += 7
+    for (let i = 0; i < updates; i++) {
+      update()
+    }
     draw()
 
     // for the overflow
@@ -140,6 +146,16 @@ const go = () => {
   financeWindow.setPosition(16384, 36)
 
   createMainListeners()
+  document.onkeydown = (event:KeyboardEvent) => {
+    if (event.key === 'f') {
+      fastForward = true
+    }
+  }
+  document.onkeyup = (event:KeyboardEvent) => {
+    if (event.key === 'f') {
+      fastForward = false
+    }
+  }
 
   requestAnimationFrame(next)
 
