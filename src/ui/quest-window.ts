@@ -7,10 +7,10 @@ const padAmount = (amount:number) => `x${amount} `.padStart(7, ' ')
 
 export class QuestMenu extends MovableWindow {
   constructor (x:number, y:number) {
-    super(x, y, 'Wares', true, 'wares')
+    super(x, y, 'Quest', true, 'quest')
 
     const pre = makePreText('')
     this.content.appendChild(pre)
-    const renderer = new AsciiRenderer(pre, 10, 20, [], [])
+    const renderer = new AsciiRenderer(pre, 11, 20, [], [])
   }
 }
