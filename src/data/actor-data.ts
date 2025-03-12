@@ -2,6 +2,7 @@ import { getWeightedRandom, intClamp, randomInt } from '../util/util'
 import { Actor } from '../world/actor'
 import { EncounterType } from './encounter-data'
 import { Inventory, itemData, ItemType } from './items'
+import { Random } from '../util/random'
 
 let id = 0
 
@@ -63,6 +64,17 @@ const generateActorTarget = (level:number):ItemType => {
 
 export const generateName = (id:number): string | undefined => {
   return names[id]
+}
+
+export const generateMainActors = () => {
+  const rand = new Random('weee')
+  console.log(rand.get())
+  console.log(rand.get())
+  console.log(rand.get())
+  console.log(rand.get())
+  console.log(rand.get())
+  console.log(rand.get())
+  console.log(rand.get())
 }
 
 const names = [

@@ -36,8 +36,6 @@ export class AsciiRenderer {
     this.prevSymbols = makeEmptyGrid(height, width)
     this.prevColors = makeEmptyGrid(height, width)
 
-    console.log(symbols)
-
     this.make()
     this.render()
   }

@@ -13,6 +13,7 @@ import { logger, LogLevel, setLogLevel } from './util/logger'
 import { AsciiRenderer } from './ui/ascii'
 import { fileInCode, fileInColors } from './data/editor-data'
 import { symbols } from './editor/symbols'
+import { generateMainActors } from './data/actor-data'
 
 let world:World
 let state:GameState
@@ -104,6 +105,7 @@ const handleGrabWindow = () => {}
 
 const go = () => {
   console.log(symbols)
+  generateMainActors()
   state = new GameState()
   world = new World(state, handleEncounter, handleEncounterRes)
 
