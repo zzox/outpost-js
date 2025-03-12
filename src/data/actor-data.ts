@@ -4,12 +4,13 @@ import { EncounterType } from './encounter-data'
 import { Inventory, itemData, ItemType } from './items'
 import { Random } from '../util/random'
 
-let id = 0
+let id = 400
 
-// export enum ActorType {
-//   Knight;
-//   Witch;
-// }
+export enum ActorType {
+  Knight = 'Knight',
+  Witch = 'Witch',
+  Healer = 'Healer',
+}
 
 export const generateActor = ():Actor => {
   const actorLevel = 3 + randomInt(5);
@@ -23,10 +24,15 @@ export const generateActor = ():Actor => {
     intClamp(100 - randomInt(200), 0, 100)
   )
 
-  actor.targetType = Math.random() < 0.9 ? EncounterType.Buy : EncounterType.Sell
-  actor.target = generateActorTarget(actor.level)
+  if (Math.random() < 0.9) {
+    actor.targetType = EncounterType.Buy
+    actor.target = generateActorTarget(actor.level)
+  } else {
+    actor.targetType = EncounterType.Sell
+    actor.target = generateActorTarget(actor.level)
+  }
 
-  return actor;
+  return actor
 }
 
 const generateActorTarget = (level:number):ItemType => {
@@ -36,6 +42,29 @@ const generateActorTarget = (level:number):ItemType => {
   }
 
   return getWeightedRandom(weights)
+}
+
+export const generateName = (id:number): string | undefined => {
+  return names[id]
+}
+
+const types = [
+  ActorType.Knight,
+  ActorType.Witch,
+  ActorType.Healer
+]
+
+export const getActorType = (id:number): ActorType => types[id % 3]
+
+export const generateMainActors = () => {
+  const rand = new Random('weee')
+  console.log(rand.get())
+  console.log(rand.get())
+  console.log(rand.get())
+  console.log(rand.get())
+  console.log(rand.get())
+  console.log(rand.get())
+  console.log(rand.get())
 }
 
 // const generateInventory = (level:number) => {
@@ -61,21 +90,6 @@ const generateActorTarget = (level:number):ItemType => {
 //   }
 //   return inventory;
 // }
-
-export const generateName = (id:number): string | undefined => {
-  return names[id]
-}
-
-export const generateMainActors = () => {
-  const rand = new Random('weee')
-  console.log(rand.get())
-  console.log(rand.get())
-  console.log(rand.get())
-  console.log(rand.get())
-  console.log(rand.get())
-  console.log(rand.get())
-  console.log(rand.get())
-}
 
 const names = [
   // m
