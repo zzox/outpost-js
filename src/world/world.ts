@@ -160,11 +160,12 @@ export class World {
   }
 
   handleSell (actor:Actor) {
+    // TODO: handle renegotiate prices according to cheapness/zealousness
     const encounter = {
       type: EncounterType.Sell,
       actor,
       amount: actor.genData?.amount as number,
-      price: 0,
+      price: actor.genData?.price as number,
       item: actor.genData?.item as ItemType
     }
     actor.target = encounter.item
@@ -174,13 +175,12 @@ export class World {
       throw 'Cannot find item'
     }
 
-    // TODO: specific scaling per item
-    const amount = Math.max(getScale(actor.target, actor.level) * 10, 1)
-    // TODO: specific margin per item
-    const price = Math.ceil(data.price * 0.5)
-
-    encounter.amount = amount
-    encounter.price = price * amount
+    // // TODO: specific scaling per item
+    // const amount = Math.max(getScale(actor.target, actor.level) * 10, 1)
+    // // TODO: specific margin per item
+    // const price = Math.ceil(data.price * 0.5)
+    // encounter.amount = amount
+    // encounter.price = price * amount
 
     if (encounter.price > this.state.money) {
       this.onEncounterRes({ type: EncounterResType.CantAfford, encounter })
@@ -191,7 +191,7 @@ export class World {
     this.onEncounter(this.currentEncounter)
   }
 
-  doEncounter (result:boolean) {
+  doEncounter (result:boolean, additions:boolean) {
     if (!this.currentEncounter) {
       throw 'No encounter exists'
     }
@@ -200,7 +200,7 @@ export class World {
       this.onEncounterRes({ type: result ? EncounterResType.Sold : EncounterResType.DenySold, encounter: this.currentEncounter })
       this.currentEncounter = undefined
     } else if (this.currentEncounter.type === EncounterType.Sell) {
-      this.onEncounterRes({ type: result ? EncounterResType.Bought : EncounterResType.NotBought, encounter: this.currentEncounter })
+      this.onEncounterRes({ type: result ? EncounterResType.Bought : EncounterResType.NotBought, encounter: this.currentEncounter, recurring: additions })
       this.currentEncounter = undefined
     } else {
       throw 'Not Implemented'

@@ -83,6 +83,10 @@ input[type=number] {
   appearance: textfield;
 }
 
+input[type=checkbox] {
+  accent-color: #268bd2;
+}
+
 #day {
   align-items: start;
   min-width: 10em;
@@ -111,7 +115,7 @@ input[type=number] {
 }
 
 .display-none {
-  display: none;
+  display: none !important;
 }
 
 .box {
@@ -173,6 +177,17 @@ input[type=number] {
 
 .top {
   z-index: var(--top);
+}
+
+.subtext-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subtext {
+  text-decoration: underline;
+  font-style: oblique;
 }
 
 .items-row {

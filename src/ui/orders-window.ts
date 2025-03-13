@@ -7,12 +7,13 @@ const padAmount = (amount:number) => `x${amount} `.padStart(7, ' ')
 const padPrice = (price:number) => `$${price} `.padEnd(7, ' ')
 
 type OrderCallback = (id:number) => void
+type ToggleOrderCallback = (id:number, on:boolean) => void
 
 export class OrdersMenu extends MovableWindow {
   onRemoveOrder:OrderCallback
-  onToggleOrder:OrderCallback
+  onToggleOrder:ToggleOrderCallback
 
-  constructor (x:number, y:number, onRemoveOrder:OrderCallback, onToggleOrder:OrderCallback) {
+  constructor (x:number, y:number, onRemoveOrder:OrderCallback, onToggleOrder:ToggleOrderCallback) {
     super(x, y, 'Orders', true, 'orders')
 
     this.onRemoveOrder = onRemoveOrder
@@ -27,10 +28,10 @@ export class OrdersMenu extends MovableWindow {
     const nameEl = makePreText(getName(actorId)?.padEnd(12, ' ') as string)
     const amountEl = makePreText(padAmount(amount))
     const priceEl = makePreText(padPrice(price))
-    const div1 = makePreText('|')
-    const div2 = makePreText('| from: ')
+    const div1 = makePreText('| from: ')
+    const div2 = makePreText('|')
     const div3 = makePreText('|')
-    const removeButton = makeButton('set')
+    const removeButton = makeButton('remove')
 
     checkbox.type = 'checkbox'
     checkbox.checked = true
@@ -53,8 +54,8 @@ export class OrdersMenu extends MovableWindow {
       fullEl.remove()
     }
 
-    removeButton.onclick = () => {
-      this.onToggleOrder(actorId)
+    checkbox.onclick = (event:MouseEvent) => {
+      this.onToggleOrder(actorId, (event.target as HTMLInputElement).checked)
     }
 
     this.content.appendChild(fullEl)

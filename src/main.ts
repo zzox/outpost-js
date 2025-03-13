@@ -1,8 +1,8 @@
-import { Alert, LogList } from './ui/windows'
+import { LogList } from './ui/windows'
 import { $id, addToMain, hideWindow, setMoneyUi, showWindow } from './ui/ui'
 import { World } from './world/world'
-import { encounterLog, encounterOption, encounterText, getTimeText } from './util/text-display'
-import { EncounterData, EncounterResData, EncounterResType } from './data/encounter-data'
+import { encounterLog, encounterOption, encounterSubtext, encounterText, getTimeText } from './util/text-display'
+import { EncounterData, EncounterResData, EncounterResType, EncounterType } from './data/encounter-data'
 import { GameState } from './world/game-state'
 import { ItemType } from './data/items'
 import { clamp, randomInt } from './util/util'
@@ -14,6 +14,8 @@ import { AsciiRenderer } from './ui/ascii'
 import { fileInCode, fileInColors } from './data/editor-data'
 import { symbols } from './editor/symbols'
 import { generateMainActors } from './data/actor-data'
+import { Alert } from './ui/alert-window'
+import { OrdersMenu } from './ui/orders-window'
 
 let world:World
 let state:GameState
@@ -22,6 +24,7 @@ let worldAscii:AsciiRenderer
 let logs:LogList
 let alert:Alert
 let waresMenu:WaresMenu
+let ordersMenu:OrdersMenu
 let financeWindow:FinanceWindow
 
 // let windows:MovableWindow[] = []
@@ -31,16 +34,20 @@ let fastForward = false
 let time = 0
 
 const handleEncounter = (data:EncounterData) => {
-  alert.activate(encounterText(data), [
-    { text: encounterOption(data, 0), cb: () => {
-      encounterActive = false
-      world.doEncounter(true)
-    } },
-    { text: encounterOption(data, 1), cb: () => {
-      encounterActive = false
-      world.doEncounter(false)
-    } },
-  ])
+  alert.activate(
+    encounterText(data),
+    [
+      { text: encounterOption(data, 0), cb: (addition:boolean) => {
+        encounterActive = false
+        world.doEncounter(true, addition)
+      }, },
+      { text: encounterOption(data, 1), cb: () => {
+        encounterActive = false
+        world.doEncounter(false, false)
+      } },
+    ],
+    data.type === EncounterType.Sell ? { text: encounterSubtext(data) } : undefined
+  )
   showWindow(alert)
   alert.alignToCenter()
   encounterActive = true
@@ -56,6 +63,16 @@ const handleEncounterRes = (data:EncounterResData) => {
     state.buyItem(data.encounter.item, data.encounter.amount, data.encounter.price)
     waresMenu.updateItem(data.encounter.item, state.wares.get(data.encounter.item) as number)
     setMoneyUi(state.money)
+    if (data.recurring) {
+      const actor = world.actors[data.encounter.actor.id]
+      ordersMenu.addOrder(
+        actor.id,
+        actor.genData?.item as ItemType,
+        actor.genData?.amount as number,
+        actor.genData?.price as number
+      )
+      state.orders.add(data.encounter.actor.id)
+    }
   }
 
   financeWindow.updateFromState(state.history)
@@ -66,6 +83,18 @@ const handleEncounterRes = (data:EncounterResData) => {
 const onSetPrice = (type:ItemType, price?:number) => {
   state.prices.set(type, price ?? 0)
   logger.log('prices set', state.prices)
+}
+
+const onRemoveOrder = (id:number) => {
+  state.orders.delete(id)
+}
+
+const onToggleOrder = (id:number, on:boolean) => {
+  if (on) {
+    state.orders.add(id)
+  } else {
+    state.orders.delete(id)
+  }
 }
 
 const update = () => {
@@ -104,6 +133,7 @@ const next = (now:number) => {
 
 const createMainListeners = () => {
   $id('wares-button').onclick = () => showWindow(waresMenu)
+  $id('orders-button').onclick = () => showWindow(ordersMenu)
   $id('money-button').onclick = () => showWindow(financeWindow)
 }
 
@@ -116,17 +146,20 @@ const go = () => {
   world = new World(state, handleEncounter, handleEncounterRes)
 
   logs = new LogList(0, 0)
-  financeWindow = new FinanceWindow(0, TOPBAR_HEIGHT)
   waresMenu = new WaresMenu(0, 200, onSetPrice)
+  ordersMenu = new OrdersMenu(400, 200, onRemoveOrder, onToggleOrder)
+  financeWindow = new FinanceWindow(0, TOPBAR_HEIGHT)
   alert = new Alert()
 
   worldAscii = new AsciiRenderer($id('bg') as HTMLPreElement, 30, 60, fileInCode, fileInColors)
 
   addToMain(logs)
   addToMain(waresMenu)
+  addToMain(ordersMenu)
   addToMain(financeWindow)
   addToMain(alert)
 
+  hideWindow(ordersMenu)
   hideWindow(financeWindow)
   hideWindow(alert)
 

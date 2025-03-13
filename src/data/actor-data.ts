@@ -19,6 +19,7 @@ export type GenerationData = {
   type:EncounterType
   item?:ItemType
   amount?:number
+  price?:number
   day:HiLow
   // level:HiLow
 }
@@ -90,6 +91,7 @@ export const generateMainActors = ():Actor[] => {
     type: EncounterType.Sell,
     item: ItemType.Potion,
     amount: 100,
+    price: 500,
     day: { low: 0, hi: -1 }
     // level: { low: 5, hi: },
   }

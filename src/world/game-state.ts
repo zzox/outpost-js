@@ -17,6 +17,7 @@ export class GameState {
 
   wares:Inventory
   prices:Inventory
+  orders:Set<number>
 
   history:History
 
@@ -26,6 +27,7 @@ export class GameState {
     this.prices = startingPrices
 
     this.history = new History()
+    this.orders = new Set()
   }
 
   buyItem (item:ItemType, amount:number, totalPrice:number) {

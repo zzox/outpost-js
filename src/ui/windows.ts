@@ -79,48 +79,6 @@ export class MovableWindow {
   }
 }
 
-export class Alert extends MovableWindow {
-  dialog:HTMLPreElement
-  buttonRow:HTMLDivElement
-
-  constructor () {
-    super(0, 0, 'Alert', false, 'alert')
-
-    this.dialog = $make('pre') as HTMLPreElement
-    this.dialog.className = 'alert-text'
-
-    this.buttonRow = $make('div') as HTMLDivElement
-    this.buttonRow.className = 'button-row'
-
-    this.content.appendChild(this.dialog)
-    this.content.appendChild(this.buttonRow)
-  }
-
-  activate (
-    textString:string,
-    options:{ text: string, cb: () => void }[],
-    checkbox?: { text: string, cb: (checked:boolean) => void }
-  ) {
-    this.dialog.innerText = textString
-
-    Array.from(this.buttonRow.children).forEach(el => el.remove())
-
-    options.forEach(({ text, cb }) => {
-      const button = $make('button')
-      const pre = makePreText(text)
-
-      button.appendChild(pre)
-
-      button.onclick = () => {
-        this.close()
-        cb()
-      }
-
-      this.buttonRow.appendChild(button)
-    })
-  }
-}
-
 export class LogList extends MovableWindow {
   static logs: string[]
 

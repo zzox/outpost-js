@@ -33,6 +33,7 @@ export type EncounterData = {
 export type EncounterResData = {
   type:EncounterResType
   encounter:EncounterData
+  recurring?:boolean
   // actor:Actor
   // item:ItemType
 }

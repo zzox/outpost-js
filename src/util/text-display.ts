@@ -62,3 +62,11 @@ export const encounterText = (data:EncounterData):string => {
 
   throw 'Undefined enctounter text'
 }
+
+export const encounterSubtext = (data:EncounterData):string => {
+  if (data.type === EncounterType.Sell) {
+    return `Repeat this order in the future`
+  }
+
+  throw 'Undefined encounter text'
+}
