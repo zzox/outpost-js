@@ -1,4 +1,4 @@
-import { Inventory } from "../data/items"
+import { Inventory } from '../data/items'
 
 export const clamp = (value:number, min:number, max:number):number => Math.max(Math.min(value, max), min)
 export const intClamp = (value:number, min:number, max:number):number => Math.floor(Math.max(Math.min(value, max), min))

@@ -1,8 +1,8 @@
-import { ItemType } from "../data/items"
-import { $make, makePreText } from "./ui"
-import { MovableWindow } from "./windows"
+import { ItemType } from '../data/items'
+import { $make, makePreText } from './ui'
+import { MovableWindow } from './windows'
 import { History } from '../world/game-state'
-import { totalInventory } from "../util/util"
+import { totalInventory } from '../util/util'
 
 export class FinanceWindow extends MovableWindow {
   itemsSoldEl:HTMLPreElement

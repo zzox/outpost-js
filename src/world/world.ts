@@ -1,6 +1,7 @@
-import { generateActor } from '../data/actor-data'
+import { generateActor, generateMainActors } from '../data/actor-data'
 import { EncounterData, EncounterResData, EncounterResType, EncounterType } from '../data/encounter-data'
-import { getActorMaxPrice, getNumFromInventory, getScale, itemData } from '../data/items'
+import { DAY_LENGTH } from '../data/globals'
+import { getActorMaxPrice, getNumFromInventory, getScale, itemData, ItemType } from '../data/items'
 import { randomInt } from '../util/util'
 import { Actor } from './actor'
 import { GameState } from './game-state'
@@ -18,6 +19,8 @@ export class World {
 
   currentEncounter?:EncounterData
 
+  actors:Actor[]
+
   // callback denoting an encounter starting
   onEncounter:(d:EncounterData) => void
   // callback on an encounter resolving
@@ -31,14 +34,17 @@ export class World {
     this.onEncounter = onEncounter
     this.onEncounterRes = onEncounterRes
     this.state = state
+    this.actors = generateMainActors()
   }
 
   step () {
     this.time++
-    if (this.time == 360) {
+    if (this.time === DAY_LENGTH) {
       this.time = 0
       this.day++
     }
+
+    this.actors.forEach(a => a.genData!.nextTime--)
 
     if (--this.spawnTime === 0) {
     // TODO: separate spawning an actor and an actor encounter
@@ -51,12 +57,25 @@ export class World {
   spawnAction () {
     this.spawnTime = SPAWN_TIME
 
-    const actor = generateActor()
+    let actor:Actor | undefined
+    this.actors.forEach(a => {
+      if (!actor && a.genData!.nextTime <= 0) {
+        actor = a
+      }
+    })
+
+    if (!actor) {
+      actor = generateActor()
+    }
 
     if (actor.targetType === EncounterType.Buy) {
       this.handleBuy(actor)
     } else {
       this.handleSell(actor)
+    }
+
+    if (actor.genData) {
+      actor.genData.nextTime += actor.genData.frequency
     }
   }
 
@@ -144,10 +163,11 @@ export class World {
     const encounter = {
       type: EncounterType.Sell,
       actor,
-      amount: 0,
+      amount: actor.genData?.amount as number,
       price: 0,
-      item: actor.target
+      item: actor.genData?.item as ItemType
     }
+    actor.target = encounter.item
 
     const data = itemData.get(actor.target)
     if (!data) {

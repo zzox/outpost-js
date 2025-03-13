@@ -3,6 +3,7 @@ import { Actor } from '../world/actor'
 import { EncounterType } from './encounter-data'
 import { Inventory, itemData, ItemType } from './items'
 import { Random } from '../util/random'
+import { DAY_LENGTH, HiLow, scale, Scale } from './globals'
 
 let id = 400
 
@@ -10,6 +11,16 @@ export enum ActorType {
   Knight = 'Knight',
   Witch = 'Witch',
   Healer = 'Healer',
+}
+
+export type GenerationData = {
+  frequency:number
+  nextTime:number
+  type:EncounterType
+  item?:ItemType
+  amount?:number
+  day:HiLow
+  // level:HiLow
 }
 
 export const generateActor = ():Actor => {
@@ -24,13 +35,13 @@ export const generateActor = ():Actor => {
     intClamp(100 - randomInt(200), 0, 100)
   )
 
-  if (Math.random() < 0.9) {
-    actor.targetType = EncounterType.Buy
-    actor.target = generateActorTarget(actor.level)
-  } else {
-    actor.targetType = EncounterType.Sell
-    actor.target = generateActorTarget(actor.level)
-  }
+  // if (Math.random() < 0.9) {
+  actor.targetType = EncounterType.Buy
+  actor.target = generateActorTarget(actor.level)
+  // } else {
+  //   actor.targetType = EncounterType.Sell
+  //   actor.target = generateActorTarget(actor.level)
+  // }
 
   return actor
 }
@@ -45,7 +56,7 @@ const generateActorTarget = (level:number):ItemType => {
 }
 
 export const generateName = (id:number): string | undefined => {
-  return names[id]
+  return shuffledNames[id]
 }
 
 const types = [
@@ -56,15 +67,37 @@ const types = [
 
 export const getActorType = (id:number): ActorType => types[id % 3]
 
-export const generateMainActors = () => {
+export const generateMainActors = ():Actor[] => {
   const rand = new Random('weee')
   console.log(rand.get())
   console.log(rand.get())
   console.log(rand.get())
-  console.log(rand.get())
-  console.log(rand.get())
-  console.log(rand.get())
-  console.log(rand.get())
+
+  let actorId = 0
+  const actors = []
+
+  const actor = new Actor(
+    actorId,
+    5,
+    1000,
+    0,
+    0,
+    0
+  )
+  actor.genData = {
+    frequency: DAY_LENGTH,
+    nextTime: 0,
+    type: EncounterType.Sell,
+    item: ItemType.Potion,
+    amount: 100,
+    day: { low: 0, hi: -1 }
+    // level: { low: 5, hi: },
+  }
+  actor.genData.nextTime = randomInt(actor.genData.frequency)
+
+  actors.push(actor)
+
+  return actors
 }
 
 // const generateInventory = (level:number) => {
@@ -495,3 +528,7 @@ const names = [
   'Sue',
   'Christina'
 ]
+
+const shuffledNames:string[] = names.slice()
+// @ts-ignore
+shuffledNames.sort((a, b) => a - b)

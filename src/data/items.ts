@@ -1,3 +1,5 @@
+import { scale, Scale } from './globals'
+
 export enum ItemType {
   Rope = 'Rope',
   Wood = 'Wood',
@@ -6,20 +8,11 @@ export enum ItemType {
   RiseLeaf = 'Rise Leaf',
 }
 
-// y = mx + b, <= limit
-type Scale = {
-  m:number
-  b:number
-  l:number
-}
-
 type ItemData = {
   price:number
   common:number
   scale:Scale
 }
-
-const scale = (m:number, b:number, l:number):Scale => ({ m, b, l })
 
 // TODO: parse from config file
 export const itemData:Map<ItemType, ItemData> = new Map()
