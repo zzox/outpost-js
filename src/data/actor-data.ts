@@ -90,8 +90,8 @@ export const generateMainActors = ():Actor[] => {
     nextTime: 0,
     type: EncounterType.Sell,
     item: ItemType.Potion,
-    amount: 100,
-    price: 500,
+    amount: 10,
+    price: 100,
     day: { low: 0, hi: -1 }
     // level: { low: 5, hi: },
   }

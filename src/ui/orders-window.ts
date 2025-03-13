@@ -30,7 +30,7 @@ export class OrdersMenu extends MovableWindow {
     const priceEl = makePreText(padPrice(price))
     const div1 = makePreText('| from: ')
     const div2 = makePreText('|')
-    const div3 = makePreText('|')
+    const div3 = makePreText('| ')
     const removeButton = makeButton('remove')
 
     checkbox.type = 'checkbox'

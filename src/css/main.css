@@ -105,6 +105,10 @@ input[type=checkbox] {
   width: 20em;
 }
 
+#orders > .box-content {
+  width: 40em;
+}
+
 #bg {
   width: 100vw;
   height: calc(100vh - 3em);
