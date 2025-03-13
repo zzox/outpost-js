@@ -175,7 +175,7 @@ input[type=number] {
   z-index: var(--top);
 }
 
-.wares-row {
+.items-row {
   display: flex;
   align-items: center;
 }

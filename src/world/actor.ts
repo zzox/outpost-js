@@ -1,4 +1,4 @@
-import { ActorType, generateName, GenerationData, getActorType } from '../data/actor-data'
+import { ActorType, getName, GenerationData, getActorType } from '../data/actor-data'
 import { EncounterType } from '../data/encounter-data'
 import { Inventory, ItemType } from '../data/items'
 
@@ -30,7 +30,7 @@ export class Actor {
 
     this.inventory = new Map()
 
-    this.name = generateName(id)
+    this.name = getName(id)
     this.type = getActorType(id)
   }
 }

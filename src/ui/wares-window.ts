@@ -25,7 +25,7 @@ export class WaresMenu extends MovableWindow {
     const numInput = makeNumInput()
     const setButton = makeButton('set')
 
-    fullEl.className = 'wares-row'
+    fullEl.className = 'items-row'
     numInput.value = price.toString()
     amountEl.className = 'amount'
     setButton.className = 'set-button'

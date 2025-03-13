@@ -55,7 +55,7 @@ const generateActorTarget = (level:number):ItemType => {
   return getWeightedRandom(weights)
 }
 
-export const generateName = (id:number): string | undefined => {
+export const getName = (id:number): string | undefined => {
   return shuffledNames[id]
 }
 
