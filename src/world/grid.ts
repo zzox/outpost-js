@@ -33,9 +33,9 @@ export type IntGrid = number[][]
 
 export const makeEmptyGrid = (height:number, width:number):IntGrid => {
   const newGrid = []
-  for (let y = 0; y < width; y++) {
+  for (let y = 0; y < height; y++) {
     const newRow = []
-    for (let x = 0; x < height; x++) {
+    for (let x = 0; x < width; x++) {
       newRow.push(0)
     }
     newGrid.push(newRow)

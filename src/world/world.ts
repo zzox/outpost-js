@@ -160,7 +160,6 @@ export class World {
   }
 
   handleSell (actor:Actor) {
-    // TODO: handle renegotiate prices according to cheapness/zealousness
     const encounter = {
       type: EncounterType.Sell,
       actor,
@@ -184,6 +183,12 @@ export class World {
 
     if (encounter.price > this.state.money) {
       this.onEncounterRes({ type: EncounterResType.CantAfford, encounter })
+      return
+    }
+
+    // TODO: handle renegotiate prices according to cheapness/zealousness
+    if (this.state.orders.has(actor.id)) {
+      this.onEncounterRes({ type: EncounterResType.Bought, encounter: encounter })
       return
     }
 
