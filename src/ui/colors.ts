@@ -21,8 +21,10 @@ enum Colors {
   DARK_GREEN = 0x587558,
 }
 
-// needed?
 const paletteColors = [
+  // made up
+  Colors.BG,
+
   Colors.WHITE,
   Colors.WHITESMOKE,
   Colors.OFFWHITE,
@@ -36,12 +38,11 @@ const paletteColors = [
   Colors.TAN,
 
   // made up
-  Colors.BG,
   Colors.BROWN,
   Colors.GOLD,
 
-  // Not yet used colors
-  Colors.DARK_GREEN,
+  // // Not yet used colors
+  // Colors.DARK_GREEN,
 ]
 
 export const cssColors = [

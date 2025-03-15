@@ -32,6 +32,9 @@ class PathNode {
   h:number = 0.0
 
   constructor (point:Vec2, tail?:PathNode) {
+    if (point == null) {
+      console.warn('p', point, tail)
+    }
     this.point = point
     this.tail = tail
   }
@@ -169,10 +172,10 @@ export function pathfind (
   while (heap.nodes.length > 0) {
     const currentNode = heap.popNode()
 
-    if (currentNode == null) {
+    if (!currentNode) {
       throw 'Undefined node!';
     }
-  
+
     // check if this start equals the end
     // trace(endPoint.x, endPoint.y, currentNode.point.x, currentNode.point.y);
     if (checkPointsEqual(endPoint, currentNode.point)) {
@@ -189,6 +192,7 @@ export function pathfind (
 
       // if the visited item exists and has a lower cost, don't do anything with this neighbor
       const visitedItem = visited.getItem(neighbor);
+      // console.log(neighbor, currentNode.point)
       if (visitedItem == null || newCost < visitedItem) {
         const newNode = new PathNode(neighbor, currentNode);
         newNode.cost = newCost;

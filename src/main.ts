@@ -10,7 +10,7 @@ import { FinanceWindow } from './ui/finance-window'
 import { TOPBAR_HEIGHT } from './data/globals'
 import { WaresMenu } from './ui/wares-window'
 import { logger, LogLevel, setLogLevel } from './util/logger'
-import { AsciiRenderer } from './ui/ascii'
+import { AsciiRenderer, BgRender } from './ui/ascii'
 import { fileInCode, fileInColors } from './data/editor-data'
 import { symbols } from './editor/symbols'
 import { generateMainActors } from './data/actor-data'
@@ -151,7 +151,8 @@ const go = () => {
   financeWindow = new FinanceWindow(0, TOPBAR_HEIGHT)
   alert = new Alert()
 
-  worldAscii = new AsciiRenderer($id('bg') as HTMLPreElement, 30, 60, fileInCode, fileInColors)
+  // worldAscii = new AsciiRenderer($id('bg') as HTMLPreElement, 30, 60, fileInCode, fileInColors)
+  worldAscii = new BgRender($id('bg') as HTMLPreElement, 30, 60, fileInCode, fileInColors, world.tiles)
 
   addToMain(logs)
   addToMain(waresMenu)

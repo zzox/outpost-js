@@ -3,6 +3,7 @@ import { Inventory } from '../data/items'
 export const clamp = (value:number, min:number, max:number):number => Math.max(Math.min(value, max), min)
 export const intClamp = (value:number, min:number, max:number):number => Math.floor(Math.max(Math.min(value, max), min))
 
+// WARN: uses ceil here instead of floor
 export const randomInt = (num:number) => {
   return Math.ceil(Math.random() * num)
 }

@@ -2,7 +2,7 @@ import { collisions, playerPos, spawnPositions } from '../data/editor-data'
 import { vec2, Vec2 } from '../data/globals'
 import { logger } from '../util/logger'
 import { Diagonal, pathfind } from '../util/pathfinding'
-import { getRandom, randomInt } from '../util/util'
+import { getRandom } from '../util/util'
 import { Actor } from './actor'
 import { Grid, makeGrid, makeIntGrid } from './grid'
 
@@ -49,7 +49,7 @@ export class WorldTiles {
     const items = spawnPositions.filter(pos => this.grid[pos.y][pos.x] === null)
     if (items.length == 0) throw 'No valid exit'
 
-    const startPos = items[randomInt(items.length)]
+    const startPos = getRandom(items)
 
     const path = pathfind(
       makeIntGrid(this.grid, collisions),

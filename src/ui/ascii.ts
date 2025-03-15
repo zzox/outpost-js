@@ -1,6 +1,5 @@
 import { symbols } from '../editor/symbols'
 import { logger } from '../util/logger'
-import { randomInt } from '../util/util'
 import { copyGrid, IntGrid, makeEmptyGrid } from '../world/grid'
 import { WorldTiles } from '../world/world-tiles'
 import { cssColors } from './colors'
@@ -72,7 +71,10 @@ export class AsciiRenderer {
     this.prevSymbols = copyGrid(this.symbols)
   }
 
-  setItem (grid, x, y, symbol, color) {}
+  setItem (x:number, y:number, symbol:number, color:number) {
+    this.colors[y][x] = color
+    this.symbols[y][x] = symbol
+  }
 }
 
 export class BgRender extends AsciiRenderer {
@@ -81,19 +83,21 @@ export class BgRender extends AsciiRenderer {
 
   worldTiles:WorldTiles
 
-  constructor (parent:HTMLPreElement, height:number, width:number, symbols:IntGrid, colors:IntGrid) {
+  constructor (parent:HTMLPreElement, height:number, width:number, symbols:IntGrid, colors:IntGrid, worldTiles:WorldTiles) {
     super(parent, height, width, symbols, colors)
 
     this.bgSymbols = copyGrid(symbols)
     this.bgColors = copyGrid(colors)
+    this.worldTiles = worldTiles
   }
 
   render() {
-    const newSymbols = copyGrid(this.symbols)
-    const newColors = copyGrid(this.colors)
+    this.symbols = copyGrid(this.bgSymbols)
+    this.colors = copyGrid(this.bgColors)
 
-    this.symbols = newSymbols
-    this.colors = newColors
+    this.worldTiles.actors.forEach(actor => {
+      this.setItem(actor.x, actor.y, 32, 6)
+    })
 
     super.render()
   }
