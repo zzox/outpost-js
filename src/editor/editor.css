@@ -19,6 +19,7 @@ pre {
   line-height: 1em;
   margin: 0;
   user-select: none;
+  color: var(--color);
   /* letter-spacing: .2em; */
   /* font-stretch: semi-expanded; */
   /* transform: scale(1.2, 1.0); */
