@@ -7,6 +7,8 @@ export const randomInt = (num:number) => {
   return Math.ceil(Math.random() * num)
 }
 
+export const getRandom = <T>(items:T[]):T => items[Math.floor(Math.random() * items.length)]
+
 type RandomWeight<T> = {
   weight:number
   item:T

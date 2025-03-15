@@ -2,6 +2,7 @@ import { symbols } from '../editor/symbols'
 import { logger } from '../util/logger'
 import { randomInt } from '../util/util'
 import { copyGrid, IntGrid, makeEmptyGrid } from '../world/grid'
+import { WorldTiles } from '../world/world-tiles'
 import { cssColors } from './colors'
 import { $id, $make, $q } from './ui'
 
@@ -37,7 +38,7 @@ export class AsciiRenderer {
     this.prevColors = makeEmptyGrid(height, width)
 
     this.make()
-    this.render()
+    // this.render()
   }
 
   make () {
@@ -69,6 +70,32 @@ export class AsciiRenderer {
 
     this.prevColors = copyGrid(this.colors)
     this.prevSymbols = copyGrid(this.symbols)
+  }
+
+  setItem (grid, x, y, symbol, color) {}
+}
+
+export class BgRender extends AsciiRenderer {
+  bgSymbols:IntGrid
+  bgColors:IntGrid
+
+  worldTiles:WorldTiles
+
+  constructor (parent:HTMLPreElement, height:number, width:number, symbols:IntGrid, colors:IntGrid) {
+    super(parent, height, width, symbols, colors)
+
+    this.bgSymbols = copyGrid(symbols)
+    this.bgColors = copyGrid(colors)
+  }
+
+  render() {
+    const newSymbols = copyGrid(this.symbols)
+    const newColors = copyGrid(this.colors)
+
+    this.symbols = newSymbols
+    this.colors = newColors
+
+    super.render()
   }
 }
 

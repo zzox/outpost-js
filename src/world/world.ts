@@ -2,9 +2,9 @@ import { generateActor, generateMainActors } from '../data/actor-data'
 import { EncounterData, EncounterResData, EncounterResType, EncounterType } from '../data/encounter-data'
 import { DAY_LENGTH } from '../data/globals'
 import { getActorMaxPrice, getNumFromInventory, getScale, itemData, ItemType } from '../data/items'
-import { randomInt } from '../util/util'
 import { Actor } from './actor'
 import { GameState } from './game-state'
+import { WorldTiles } from './world-tiles'
 
 // TEMP:
 const SPAWN_TIME = 10
@@ -19,6 +19,7 @@ export class World {
 
   currentEncounter?:EncounterData
 
+  tiles:WorldTiles
   actors:Actor[]
 
   // callback denoting an encounter starting
@@ -35,6 +36,8 @@ export class World {
     this.onEncounterRes = onEncounterRes
     this.state = state
     this.actors = generateMainActors()
+
+    this.tiles = new WorldTiles(60, 30, this.handleEncounter)
   }
 
   step () {
@@ -51,7 +54,7 @@ export class World {
       this.spawnAction()
     }
 
-    // tiles.update()
+   this.tiles.update()
   }
 
   spawnAction () {
@@ -77,6 +80,12 @@ export class World {
     if (actor.genData) {
       actor.genData.nextTime += actor.genData.frequency
     }
+
+    this.tiles.addActor(actor, false)
+  }
+
+  handleEncounter (actor:Actor) {
+    console.error(actor)
   }
 
   handleBuy (actor:Actor) {

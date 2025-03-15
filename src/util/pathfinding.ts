@@ -148,7 +148,7 @@ function getMovementCost (grid: IntGrid, fromPoint:Vec2, toPoint:Vec2): number {
   return pointCost * multi
 }
 
-function pathfind (
+export function pathfind (
   grid: IntGrid,
   startPoint:Vec2,
   endPoint:Vec2,
