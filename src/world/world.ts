@@ -187,8 +187,11 @@ export class World {
     }
 
     // TODO: handle renegotiate prices according to cheapness/zealousness
-    if (this.state.orders.has(actor.id)) {
+    if (this.state.orders.get(actor.id)) {
       this.onEncounterRes({ type: EncounterResType.Bought, encounter: encounter })
+      return
+    } else if (this.state.orders.get(actor.id) === false) {
+      this.onEncounterRes({ type: EncounterResType.NotBought, encounter: encounter })
       return
     }
 

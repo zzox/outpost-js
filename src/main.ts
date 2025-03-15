@@ -71,7 +71,7 @@ const handleEncounterRes = (data:EncounterResData) => {
         actor.genData?.amount as number,
         actor.genData?.price as number
       )
-      state.orders.add(data.encounter.actor.id)
+      state.orders.set(data.encounter.actor.id, true)
     }
   }
 
@@ -91,9 +91,9 @@ const onRemoveOrder = (id:number) => {
 
 const onToggleOrder = (id:number, on:boolean) => {
   if (on) {
-    state.orders.add(id)
+    state.orders.set(id, true)
   } else {
-    state.orders.delete(id)
+    state.orders.set(id, false)
   }
 }
 

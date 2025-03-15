@@ -17,7 +17,7 @@ export class GameState {
 
   wares:Inventory
   prices:Inventory
-  orders:Set<number>
+  orders:Map<number, boolean>
 
   history:History
 
@@ -27,7 +27,7 @@ export class GameState {
     this.prices = startingPrices
 
     this.history = new History()
-    this.orders = new Set()
+    this.orders = new Map()
   }
 
   buyItem (item:ItemType, amount:number, totalPrice:number) {
