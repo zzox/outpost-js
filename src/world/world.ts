@@ -7,7 +7,7 @@ import { GameState } from './game-state'
 import { WorldTiles } from './world-tiles'
 
 // TEMP:
-const SPAWN_TIME = 10
+const SPAWN_TIME = 50
 
 export class World {
   state:GameState
@@ -38,6 +38,9 @@ export class World {
     this.actors = generateMainActors()
 
     this.tiles = new WorldTiles(60, 30, this.handleEncounter)
+
+    // this.handleBuy = this.handleBuy.bind(this)
+    // this.handleSell = this.handleSell.bind(this)
   }
 
   step () {
@@ -71,12 +74,7 @@ export class World {
       actor = generateActor()
     }
 
-    if (actor.targetType === EncounterType.Buy) {
-      this.handleBuy(actor)
-    } else {
-      this.handleSell(actor)
-    }
-
+    // TODO: consider adding this on exit
     if (actor.genData) {
       actor.genData.nextTime += actor.genData.frequency
     }
@@ -84,8 +82,14 @@ export class World {
     this.tiles.addActor(actor, false)
   }
 
-  handleEncounter (actor:Actor) {
-    console.error(actor)
+  handleEncounter = (actor:Actor) => {
+    console.warn('encounter', actor)
+
+    if (actor.targetType === EncounterType.Buy) {
+      this.handleBuy(actor)
+    } else {
+      this.handleSell(actor)
+    }
   }
 
   handleBuy (actor:Actor) {
@@ -136,7 +140,7 @@ export class World {
 
     const itemsInInventory = getNumFromInventory(this.state.wares, actor.target)
     if (itemsInInventory === 0) {
-      this.onEncounterRes({ type: EncounterResType.DontHave, encounter })
+      this.handleEncounterResult({ type: EncounterResType.DontHave, encounter })
       return
     }
 
@@ -152,11 +156,11 @@ export class World {
     // if the prices are set, decide here if the actor buys
     if (itemPrice !== 0) {
       if (encounter.price > actor.money) {
-        this.onEncounterRes({ type: EncounterResType.CantAfford, encounter })
+        this.handleEncounterResult({ type: EncounterResType.CantAfford, encounter })
       } else if (itemPrice <= getActorMaxPrice(data.price, actor.leeway)) {
-        this.onEncounterRes({ type: EncounterResType.Sold, encounter })
+        this.handleEncounterResult({ type: EncounterResType.Sold, encounter })
       } else {
-        this.onEncounterRes({ type: EncounterResType.TooExpensive, encounter })
+        this.handleEncounterResult({ type: EncounterResType.TooExpensive, encounter })
       }
       return
     } else {
@@ -191,16 +195,16 @@ export class World {
     // encounter.price = price * amount
 
     if (encounter.price > this.state.money) {
-      this.onEncounterRes({ type: EncounterResType.CantAfford, encounter })
+      this.handleEncounterResult({ type: EncounterResType.CantAfford, encounter })
       return
     }
 
     // TODO: handle renegotiate prices according to cheapness/zealousness
     if (this.state.orders.get(actor.id)) {
-      this.onEncounterRes({ type: EncounterResType.Bought, encounter: encounter })
+      this.handleEncounterResult({ type: EncounterResType.Bought, encounter: encounter })
       return
     } else if (this.state.orders.get(actor.id) === false) {
-      this.onEncounterRes({ type: EncounterResType.NotBought, encounter: encounter })
+      this.handleEncounterResult({ type: EncounterResType.NotBought, encounter: encounter })
       return
     }
 
@@ -214,13 +218,18 @@ export class World {
     }
 
     if (this.currentEncounter.type === EncounterType.Buy) {
-      this.onEncounterRes({ type: result ? EncounterResType.Sold : EncounterResType.DenySold, encounter: this.currentEncounter })
+      this.handleEncounterResult({ type: result ? EncounterResType.Sold : EncounterResType.DenySold, encounter: this.currentEncounter })
       this.currentEncounter = undefined
     } else if (this.currentEncounter.type === EncounterType.Sell) {
-      this.onEncounterRes({ type: result ? EncounterResType.Bought : EncounterResType.NotBought, encounter: this.currentEncounter, recurring: additions })
+      this.handleEncounterResult({ type: result ? EncounterResType.Bought : EncounterResType.NotBought, encounter: this.currentEncounter, recurring: additions })
       this.currentEncounter = undefined
     } else {
       throw 'Not Implemented'
     }
+  }
+
+  handleEncounterResult (data:EncounterResData) {
+    this.onEncounterRes(data)
+    this.tiles.actorDone()
   }
 }

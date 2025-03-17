@@ -65,7 +65,7 @@ export class WorldTiles {
       x: startPos.x,
       y: startPos.y,
       actor: actor,
-      time: 7,
+      time: 3,
       state: GridActorState.Coming,
       path: path
     }
@@ -105,7 +105,7 @@ export class WorldTiles {
     const item = actor.path[0]
     if (this.grid[item.y][item.x] == null) {
       // if actor distance is diagonal, time is 7
-      actor.time = Math.abs(actor.x - item.x) > 0 && Math.abs(actor.y - item.y) > 0 ? 7 : 5
+      actor.time = Math.abs(actor.x - item.x) > 0 && Math.abs(actor.y - item.y) > 0 ? 3 : 2
       this.grid[actor.y][actor.x] = null
       this.grid[item.y][item.x] = actor
       actor.x = item.x
