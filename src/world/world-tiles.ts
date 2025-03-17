@@ -2,7 +2,7 @@ import { collisions, playerPos, spawnPositions } from '../data/editor-data'
 import { vec2, Vec2 } from '../data/globals'
 import { logger } from '../util/logger'
 import { Diagonal, pathfind } from '../util/pathfinding'
-import { getRandom } from '../util/util'
+import { getRandom, randomInt } from '../util/util'
 import { Actor } from './actor'
 import { Grid, makeGrid, makeIntGrid } from './grid'
 
@@ -125,7 +125,7 @@ export class WorldTiles {
       if (path == null) throw 'No Path on adjust'
 
       actor.path = path
-      actor.time = 10
+      actor.time = 5 + randomInt(5)
     }
   }
 

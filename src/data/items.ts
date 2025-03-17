@@ -16,9 +16,9 @@ type ItemData = {
 
 // TODO: parse from config file
 export const itemData:Map<ItemType, ItemData> = new Map()
-itemData.set(ItemType.Wood, { price: 2, common: 2, scale: scale(1, 10, 25) })
-itemData.set(ItemType.Rope, { price: 5, common: 1, scale: scale(5, 50, 100) })
-itemData.set(ItemType.Potion, { price: 20, common: 4, scale: scale(1, 0, 10) })
+itemData.set(ItemType.Wood, { price: 2, common: 2, scale: scale(1, 10, 200) })
+itemData.set(ItemType.Rope, { price: 5, common: 1, scale: scale(2, 50, 100) })
+itemData.set(ItemType.Potion, { price: 20, common: 4, scale: scale(0.2, 0, 10) })
 itemData.set(ItemType.RiseLeaf, { price: 200, common: 1, scale: scale(1, -10, 2) })
 
 // export const targetItems:Map<TargetType, ItemType[]> = new Map()
@@ -51,7 +51,7 @@ export const getScale = (item:ItemType, level:number) => {
   if (!data) {
     throw 'Cant get scale for this'
   }
-  return Math.min(data.scale.m * level + data.scale.b, data.scale.l)
+  return Math.round(Math.min(data.scale.m * level + data.scale.b, data.scale.l))
 }
 
 export const getActorMaxPrice = (price:number, leeway:number):number =>

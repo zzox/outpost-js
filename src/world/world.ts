@@ -2,6 +2,7 @@ import { generateActor, generateMainActors } from '../data/actor-data'
 import { EncounterData, EncounterResData, EncounterResType, EncounterType } from '../data/encounter-data'
 import { DAY_LENGTH } from '../data/globals'
 import { getActorMaxPrice, getNumFromInventory, getScale, itemData, ItemType } from '../data/items'
+import { randomInt } from '../util/util'
 import { Actor } from './actor'
 import { GameState } from './game-state'
 import { WorldTiles } from './world-tiles'
@@ -135,8 +136,8 @@ export class World {
     }
 
     // calculate the scale of a target item from level
-    // TODO: random num between half scale and scale
-    let amountWanted = Math.max(getScale(actor.target, actor.level), 1)
+    const wantedScale = getScale(actor.target, actor.level)
+    let amountWanted = Math.max(Math.round(wantedScale * 0.5 + Math.random() * wantedScale * 0.5), 1)
 
     const itemsInInventory = getNumFromInventory(this.state.wares, actor.target)
     if (itemsInInventory === 0) {
