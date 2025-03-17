@@ -10,6 +10,20 @@ export const randomInt = (num:number) => {
 
 export const getRandom = <T>(items:T[]):T => items[Math.floor(Math.random() * items.length)]
 
+type SeedFunction = () => number
+
+export const seedShuffle = <T>(items:T[], seedFunc?:SeedFunction) => {
+  if (!seedFunc) {
+    seedFunc = Math.random
+  }
+
+  // from: https://stackoverflow.com/a/12646864
+  for (let i = items.length - 1; i >= 0; i--) {
+    const j = Math.floor(seedFunc() * (i + 1));
+    [items[i], items[j]] = [items[j], items[i]];
+  }
+}
+
 type RandomWeight<T> = {
   weight:number
   item:T

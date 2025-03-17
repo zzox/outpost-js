@@ -60,7 +60,6 @@ export class WaresMenu extends MovableWindow {
     numInput.onblur = onEnterPrice
     numInput.onkeydown = (event:KeyboardEvent) => {
       if (event.key === 'Enter') {
-        console.log('focusing')
         const el = this.priceLines[(index + 1) % this.priceLines.length]?.el
         if (!el.querySelector('.num-input')?.classList.contains('display-none')) {
           (el.querySelector('.num-input') as HTMLInputElement)?.focus()

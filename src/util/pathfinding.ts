@@ -189,7 +189,6 @@ export function pathfind (
 
       // if the visited item exists and has a lower cost, don't do anything with this neighbor
       const visitedItem = visited.getItem(neighbor);
-      // console.log(neighbor, currentNode.point)
       if (visitedItem == null || newCost < visitedItem) {
         const newNode = new PathNode(neighbor, currentNode);
         newNode.cost = newCost;
