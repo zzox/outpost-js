@@ -113,7 +113,19 @@ export class WorldTiles {
       actor.path.shift()
     } else {
       logger.debug('something in the way', actor.actor.name)
-      actor.time = 60
+      const endPos = actor.path[actor.path.length - 1]
+      const path = pathfind(
+        makeIntGrid(this.grid, collisions),
+        vec2(actor.x, actor.y),
+        endPos,
+        Diagonal,
+        true
+      )
+
+      if (path == null) throw 'No Path on adjust'
+
+      actor.path = path
+      actor.time = 10
     }
   }
 
