@@ -13,7 +13,6 @@ import { logger, LogLevel, setLogLevel } from './util/logger'
 import { AsciiRenderer, BgRender } from './ui/ascii'
 import { fileInCode, fileInColors } from './data/editor-data'
 import { symbols } from './editor/symbols'
-import { generateMainActors } from './data/actor-data'
 import { Alert } from './ui/alert-window'
 import { OrdersMenu } from './ui/orders-window'
 
@@ -141,7 +140,6 @@ const handleGrabWindow = () => {}
 
 const go = () => {
   console.log(symbols)
-  generateMainActors()
   state = new GameState()
   world = new World(state, handleEncounter, handleEncounterRes)
 
@@ -193,7 +191,7 @@ const go = () => {
 
   requestAnimationFrame(next)
 
-  setLogLevel(LogLevel.Debug)
+  setLogLevel(LogLevel.Log)
   console.log('hi world')
 }
 

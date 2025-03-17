@@ -2,7 +2,7 @@ import { generateActor, generateMainActors } from '../data/actor-data'
 import { EncounterData, EncounterResData, EncounterResType, EncounterType } from '../data/encounter-data'
 import { DAY_LENGTH } from '../data/globals'
 import { getActorMaxPrice, getNumFromInventory, getScale, itemData, ItemType } from '../data/items'
-import { randomInt } from '../util/util'
+import { logger } from '../util/logger'
 import { Actor } from './actor'
 import { GameState } from './game-state'
 import { WorldTiles } from './world-tiles'
@@ -84,8 +84,7 @@ export class World {
   }
 
   handleEncounter = (actor:Actor) => {
-    console.warn('encounter', actor)
-
+    logger.debug('encounter', actor)
     if (actor.targetType === EncounterType.Buy) {
       this.handleBuy(actor)
     } else {
@@ -157,6 +156,7 @@ export class World {
     // if the prices are set, decide here if the actor buys
     if (itemPrice !== 0) {
       if (encounter.price > actor.money) {
+        // TODO: consider buying less if they can afford less
         this.handleEncounterResult({ type: EncounterResType.CantAfford, encounter })
       } else if (itemPrice <= getActorMaxPrice(data.price, actor.leeway)) {
         this.handleEncounterResult({ type: EncounterResType.Sold, encounter })

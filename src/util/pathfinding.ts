@@ -32,9 +32,6 @@ class PathNode {
   h:number = 0.0
 
   constructor (point:Vec2, tail?:PathNode) {
-    if (point == null) {
-      console.warn('p', point, tail)
-    }
     this.point = point
     this.tail = tail
   }
