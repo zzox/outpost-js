@@ -158,7 +158,7 @@ export class World {
       if (encounter.price > actor.money) {
         // TODO: consider buying less if they can afford less
         this.handleEncounterResult({ type: EncounterResType.CantAfford, encounter })
-      } else if (itemPrice <= getActorMaxPrice(data.price, actor.leeway)) {
+      } else if (itemPrice <= getActorMaxPrice(data.price, actor.cheapness)) {
         this.handleEncounterResult({ type: EncounterResType.Sold, encounter })
       } else {
         this.handleEncounterResult({ type: EncounterResType.TooExpensive, encounter })

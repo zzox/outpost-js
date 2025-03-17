@@ -5,7 +5,7 @@ import { Inventory, ItemType } from '../data/items'
 export class Actor {
   id:number
   money:number
-  leeway:number // 0-100 percentage OVER they are willing to pay
+  // leeway:number // 0-100 percentage OVER they are willing to pay
   cheapness:number // 0-100 how much they desire things discounted
   zealous:number // 0-100 how much they try to over-sell
 
@@ -19,12 +19,12 @@ export class Actor {
   targetType!:EncounterType
   genData?:GenerationData
 
-  constructor (id:number, level:number, money:number, leeway:number, cheapness:number, zealous:number) {
+  constructor (id:number, level:number, money:number, /* leeway:number */ cheapness:number, zealous:number) {
     this.id = id
     this.level = level
 
     this.money = money
-    this.leeway = leeway
+    // this.leeway = leeway
     this.cheapness = cheapness
     this.zealous = zealous
 

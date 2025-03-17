@@ -32,7 +32,6 @@ export const generateActor = ():Actor => {
     actorLevel,
     randomInt(50 * actorLevel),
     intClamp(100 - randomInt(1000), 0, 100),
-    intClamp(100 - randomInt(1000), 0, 100),
     intClamp(100 - randomInt(200), 0, 100)
   )
 
@@ -81,7 +80,6 @@ export const generateMainActors = ():Actor[] => {
     actorId,
     5,
     1000,
-    0,
     0,
     0
   )
