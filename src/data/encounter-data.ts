@@ -3,7 +3,7 @@ import { ItemType } from './items'
 
 export enum EncounterType {
   Buy = 'Buy',
-  Sell = 'Sell',
+  Distribute = 'Distribute',
   // Service
   // Robbery
   // Stickup

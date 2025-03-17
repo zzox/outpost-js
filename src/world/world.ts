@@ -41,7 +41,7 @@ export class World {
     this.tiles = new WorldTiles(60, 30, this.handleEncounter)
 
     // this.handleBuy = this.handleBuy.bind(this)
-    // this.handleSell = this.handleSell.bind(this)
+    // this.handleDistribute = this.handleDistribute.bind(this)
   }
 
   step () {
@@ -88,7 +88,7 @@ export class World {
     if (actor.targetType === EncounterType.Buy) {
       this.handleBuy(actor)
     } else {
-      this.handleSell(actor)
+      this.handleDistribute(actor)
     }
   }
 
@@ -173,9 +173,9 @@ export class World {
     this.onEncounter(this.currentEncounter)
   }
 
-  handleSell (actor:Actor) {
+  handleDistribute (actor:Actor) {
     const encounter = {
-      type: EncounterType.Sell,
+      type: EncounterType.Distribute,
       actor,
       amount: actor.genData?.amount as number,
       price: actor.genData?.price as number,
@@ -221,7 +221,7 @@ export class World {
     if (this.currentEncounter.type === EncounterType.Buy) {
       this.handleEncounterResult({ type: result ? EncounterResType.Sold : EncounterResType.DenySold, encounter: this.currentEncounter })
       this.currentEncounter = undefined
-    } else if (this.currentEncounter.type === EncounterType.Sell) {
+    } else if (this.currentEncounter.type === EncounterType.Distribute) {
       this.handleEncounterResult({ type: result ? EncounterResType.Bought : EncounterResType.NotBought, encounter: this.currentEncounter, recurring: additions })
       this.currentEncounter = undefined
     } else {

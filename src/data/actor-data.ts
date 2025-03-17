@@ -68,11 +68,11 @@ const types = [
 export const getActorType = (id:number): ActorType => types[id % 3]
 
 const mainActorData = [
-  { level: 5, money: 1000, cheapness: 0, zealous: 0, frequency: DAY_LENGTH, type: EncounterType.Sell, item: ItemType.Potion, amount: 10, price: 150, day: { low: 0, hi: -1 } },
-  { level: 5, money: 1000, cheapness: 0, zealous: 0, frequency: DAY_LENGTH * 5, type: EncounterType.Sell, item: ItemType.Wood, amount: 1000, price: 1200, day: { low: 0, hi: -1 } },
-  { level: 5, money: 1000, cheapness: 0, zealous: 0, frequency: DAY_LENGTH * 3, type: EncounterType.Sell, item: ItemType.Rope, amount: 200, price: 1000, day: { low: 0, hi: -1 } },
-  { level: 5, money: 1000, cheapness: 0, zealous: 0, frequency: DAY_LENGTH * 3, type: EncounterType.Sell, item: ItemType.RiseLeaf, amount: 5, price: 900, day: { low: 0, hi: -1 } },
-  { level: 5, money: 1000, cheapness: 0, zealous: 0, frequency: DAY_LENGTH * 10, type: EncounterType.Sell, item: ItemType.RiseLeaf, amount: 10, price: 1500, day: { low: 0, hi: -1 } },
+  { level: 5, money: 1000, cheapness: 0, zealous: 0, frequency: DAY_LENGTH, type: EncounterType.Distribute, item: ItemType.Potion, amount: 10, price: 150, day: { low: 0, hi: -1 } },
+  { level: 5, money: 1000, cheapness: 0, zealous: 0, frequency: DAY_LENGTH * 5, type: EncounterType.Distribute, item: ItemType.Wood, amount: 1000, price: 1200, day: { low: 0, hi: -1 } },
+  { level: 5, money: 1000, cheapness: 0, zealous: 0, frequency: DAY_LENGTH * 3, type: EncounterType.Distribute, item: ItemType.Rope, amount: 200, price: 1000, day: { low: 0, hi: -1 } },
+  { level: 5, money: 1000, cheapness: 0, zealous: 0, frequency: DAY_LENGTH * 3, type: EncounterType.Distribute, item: ItemType.RiseLeaf, amount: 5, price: 900, day: { low: 0, hi: -1 } },
+  { level: 5, money: 1000, cheapness: 0, zealous: 0, frequency: DAY_LENGTH * 10, type: EncounterType.Distribute, item: ItemType.RiseLeaf, amount: 10, price: 1500, day: { low: 0, hi: -1 } },
 ]
 
 export const generateMainActors = ():Actor[] => {

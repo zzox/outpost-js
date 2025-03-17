@@ -29,7 +29,7 @@ export const encounterLog = ({ encounter, type }:EncounterResData):string => {
     } else if (type === EncounterResType.CantAfford) {
       return `${getDisplayName(encounter.actor, true)} cannot afford your ${encounter.item}s`
     }
-  } else if (encounter.type === EncounterType.Sell) {
+  } else if (encounter.type === EncounterType.Distribute) {
     if (type === EncounterResType.Bought) {
       return `You bought ${encounter.amount} ${encounter.item}${plural} from ${getDisplayName(encounter.actor, false)}`
     } else if (type === EncounterResType.NotBought) {
@@ -45,7 +45,7 @@ export const encounterLog = ({ encounter, type }:EncounterResData):string => {
 export const encounterOption = ({ type }:EncounterData, option:number):string => {
   if (type === EncounterType.Buy) {
     return ['Sell', 'Deny'][option]
-  } else if (type === EncounterType.Sell) {
+  } else if (type === EncounterType.Distribute) {
     return ['Buy', 'Dont'][option]
   }
 
@@ -56,7 +56,7 @@ export const encounterText = (data:EncounterData):string => {
   const plural = data.amount && data.amount > 1 ? 's' : ''
   if (data.type === EncounterType.Buy) {
     return `Sell ${data.amount} ${data.item}${plural} to ${getDisplayName(data.actor, false)} for $${data.price}?`
-  } else if (data.type === EncounterType.Sell) {
+  } else if (data.type === EncounterType.Distribute) {
     return `Buy ${data.amount} ${data.item}${plural} from ${getDisplayName(data.actor, false)} for $${data.price}?`
   }
 
@@ -64,7 +64,7 @@ export const encounterText = (data:EncounterData):string => {
 }
 
 export const encounterSubtext = (data:EncounterData):string => {
-  if (data.type === EncounterType.Sell) {
+  if (data.type === EncounterType.Distribute) {
     return `Repeat this order in the future`
   }
 

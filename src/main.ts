@@ -45,7 +45,7 @@ const handleEncounter = (data:EncounterData) => {
         world.doEncounter(false, false)
       } },
     ],
-    data.type === EncounterType.Sell ? { text: encounterSubtext(data) } : undefined
+    data.type === EncounterType.Distribute ? { text: encounterSubtext(data) } : undefined
   )
   showWindow(alert)
   alert.alignToCenter()
