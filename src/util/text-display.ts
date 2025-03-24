@@ -41,7 +41,7 @@ export const encounterLog = ({ encounter, type }:EncounterResData):EncounterLog 
     } else if (type === EncounterResType.NotBought) {
       return { color: Color.Brown, text: `You did not buy ${encounter.item}${plural} from ${getDisplayName(encounter.actor, false)}` }
     } else if (type === EncounterResType.CantAfford) {
-      return { color: Color.WhiteSmoke, text: `You cannot afford ${getDisplayName(encounter.actor, false)}\'s ${encounter.item}s` }
+      return { color: Color.Tan, text: `You cannot afford ${getDisplayName(encounter.actor, false)}\'s ${encounter.item}s` }
     }
   }
 

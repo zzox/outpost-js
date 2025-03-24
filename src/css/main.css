@@ -93,8 +93,8 @@ input[type=checkbox] {
 }
 
 #logs > .box-content {
-  height: 25em;
-  width: 20em;
+  height: 35em;
+  width: 25em;
 }
 
 #logs pre {

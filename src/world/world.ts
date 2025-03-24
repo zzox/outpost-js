@@ -153,12 +153,14 @@ export class World {
     const itemPrice = getNumFromInventory(this.state.prices, actor.target)
     encounter.price = amountWanted * itemPrice
 
+    logger.log(itemPrice, getActorMaxPrice(data.price, actor.cheapness, actor.leeway))
+
     // if the prices are set, decide here if the actor buys
     if (itemPrice !== 0) {
       if (encounter.price > actor.money) {
         // TODO: consider buying less if they can afford less
         this.handleEncounterResult({ type: EncounterResType.CantAfford, encounter })
-      } else if (itemPrice <= getActorMaxPrice(data.price, actor.cheapness)) {
+      } else if (itemPrice <= getActorMaxPrice(data.price, actor.cheapness, actor.leeway)) {
         this.handleEncounterResult({ type: EncounterResType.Sold, encounter })
       } else {
         this.handleEncounterResult({ type: EncounterResType.TooExpensive, encounter })

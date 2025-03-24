@@ -56,5 +56,5 @@ export const getScale = (item:ItemType, level:number) => {
 
 // export const getActorMaxPrice = (price:number, leeway:number):number =>
 //   Math.ceil(price * (1 + leeway / 100))
-export const getActorMaxPrice = (price:number, cheapness:number): number =>
-  Math.ceil(price * (100 - cheapness) / 100)
+export const getActorMaxPrice = (price:number, cheapness:number, leeway:number): number =>
+  Math.ceil(price * (100 - cheapness) / 100 * (1 + leeway / 100))
