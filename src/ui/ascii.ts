@@ -96,7 +96,11 @@ export class BgRender extends AsciiRenderer {
     this.colors = copyGrid(this.bgColors)
 
     this.worldTiles.actors.forEach(actor => {
-      this.setItem(actor.x, actor.y, 32, 6)
+      if (actor.actor.name) {
+        this.setItem(actor.x, actor.y, 32, 4)
+      } else {
+        this.setItem(actor.x, actor.y, symbols.indexOf(actor.actor.type.charAt(0)), 5)
+      }
     })
 
     super.render()

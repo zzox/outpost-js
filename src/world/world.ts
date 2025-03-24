@@ -1,7 +1,7 @@
 import { generateActor, generateMainActors } from '../data/actor-data'
 import { EncounterData, EncounterResData, EncounterResType, EncounterType } from '../data/encounter-data'
 import { DAY_LENGTH } from '../data/globals'
-import { getActorMaxPrice, getNumFromInventory, getScale, itemData, ItemType } from '../data/items'
+import { getActorCheapPrice, getActorMaxPrice, getNumFromInventory, getScale, itemData, ItemType } from '../data/items'
 import { logger } from '../util/logger'
 import { Actor } from './actor'
 import { GameState } from './game-state'
@@ -167,8 +167,8 @@ export class World {
       }
       return
     } else {
-      // TODO: update price with actor cheapness
-      encounter.price = amountWanted * data.price
+      // TODO: update price with actor desparation
+      encounter.price = amountWanted * getActorCheapPrice(data.price, actor.cheapness)
     }
 
     this.currentEncounter = encounter
