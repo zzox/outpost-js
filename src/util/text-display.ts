@@ -16,32 +16,32 @@ const capitalize = (word:string) => word[0].toUpperCase() + word.slice(1)
 
 const getDisplayName = (actor:Actor, capital:boolean) => actor.name ?? `${capital ? 'A' : 'a'} ${actor.type}`
 
-type EncounterText = {
+export type EncounterLog = {
   text: string,
   color: Color
 }
 
-export const encounterLog = ({ encounter, type }:EncounterResData):string => {
+export const encounterLog = ({ encounter, type }:EncounterResData):EncounterLog => {
   const plural = encounter.amount && encounter.amount > 1 ? 's' : ''
   if (encounter.type === EncounterType.Buy) {
     if (type === EncounterResType.Sold) {
-      return `You sold ${encounter.amount} ${encounter.item}${plural} to ${getDisplayName(encounter.actor, false)}`
+      return { color: Color.Emerald, text: `You sold ${encounter.amount} ${encounter.item}${plural} to ${getDisplayName(encounter.actor, false)}` }
     } else if (type === EncounterResType.DenySold) {
-      return `You denied selling ${encounter.amount} ${encounter.item}${plural} to ${getDisplayName(encounter.actor, false)}`
+      return { color: Color.Brown, text: `You denied selling ${encounter.amount} ${encounter.item}${plural} to ${getDisplayName(encounter.actor, false)}` }
     } else if (type === EncounterResType.DontHave) {
-      return `You didnt have any ${encounter.item}s for ${getDisplayName(encounter.actor, false)}`
+      return { color: Color.Grey, text: `You didnt have any ${encounter.item}s for ${getDisplayName(encounter.actor, false)}` }
     } else if (type === EncounterResType.TooExpensive) {
-      return `"Your ${encounter.item} prices are too expensive" says a ${getDisplayName(encounter.actor, false)}`
+      return { color: Color.Grey, text: `"Your ${encounter.item} prices are too expensive" says a ${getDisplayName(encounter.actor, false)}` }
     } else if (type === EncounterResType.CantAfford) {
-      return `${getDisplayName(encounter.actor, true)} cannot afford your ${encounter.item}s`
+      return { color: Color.Grey, text: `${getDisplayName(encounter.actor, true)} cannot afford your ${encounter.item}s` }
     }
   } else if (encounter.type === EncounterType.Distribute) {
     if (type === EncounterResType.Bought) {
-      return `You bought ${encounter.amount} ${encounter.item}${plural} from ${getDisplayName(encounter.actor, false)}`
+      return { color: Color.Green, text: `You bought ${encounter.amount} ${encounter.item}${plural} from ${getDisplayName(encounter.actor, false)}` }
     } else if (type === EncounterResType.NotBought) {
-      return `You did not buy ${encounter.item}${plural} from ${getDisplayName(encounter.actor, false)}`
+      return { color: Color.Brown, text: `You did not buy ${encounter.item}${plural} from ${getDisplayName(encounter.actor, false)}` }
     } else if (type === EncounterResType.CantAfford) {
-      return `You cannot afford ${getDisplayName(encounter.actor, false)}\'s ${encounter.item}s`
+      return { color: Color.WhiteSmoke, text: `You cannot afford ${getDisplayName(encounter.actor, false)}\'s ${encounter.item}s` }
     }
   }
 

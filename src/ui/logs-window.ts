@@ -1,3 +1,4 @@
+import { EncounterLog } from '../util/text-display'
 import { makePreText } from './ui'
 import { MovableWindow } from './windows'
 
@@ -17,11 +18,11 @@ export class LogsWindow extends MovableWindow {
   }
 
   render = () => {
-    this.preEl.innerText = LogsWindow.logs.join('\n')
+    this.preEl.innerHTML = LogsWindow.logs.join('\n')
   }
 
-  addLog = (log:string) => {
+  addLog = (log:EncounterLog) => {
     LogsWindow.logs.pop()
-    LogsWindow.logs.unshift(log)
+    LogsWindow.logs.unshift(`<span class=${log.color}>${log.text}</span>`)
   }
 }
