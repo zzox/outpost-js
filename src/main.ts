@@ -1,4 +1,4 @@
-import { LogList } from './ui/windows'
+import { LogsWindow } from './ui/logs-window'
 import { $id, addToMain, hideWindow, setMoneyUi, showWindow } from './ui/ui'
 import { World } from './world/world'
 import { encounterLog, encounterOption, encounterSubtext, encounterText, getTimeText } from './util/text-display'
@@ -20,7 +20,7 @@ let world:World
 let state:GameState
 let encounterActive:boolean = false
 let worldAscii:AsciiRenderer
-let logs:LogList
+let logsWindow:LogsWindow
 let alert:Alert
 let waresMenu:WaresMenu
 let ordersMenu:OrdersMenu
@@ -75,8 +75,8 @@ const handleEncounterRes = (data:EncounterResData) => {
   }
 
   financeWindow.updateFromState(state.history)
-  logs.addLog(encounterLog(data))
-  logs.render()
+  logsWindow.addLog(encounterLog(data))
+  logsWindow.render()
 }
 
 const onSetPrice = (type:ItemType, price?:number) => {
@@ -134,6 +134,7 @@ const createMainListeners = () => {
   $id('wares-button').onclick = () => showWindow(waresMenu)
   $id('orders-button').onclick = () => showWindow(ordersMenu)
   $id('money-button').onclick = () => showWindow(financeWindow)
+  $id('logs-button').onclick = () => showWindow(logsWindow)
 }
 
 const handleGrabWindow = () => {}
@@ -143,7 +144,7 @@ const go = () => {
   state = new GameState()
   world = new World(state, handleEncounter, handleEncounterRes)
 
-  logs = new LogList(0, 0)
+  logsWindow = new LogsWindow(0, 0)
   waresMenu = new WaresMenu(0, 200, onSetPrice)
   ordersMenu = new OrdersMenu(400, 200, onRemoveOrder, onToggleOrder)
   financeWindow = new FinanceWindow(0, TOPBAR_HEIGHT)
@@ -152,7 +153,7 @@ const go = () => {
   // worldAscii = new AsciiRenderer($id('bg') as HTMLPreElement, 30, 60, fileInCode, fileInColors)
   worldAscii = new BgRender($id('bg') as HTMLPreElement, 30, 60, fileInCode, fileInColors, world.tiles)
 
-  addToMain(logs)
+  addToMain(logsWindow)
   addToMain(waresMenu)
   addToMain(ordersMenu)
   addToMain(financeWindow)
@@ -174,7 +175,7 @@ const go = () => {
   setMoneyUi(state.money)
 
   // setting position here so the bounding client rect exists once added
-  logs.setPosition(16384, 16384)
+  logsWindow.setPosition(16384, 16384)
   financeWindow.setPosition(16384, 36)
 
   createMainListeners()

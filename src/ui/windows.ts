@@ -78,28 +78,3 @@ export class MovableWindow {
     hideWindow(this)
   }
 }
-
-export class LogList extends MovableWindow {
-  static logs: string[]
-
-  preEl: HTMLPreElement
-
-  constructor (x:number, y:number) {
-    super(x, y, 'Logs', true, 'logs')
-
-    this.preEl = makePreText((new Array(20)).map(_ => '\n').join(''))
-    this.content.appendChild(this.preEl)
-    // this.content.classList.add('min-box')
-
-    LogList.logs = (new Array(100)).map(_ => '')
-  }
-
-  render = () => {
-    this.preEl.innerText = LogList.logs.join('\n')
-  }
-
-  addLog = (log:string) => {
-    LogList.logs.pop()
-    LogList.logs.unshift(log)
-  }
-}

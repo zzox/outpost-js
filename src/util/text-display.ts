@@ -1,4 +1,5 @@
 import { EncounterData, EncounterResData, EncounterResType, EncounterType } from '../data/encounter-data'
+import { Color } from '../ui/colors'
 import { Actor } from '../world/actor'
 
 export const getTimeText = (time:number):string => {
@@ -14,6 +15,11 @@ export const getTimeText = (time:number):string => {
 const capitalize = (word:string) => word[0].toUpperCase() + word.slice(1)
 
 const getDisplayName = (actor:Actor, capital:boolean) => actor.name ?? `${capital ? 'A' : 'a'} ${actor.type}`
+
+type EncounterText = {
+  text: string,
+  color: Color
+}
 
 export const encounterLog = ({ encounter, type }:EncounterResData):string => {
   const plural = encounter.amount && encounter.amount > 1 ? 's' : ''
