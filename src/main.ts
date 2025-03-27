@@ -15,6 +15,7 @@ import { fileInCode, fileInColors } from './data/editor-data'
 import { symbols } from './editor/symbols'
 import { Alert } from './ui/alert-window'
 import { OrdersMenu } from './ui/orders-window'
+import { MovableWindow } from './ui/windows'
 
 let world:World
 let state:GameState
@@ -26,7 +27,7 @@ let waresMenu:WaresMenu
 let ordersMenu:OrdersMenu
 let financeWindow:FinanceWindow
 
-// let windows:MovableWindow[] = []
+const windows:MovableWindow[] = []
 
 let fastForward = false
 
@@ -131,6 +132,11 @@ const next = (now:number) => {
 }
 
 const createMainListeners = () => {
+  window.onresize = () => {
+    windows.forEach((w) => {
+      w.resetPosition()
+    })
+  }
   $id('wares-button').onclick = () => showWindow(waresMenu)
   $id('orders-button').onclick = () => showWindow(ordersMenu)
   $id('money-button').onclick = () => showWindow(financeWindow)
@@ -163,11 +169,11 @@ const go = () => {
   hideWindow(financeWindow)
   hideWindow(alert)
 
-  // windows = [
-  //   logs,
-  //   waresMenu,
-  //   financeWindow
-  // ]
+  windows.push(logsWindow)
+  windows.push(waresMenu)
+  windows.push(ordersMenu)
+  windows.push(financeWindow)
+  windows.push(alert)
 
   for (let items of state.wares.entries()) {
     waresMenu.addItem(items[0], items[1], state.prices.get(items[0]) as number)

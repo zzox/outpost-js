@@ -4,7 +4,6 @@ export enum ItemType {
   Rope = 'Rope',
   Wood = 'Wood',
   Potion = 'Potion',
-  // ElvenBlade = 'Elven Blade',
   RiseLeaf = 'Rise Leaf',
 }
 

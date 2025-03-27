@@ -66,6 +66,10 @@ export class MovableWindow {
     this.element.style.top = `${yy}px`
   }
 
+  resetPosition = () => {
+    this.setPosition(parseInt(this.element.style.left), parseInt(this.element.style.top))
+  }
+
   alignToCenter = () => {
     this.setPosition(
       (window.innerWidth - this.element.getBoundingClientRect().width) / 2,
