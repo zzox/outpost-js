@@ -77,7 +77,7 @@ const mainActorData = [
 ]
 
 export const generateMainActors = ():Actor[] => {
-  const rand = new Random('weee')
+  const rand = new Random('weeeteeee')
   console.log(rand.get())
   console.log(rand.get())
   console.log(rand.get())

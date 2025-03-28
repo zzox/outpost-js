@@ -23,6 +23,6 @@ export class LogsWindow extends MovableWindow {
 
   addLog = (log:EncounterLog) => {
     LogsWindow.logs.pop()
-    LogsWindow.logs.unshift(`<span class=${log.color}>* ${log.text}</span>`)
+    LogsWindow.logs.unshift(`<span class="indent ${log.color}">* ${log.text}</span>`)
   }
 }

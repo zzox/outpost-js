@@ -190,6 +190,7 @@ export class World {
       throw 'Cannot find item'
     }
 
+    // TODO: delete the next six lines of stuff? doesnt make sense
     // // TODO: specific scaling per item
     // const amount = Math.max(getScale(actor.target, actor.level) * 10, 1)
     // // TODO: specific margin per item
