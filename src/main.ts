@@ -16,6 +16,7 @@ import { symbols } from './editor/symbols'
 import { Alert } from './ui/alert-window'
 import { OrdersMenu } from './ui/orders-window'
 import { MovableWindow } from './ui/windows'
+import { Actor } from './world/actor'
 
 let world:World
 let state:GameState
@@ -131,6 +132,20 @@ const next = (now:number) => {
   requestAnimationFrame(next)
 }
 
+const handleGrabWindow = () => {}
+
+// WARN: this relies on their being only one actor with each name
+const handleOpenActorWindow = (actor:Actor) => {
+  // check windows for actor
+  // showWindow
+  // push to array
+}
+
+const handleCloseActorWindow = (actor:Actor) => {
+  // remove from windows array
+  // remove from dom
+}
+
 const createMainListeners = () => {
   window.onresize = () => {
     windows.forEach((w) => {
@@ -142,8 +157,6 @@ const createMainListeners = () => {
   $id('money-button').onclick = () => showWindow(financeWindow)
   $id('logs-button').onclick = () => showWindow(logsWindow)
 }
-
-const handleGrabWindow = () => {}
 
 const go = () => {
   console.log(symbols)

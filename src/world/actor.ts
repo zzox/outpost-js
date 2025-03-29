@@ -10,7 +10,7 @@ export class Actor {
   zealous:number // 0-100 how much they try to over-sell
 
   level:number
-  name?:String
+  name?:string
   type:ActorType
 
   inventory:Inventory
