@@ -66,7 +66,7 @@ export class WaresMenu extends MovableWindow {
         } else {
           el.querySelector('button')?.focus()
           // folliwng event is needed to prevent the enter key from selecting
-          // the next "set" button
+          // the next 'set' button
           event.preventDefault()
         }
       }

@@ -1,4 +1,4 @@
-import { generateActor, generateMainActors } from '../data/actor-data'
+import { generateActor, generateMainActors, generateYou } from '../data/actor-data'
 import { EncounterData, EncounterResData, EncounterResType, EncounterType } from '../data/encounter-data'
 import { DAY_LENGTH } from '../data/globals'
 import { getActorCheapPrice, getActorMaxPrice, getNumFromInventory, getScale, itemData, ItemType } from '../data/items'
@@ -21,6 +21,7 @@ export class World {
   currentEncounter?:EncounterData
 
   tiles:WorldTiles
+  you:Actor
   actors:Actor[]
 
   // callback denoting an encounter starting
@@ -37,6 +38,7 @@ export class World {
     this.onEncounterRes = onEncounterRes
     this.state = state
     this.actors = generateMainActors()
+    this.you = generateYou()
 
     this.tiles = new WorldTiles(60, 30, this.handleEncounter)
 

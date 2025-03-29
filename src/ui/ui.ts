@@ -33,6 +33,10 @@ export const addToMain = (win:MovableWindow) => {
   $q('main').appendChild(win.element)
 }
 
+export const removeFromMain = (win:MovableWindow) => {
+  $q('main').removeChild(win.element)
+}
+
 export const hideWindow = (win:MovableWindow) => {
   win.element.classList.add('display-none')
 }

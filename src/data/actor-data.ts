@@ -5,7 +5,7 @@ import { Inventory, itemData, ItemType } from './items'
 import { Random } from '../util/random'
 import { DAY_LENGTH, HiLow, scale, Scale } from './globals'
 
-let id = 400
+let id = 401 // its 401 since we are 0
 
 export enum ActorType {
   Knight = 'Knight',
@@ -83,8 +83,9 @@ export const generateMainActors = ():Actor[] => {
   console.log(rand.get())
 
   seedShuffle(shuffledNames, rand.get)
+  shuffledNames.unshift('You')
 
-  let actorId = -1
+  let actorId = 0
 
   return mainActorData.map((data) => {
     const actor = new Actor(
@@ -109,6 +110,17 @@ export const generateMainActors = ():Actor[] => {
 
     return actor
   })
+}
+
+export const generateYou = ():Actor => {
+  return new Actor(
+    0,
+    5,
+    500, // just simulated for now
+    0,
+    0,
+    0
+  )
 }
 
 // const generateInventory = (level:number) => {

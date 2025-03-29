@@ -1,5 +1,5 @@
 import { LogsWindow } from './ui/logs-window'
-import { $id, addToMain, hideWindow, setMoneyUi, showWindow } from './ui/ui'
+import { $id, addToMain, hideWindow, removeFromMain, setMoneyUi, showWindow } from './ui/ui'
 import { World } from './world/world'
 import { encounterLog, encounterOption, encounterSubtext, encounterText, getTimeText } from './util/text-display'
 import { EncounterData, EncounterResData, EncounterResType, EncounterType } from './data/encounter-data'
@@ -17,6 +17,7 @@ import { Alert } from './ui/alert-window'
 import { OrdersMenu } from './ui/orders-window'
 import { MovableWindow } from './ui/windows'
 import { Actor } from './world/actor'
+import { ActorWindow } from './ui/actor-window'
 
 let world:World
 let state:GameState
@@ -28,7 +29,7 @@ let waresMenu:WaresMenu
 let ordersMenu:OrdersMenu
 let financeWindow:FinanceWindow
 
-const windows:MovableWindow[] = []
+let windows:MovableWindow[] = []
 
 let fastForward = false
 
@@ -136,14 +137,21 @@ const handleGrabWindow = () => {}
 
 // WARN: this relies on their being only one actor with each name
 const handleOpenActorWindow = (actor:Actor) => {
-  // check windows for actor
-  // showWindow
-  // push to array
+  if (!document.querySelector(`div#${actor.name!.toLowerCase()}`)) {
+    const aw = new ActorWindow(0, 0, actor, () => {
+      handleCloseActorWindow(actor)
+    })
+    addToMain(aw)
+    windows.push(aw)
+  }
 }
 
 const handleCloseActorWindow = (actor:Actor) => {
   // remove from windows array
   // remove from dom
+  const w = document.querySelector(`div#${actor.name!.toLowerCase()}`)
+  w?.remove()
+  windows = windows.filter((win) => win.element !== w)
 }
 
 const createMainListeners = () => {
@@ -156,6 +164,9 @@ const createMainListeners = () => {
   $id('orders-button').onclick = () => showWindow(ordersMenu)
   $id('money-button').onclick = () => showWindow(financeWindow)
   $id('logs-button').onclick = () => showWindow(logsWindow)
+  $id('you-button').onclick = () => {
+    handleOpenActorWindow(world.you)
+  }
 }
 
 const go = () => {
