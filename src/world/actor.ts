@@ -1,4 +1,5 @@
 import { ActorType, getName, GenerationData, getActorType } from '../data/actor-data'
+import { BattleData } from '../data/battle'
 import { EncounterType } from '../data/encounter-data'
 import { Inventory, ItemType } from '../data/items'
 import { randomInt } from '../util/util'
@@ -56,6 +57,8 @@ export class Actor {
   targetType!:EncounterType
   genData?:GenerationData
 
+  battleData?:BattleData
+
   constructor (id:number, level:number, money:number, leeway:number, cheapness:number, zealous:number) {
     this.id = id
     this.level = level
@@ -82,5 +85,9 @@ export class Actor {
 
     this.name = getName(id)
     this.type = getActorType(id)
+  }
+
+  get isDead ():boolean {
+    return this.health <= 0
   }
 }
