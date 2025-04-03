@@ -83,13 +83,13 @@ export const generateMainActors = ():Actor[] => {
   console.log(rand.get())
 
   seedShuffle(shuffledNames, rand.get)
-  shuffledNames.unshift('You')
+  // shuffledNames.unshift('You')
 
   let actorId = 0
 
   return mainActorData.map((data) => {
     const actor = new Actor(
-      ++actorId,
+      actorId++,
       data.level,
       data.money,
       data.cheapness,
@@ -114,7 +114,7 @@ export const generateMainActors = ():Actor[] => {
 
 export const generateYou = ():Actor => {
   return new Actor(
-    0,
+    -2, // lol bad
     5,
     500, // just simulated for now
     0,
