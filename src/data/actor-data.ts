@@ -113,7 +113,7 @@ export const generateMainActors = ():Actor[] => {
 }
 
 export const generateYou = ():Actor => {
-  return new Actor(
+  const you = new Actor(
     -2, // lol bad
     5,
     500, // just simulated for now
@@ -121,6 +121,8 @@ export const generateYou = ():Actor => {
     0,
     0
   )
+  you.name = 'You'
+  return you
 }
 
 // const generateInventory = (level:number) => {
